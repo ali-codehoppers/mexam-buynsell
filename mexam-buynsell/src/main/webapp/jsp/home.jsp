@@ -123,7 +123,7 @@
             {
                 $.ajax({
                     type:       "get",
-                    url:        "getCategoryProducts",
+                    url:        "getCategoryParts",
                     data:       {categoryId: id},
                     success:    function(msg) {
                        
@@ -144,7 +144,7 @@
             {
                 $.ajax({
                     type:       "get",
-                    url:        "getSubCategoryProducts",
+                    url:        "getSubCategoryParts",
                     data:       {subcategoryId: id},
                     success:    function(msg) {
                        
@@ -174,7 +174,7 @@
                     html+="<img src='images/default.png'/>";
                 html+="</div>";
                 html+="<div class='productDetail'>";
-                html+="<a href='viewProduct?productId="+product.id+"'>"+product.name+" </a>";
+                html+="<a href='viewProduct?productId="+product.id+"'>"+product.partNo+" </a>";
                 html+="    <br>";
                 html+="<div class='productDesc'>"+ product.description+" </div>";
                 html+="</div>";

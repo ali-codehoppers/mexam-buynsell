@@ -93,24 +93,26 @@
         </property>
     </bean>
 
-    <bean id="productDao" parent="abstractDaoFinderImp">
+    <bean id="partDao" parent="abstractDaoFinderImp">
         <property name="proxyInterfaces">
-            <value>com.mt.idao.IProductDao</value>
+            <value>com.mt.idao.IPartDao</value>
         </property>
         <property name="target">
             <bean parent="abstractDaoGeneric">
-                <constructor-arg value="com.mt.hibernate.entities.Product" />
+                <constructor-arg value="com.mt.hibernate.entities.Part" />
             </bean>
         </property>
     </bean>
-    
-    <bean id="manufacturerDao" parent="abstractDaoFinderImp">
+
+
+ 
+    <bean id="inventoryDao" parent="abstractDaoFinderImp">
         <property name="proxyInterfaces">
-            <value>com.mt.idao.IManufacturerDao</value>
+            <value>com.mt.idao.IInventoryDao</value>
         </property>
         <property name="target">
             <bean parent="abstractDaoGeneric">
-                <constructor-arg value="com.mt.hibernate.entities.Manufacturer" />
+                <constructor-arg value="com.mt.hibernate.entities.Inventory" />
             </bean>
         </property>
     </bean>
@@ -198,12 +200,12 @@
         <constructor-arg ref="categoryDao" />
     </bean>
 
-    <bean id="productService" class="com.mt.services.ProductService">
-        <constructor-arg ref="productDao" />
+    <bean id="partService" class="com.mt.services.PartService">
+        <constructor-arg ref="partDao" />
     </bean>
 
-    <bean id="manufacturerService" class="com.mt.services.ManufacturerService">
-        <constructor-arg ref="manufacturerDao" />
+    <bean id="inventoryService" class="com.mt.services.InventoryService">
+        <constructor-arg ref="inventoryDao" />
     </bean>
 
     <bean id="imageService" class="com.mt.services.ImageService">

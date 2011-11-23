@@ -46,6 +46,45 @@
         
         
         <!-- //     Product    -->
+        
+        
+        
+                <!--      Part    -->
+        
+        <action name="showAddProduct" class="com.mt.actions.Product.ShowAddProduct">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/product/addProduct.jsp</result>
+        </action>
+
+        <action name="addProduct" class="com.mt.actions.Product.AddProduct">
+            <interceptor-ref name="basic"/>
+            <result name="success" type="redirect">viewProduct?messeage=${message}&amp;productId=${product.id} </result>
+        </action>
+        
+        <action name="viewProduct" class="com.mt.actions.Product.ViewProduct">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/product/viewProduct.jsp</result>
+        </action>
+        
+        <action name="getCategoryParts" class="com.mt.actions.ajaxActions.GetCategoryParts">
+            <interceptor-ref name="basic"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
+        <action name="getSubCategoryParts" class="com.mt.actions.ajaxActions.GetSubcategoryParts">
+            <interceptor-ref name="basic"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        
+        
+        <!-- //     Part    -->
+        
+        
+        
+        
+        
+        
+        
 
         <!--      User    -->
         <action name="showAddUser" class="com.mt.actions.User.ShowAddNewUser">
