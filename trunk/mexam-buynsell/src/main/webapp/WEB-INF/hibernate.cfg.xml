@@ -16,8 +16,6 @@
         <property name="hibernate.cache.use_second_level_cache">false</property>
 
         <mapping class="com.mt.hibernate.entities.Category"/>       
-        <mapping class="com.mt.hibernate.entities.Manufacturer"/>              
-        <mapping class="com.mt.hibernate.entities.Product"/>              
         <mapping class="com.mt.hibernate.entities.Image"/>                      
         <mapping class="com.mt.hibernate.entities.SubCategory"/>                              
         <mapping class="com.mt.hibernate.entities.User"/>                                      

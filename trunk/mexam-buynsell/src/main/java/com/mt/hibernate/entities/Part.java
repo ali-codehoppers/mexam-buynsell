@@ -15,7 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
-@javax.persistence.Table(name = "products")
+@javax.persistence.Table(name = "parts")
 @NamedQueries({
     @NamedQuery(name = "Part.findByName", query = "select c from Part c where c.partNo like ?"),
     @NamedQuery(name = "Part.findByCategory", query = "select p from Part p inner join p.subcategory as sub where sub.categoryId = cast(? as string)")
@@ -39,7 +39,13 @@ public class Part implements Serializable {
     private List<Image> images;
     @Expose
     private String overview;
+    @Expose
+    private String model;
+    @Expose
+    private String description;
 
+    
+    
     public void setId(int id) {
         this.id = id;
     }
@@ -75,6 +81,17 @@ public class Part implements Serializable {
     public void setOverview(String overview) {
         this.overview = overview;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+    
+    
+    
 
     public Part() {
     }
@@ -119,5 +136,13 @@ public class Part implements Serializable {
 
     public String getOverview() {
         return overview;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getModel() {
+        return model;
     }
 }
