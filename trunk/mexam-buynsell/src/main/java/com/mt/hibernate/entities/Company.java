@@ -5,6 +5,8 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
+import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,12 +16,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
 @javax.persistence.Table(name = "companies")
 @NamedQueries({
     @NamedQuery(name = "Company.findByName", query = "select u from Company u where u.name like ?")})
-public class Company {
+public class Company implements Serializable {
 
     @Expose
     private int id;
@@ -43,6 +46,8 @@ public class Company {
     private String webAddress;
     @Expose
     private String companyCategory;
+    private List<User> users;
+    private List<Inventory> inventorys;
 
     public void setId(int id) {
         this.id = id;
@@ -87,6 +92,15 @@ public class Company {
     public void setCompanyCategory(String companyCategory) {
         this.companyCategory = companyCategory;
     }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public void setInventorys(List<Inventory> inventorys) {
+        this.inventorys = inventorys;
+    }
+    
 
     @Id
     @GeneratedValue
@@ -136,4 +150,15 @@ public class Company {
     public String getCompanyCategory() {
         return companyCategory;
     }
+
+    @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY, mappedBy = "companyId")
+    public List<User> getUsers() {
+        return users;
+    }
+
+    @OneToMany(targetEntity = Inventory.class, fetch = FetchType.LAZY, mappedBy = "companyId")
+    public List<Inventory> getInventorys() {
+        return inventorys;
+    }
+
 }

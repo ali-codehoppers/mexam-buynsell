@@ -30,7 +30,7 @@
         </interceptors>
 
         <global-results>
-            <result name="mustAuthenticate" type="redirect">/loginRedirect.jspa?expired=true</result>
+            <result name="mustAuthenticate" type="redirect">/showLogin?expired=true</result>
             <result name="generalException">/jsp/common/exception.jsp</result>
         </global-results>
 

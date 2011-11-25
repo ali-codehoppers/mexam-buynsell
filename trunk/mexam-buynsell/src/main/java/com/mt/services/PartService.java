@@ -20,6 +20,10 @@ public class PartService {
         return partDao.findByCategory("" + id);
     }
 
+    public List<Part> findByManufacturer(String manufacturer) {
+        return partDao.findByManufacturer(manufacturer);
+    }
+
     public Integer addNew(Part newInstance) {
         return partDao.addNew(newInstance);
     }
