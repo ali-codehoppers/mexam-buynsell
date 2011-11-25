@@ -2,8 +2,6 @@ package com.mt.services;
 
 import com.mt.hibernate.entities.Inventory;
 import com.mt.idao.IInventoryDao;
-import com.mt.idao.IInventoryDao;
-import com.mt.idao.IInventoryDao;
 import java.util.List;
 
 public class InventoryService {

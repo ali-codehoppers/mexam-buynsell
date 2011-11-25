@@ -12,6 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
         <script type="text/javascript" src="js/jstree/_lib/jquery.js"></script>
         <script type="text/javascript" src="js/jstree/jquery.jstree.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/>        
 
         <style>
             #sideBar {

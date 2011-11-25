@@ -47,7 +47,27 @@
         
         <!-- //     Product    -->
         
+
+                
+                <!--      Part    -->
+          
+        <action name="showAddInventory" class="com.mt.actions.Inventory.ShowAddInventory">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/inventory/addInventory.jsp</result>
+        </action>
+
+        <action name="addInventory" class="com.mt.actions.Inventory.AddInventory">
+            <interceptor-ref name="authenticated"/>
+            <result name="success" type="redirect">home</result>
+        </action>
         
+                
+                <!-- //     Part    -->
+        
+        <action name="viewPart" class="com.mt.actions.part.ViewPart">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/part/viewPart.jsp</result>
+        </action>
         
                 <!--      Part    -->
         
@@ -147,7 +167,7 @@
 
         <!--        Login            -->
         
-        <action name="showLogin" class="com.mt.actions.Login.ShowLogin">
+        <action name="showLogin" class="com.mt.actions.DoNothing">
             <interceptor-ref name="basic"/>
             <result name="success">jsp/login/login.jsp</result>
         </action>
@@ -176,6 +196,17 @@
         <action name="getImage" class="com.mt.actions.GetImage">
             <interceptor-ref name="basic"/>
         </action>
+        
+        <action name="getParts" class="com.mt.actions.ajaxActions.GetParts">
+            <interceptor-ref name="basic"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
+        <action name="getManufacturers" class="com.mt.actions.ajaxActions.GetManufacturers">
+            <interceptor-ref name="basic"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
         
     </package>
 </struts>

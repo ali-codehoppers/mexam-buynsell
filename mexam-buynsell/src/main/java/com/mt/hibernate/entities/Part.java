@@ -18,7 +18,8 @@ import javax.persistence.OneToMany;
 @javax.persistence.Table(name = "parts")
 @NamedQueries({
     @NamedQuery(name = "Part.findByName", query = "select c from Part c where c.partNo like ?"),
-    @NamedQuery(name = "Part.findByCategory", query = "select p from Part p inner join p.subcategory as sub where sub.categoryId = cast(? as string)")
+    @NamedQuery(name = "Part.findByCategory", query = "select p from Part p inner join p.subcategory as sub where sub.categoryId = cast(? as string)"),
+    @NamedQuery(name = "Part.findByManufacturer", query = "select p from Part p where p.manufacturer like ?")    
 })
 public class Part implements Serializable {
 

@@ -6,8 +6,10 @@ package com.mt.actions.Login;
 
 import com.mt.hibernate.entities.User;
 import com.mt.services.UserService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -40,19 +42,17 @@ public class Login extends ActionSupport {
 
         if (userList == null || userList.isEmpty()) {
             return "fail";
-        }
-        else
-        {
-            for(int i=0;i<userList.size();i++)
-            {
-                if(userList.get(i).getPassword().compareTo(password)==0)
-                {
+        } else {
+            for (int i = 0; i < userList.size(); i++) {
+                if (userList.get(i).getPassword().compareTo(password) == 0) {
+                    Map session = ActionContext.getContext().getSession();
+                    session.put("user", userList.get(i));
                     return SUCCESS;
                 }
             }
         }
-        
-        
-       return "fail";
+
+
+        return "fail";
     }
 }
