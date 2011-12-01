@@ -7,5 +7,6 @@ public interface IPartDao extends IDaoGeneric<Part, Integer> {
 	List<Part> findByName(String name);
         List<Part> findByCategory(String id);
         List<Part> findByManufacturer(String manufacturer);        
+        List<Part> findBySearchString(String search,String search2, String search3);
 }
 
