@@ -5,9 +5,7 @@
 package com.mt.actions.Company;
 
 import com.mt.hibernate.entities.Company;
-import com.mt.hibernate.entities.User;
 import com.mt.services.CompanyService;
-import com.mt.services.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class ViewCompany extends ActionSupport

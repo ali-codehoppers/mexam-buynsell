@@ -24,6 +24,10 @@ public class PartService {
         return partDao.findByManufacturer(manufacturer);
     }
 
+    public List<Part> findBySearchString(String searchString) {
+        return partDao.findBySearchString("%"+searchString+"%", "%"+searchString+"%", "%"+searchString+"%");
+    }
+
     public Integer addNew(Part newInstance) {
         return partDao.addNew(newInstance);
     }

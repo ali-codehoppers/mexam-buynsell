@@ -52,7 +52,6 @@
             <s:textfield name="webAddress" label="Web Address"/>            
             <s:select name="companyCategoryId" list="companyCategories" listKey="code" listValue="description" headerKey="0" headerValue="--Category--" label="Select the category" />                        
             
-            
             <s:submit value="Add Company" align="center"/>
         </s:form>
     </body>

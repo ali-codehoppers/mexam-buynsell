@@ -19,7 +19,8 @@ import javax.persistence.OneToMany;
 @NamedQueries({
     @NamedQuery(name = "Part.findByName", query = "select c from Part c where c.partNo like ?"),
     @NamedQuery(name = "Part.findByCategory", query = "select p from Part p inner join p.subcategory as sub where sub.categoryId = cast(? as string)"),
-    @NamedQuery(name = "Part.findByManufacturer", query = "select p from Part p where p.manufacturer like ?")    
+    @NamedQuery(name = "Part.findByManufacturer", query = "select p from Part p where p.manufacturer like ?"),    
+    @NamedQuery(name = "Part.findBySearchString", query = "select p from Part p where p.partNo like ? or p.manufacturer like ? or p.name like ?")            
 })
 public class Part implements Serializable {
 
@@ -27,6 +28,8 @@ public class Part implements Serializable {
     private int id;
     @Expose
     private String partNo;
+    @Expose
+    private String name;
     @Expose
     private String manufacturer;
     @Expose
@@ -44,8 +47,6 @@ public class Part implements Serializable {
     private String model;
     @Expose
     private String description;
-
-    
     
     public void setId(int id) {
         this.id = id;
@@ -90,8 +91,10 @@ public class Part implements Serializable {
     public void setModel(String model) {
         this.model = model;
     }
-    
-    
+
+    public void setName(String name) {
+        this.name = name;
+    }
     
 
     public Part() {
@@ -146,4 +149,10 @@ public class Part implements Serializable {
     public String getModel() {
         return model;
     }
+
+    public String getName() {
+        return name;
+    }
+    
+    
 }
