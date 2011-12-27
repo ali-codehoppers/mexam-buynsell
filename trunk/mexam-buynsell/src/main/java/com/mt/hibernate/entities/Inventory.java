@@ -10,9 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
 @javax.persistence.Table(name = "inventories")
+@NamedQueries({
+    @NamedQuery(name = "Inventory.findBySearchString", query = "select p from Inventory p where  p.partNo like ? or p.manufacturer like ?")            
+})
+
 public class Inventory implements Serializable {
 
     @Expose
@@ -111,7 +117,7 @@ public class Inventory implements Serializable {
         return description;
     }
 
-    @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "companyId")
     public Company getCompany() {
         return company;

@@ -16,115 +16,169 @@
             <interceptor-ref name="basic"/>
             <result name="success">jsp/home.jsp</result>
         </action>
-        
-        <!--      Product    -->
-        
-        <action name="showAddProduct" class="com.mt.actions.Product.ShowAddProduct">
+       
+            <!--        Login            -->
+        <action name="showLogin" class="com.mt.actions.DoNothing">
             <interceptor-ref name="basic"/>
-            <result name="success">jsp/product/addProduct.jsp</result>
+            <result name="success">jsp/login/login.jsp</result>
         </action>
+        <action name="login" class="com.mt.actions.Login.Login">
+            <interceptor-ref name="basic"/>
+            <result name="success" type="redirect">home</result>
+            <result name="fail" type="redirect">showLogin</result>            
+        </action>
+            <!-- //     Login    -->
 
-        <action name="addProduct" class="com.mt.actions.Product.AddProduct">
-            <interceptor-ref name="basic"/>
-            <result name="success" type="redirect">viewProduct?messeage=${message}&amp;productId=${product.id} </result>
-        </action>
-        
-        <action name="viewProduct" class="com.mt.actions.Product.ViewProduct">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/product/viewProduct.jsp</result>
-        </action>
-        
-        <action name="getCategoryProducts" class="com.mt.actions.ajaxActions.GetCategoryProduct">
-            <interceptor-ref name="basic"/>
-            <result >jsp/common/ajax.jsp</result>
-        </action>
-
-        <action name="getSubCategoryProducts" class="com.mt.actions.ajaxActions.GetSubcategoryProduct">
-            <interceptor-ref name="basic"/>
-            <result >jsp/common/ajax.jsp</result>
-        </action>
-        
-        
-        <!-- //     Product    -->
-        
 
                 
-                <!--      Inventory    -->
+            <!--      Part    -->
+        <action name="showSearchPart" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/part/showSearchPart.jsp</result>
+        </action>
+        <action name="searchPart" class="com.mt.actions.part.SearchPart">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/part/searchedParts.jsp</result>
+        </action>
+        <action name="viewPart" class="com.mt.actions.part.ViewPart">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/part/viewPart.jsp</result>
+        </action>
+        <action name="showAddPart" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/part/showAddPart.jsp</result>
+        </action>        
+        <action name="showAddPartInfo" class="com.mt.actions.part.ShowAddPartInfo">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/part/showAddPartInfo.jsp</result>
+        </action>     
+        <action name="addPart" class="com.mt.actions.part.AddPart">
+            <interceptor-ref name="authenticated"/>
+            <result name="success" type="redirect">home</result>
+        </action>
+        
+        
+            <!--     // Part    -->       
+       
+       
+            <!--      Inventory    -->
           
         <action name="showAddInventory" class="com.mt.actions.Inventory.ShowAddInventory">
             <interceptor-ref name="authenticated"/>
             <result name="success">jsp/inventory/addInventory.jsp</result>
         </action>
-
         <action name="addInventory" class="com.mt.actions.Inventory.AddInventory">
             <interceptor-ref name="authenticated"/>
             <result name="success" type="redirect">home</result>
         </action>
-
         <action name="showInventory" class="com.mt.actions.Inventory.ShowInventory">
             <interceptor-ref name="authenticated"/>
             <result name="success">jsp/inventory/showInventory.jsp</result>
         </action>
-
-        
                 
-                <!-- //     Inventory    -->
+        <action name="showSearchItem" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/inventory/showSearchItem.jsp</result>
+        </action>
+        <action name="searchItem" class="com.mt.actions.Inventory.SearchItem">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/inventory/searchedItems.jsp</result>
+        </action>
+
                 
-                                <!--      Part    -->
+            <!-- //     Inventory    -->
+
+       
+            <!--      Broadcast    -->
+          
+        <action name="showAddBroadcast" class="com.mt.actions.broadcast.ShowAddBroadcast">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/broadcast/showAddBroadcast.jsp</result>
+        </action>
         
-        <action name="showSearchPart" class="com.mt.actions.DoNothing">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/part/showSearchPart.jsp</result>
+        <action name="addBroadcast" class="com.mt.actions.broadcast.AddBroadcast">
+            <interceptor-ref name="authenticated"/>
+            <result name="success" type="redirect">home</result>
         </action>
 
-        <action name="searchPart" class="com.mt.actions.part.SearchPart">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/part/searchedParts.jsp</result>
+        <action name="showBroadcasts" class="com.mt.actions.broadcast.ShowBroadcasts">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/broadcast/showBroadcasts.jsp</result>
+        </action>                
+        
+        <action name="showMyBroadcasts" class="com.mt.actions.broadcast.ShowMyBroadcasts">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/broadcast/showBroadcasts.jsp</result>
+        </action>                
+
+        
+            <!-- //     Broadcast    -->
+       
+       
+            <!--      Vendor    -->
+        <action name="showMyVendors" class="com.mt.actions.vendor.ShowMyVendor">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/vendor/showMyVendors.jsp</result>
+        </action>
+        <action name="showVendors" class="com.mt.actions.vendor.ShowVendor">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/vendor/showVendors.jsp</result>
         </action>
 
-        <action name="viewPart" class="com.mt.actions.part.ViewPart">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/part/viewPart.jsp</result>
+            <!-- //     Vendor    -->
+  
+              <!--      Cart    -->
+        <action name="showCart" class="com.mt.actions.Cart.ShowCart">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/cart/showCart.jsp</result>
         </action>
-        
-                        <!--     // Part    -->
-        
-                <!--      Part    -->
-        
-        <action name="showAddProduct" class="com.mt.actions.Product.ShowAddProduct">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/product/addProduct.jsp</result>
+        <action name="addToCart" class="com.mt.actions.Cart.AddToCart">
+            <interceptor-ref name="authenticated"/>
+            <result name="success" type="redirect">home</result>
         </action>
 
-        <action name="addProduct" class="com.mt.actions.Product.AddProduct">
-            <interceptor-ref name="basic"/>
-            <result name="success" type="redirect">viewProduct?messeage=${message}&amp;productId=${product.id} </result>
-        </action>
-        
-        <action name="viewProduct" class="com.mt.actions.Product.ViewProduct">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/product/viewProduct.jsp</result>
-        </action>
-        
-        <action name="getCategoryParts" class="com.mt.actions.ajaxActions.GetCategoryParts">
-            <interceptor-ref name="basic"/>
-            <result >jsp/common/ajax.jsp</result>
+
+            <!-- //     Cart    -->
+       
+  
+                <!--      RFQ    -->
+        <action name="showRFQsSent" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/rfq/showRFQsSent.jsp</result>
         </action>
 
-        <action name="getSubCategoryParts" class="com.mt.actions.ajaxActions.GetSubcategoryParts">
+        <action name="showRFQ" class="com.mt.actions.rfq.ShowRFQ">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/rfq/showRFQ.jsp</result>
+        </action>
+
+
+        <action name="showRFQsReceived" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/rfq/showRFQsReceived.jsp</result>
+        </action>
+
+            <!-- //     RFQ    -->
+  
+       
+            <!--      Registration    -->
+        
+        <action name="showRegistration" class="com.mt.actions.Registration.ShowRegistration">
             <interceptor-ref name="basic"/>
-            <result >jsp/common/ajax.jsp</result>
+            <result name="success">jsp/registration/newRegistration.jsp</result>
+        </action>
+
+        <action name="register" class="com.mt.actions.Registration.Register">
+            <interceptor-ref name="basic"/>
+            <result name="success" type="redirect">viewRegistration?messeage=${message}&amp;companyId=${company.id}&amp;userId=${user.id} </result>
+        </action>
+
+        <action name="viewRegistration" class="com.mt.actions.Registration.ViewRegistration">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/registration/viewRegistration.jsp</result>
         </action>
         
-        
-        <!-- //     Part    -->
-        
-        
-        
-        
-        
-        
-        
+            <!-- //     Registeration    -->
 
         <!--      User    -->
         <action name="showAddUser" class="com.mt.actions.User.ShowAddNewUser">
@@ -141,7 +195,6 @@
             <interceptor-ref name="basic"/>
             <result name="success">jsp/user/viewUser.jsp</result>
         </action>
-
 
         <!-- //     User    -->
 
@@ -166,44 +219,24 @@
         <!-- //     Company    -->
 
 
-        <!--      Registration    -->
+        <!--      Ajax Actions    -->
         
-        <action name="showRegistration" class="com.mt.actions.Registration.ShowRegistration">
+        <action name="getCategories" class="com.mt.actions.ajaxActions.GetCategories">
             <interceptor-ref name="basic"/>
-            <result name="success">jsp/registration/newRegistration.jsp</result>
+            <result >jsp/common/ajax.jsp</result>
         </action>
-
-        <action name="register" class="com.mt.actions.Registration.Register">
-            <interceptor-ref name="basic"/>
-            <result name="success" type="redirect">viewRegistration?messeage=${message}&amp;companyId=${company.id}&amp;userId=${user.id} </result>
-        </action>
-
-        <action name="viewRegistration" class="com.mt.actions.Registration.ViewRegistration">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/registration/viewRegistration.jsp</result>
-        </action>
-        
-        <!-- //     Registeration    -->
-
-        <!--        Login            -->
-        
-        <action name="showLogin" class="com.mt.actions.DoNothing">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/login/login.jsp</result>
-        </action>
-
-        <action name="login" class="com.mt.actions.Login.Login">
-            <interceptor-ref name="basic"/>
-            <result name="success" type="redirect">home</result>
-            <result name="fail" type="redirect">showLogin</result>            
-        </action>
-
-        <!-- //     Login    -->
-
-
-
 
         <action name="getSubCategories" class="com.mt.actions.ajaxActions.GetSubCategories">
+            <interceptor-ref name="basic"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        
+        <action name="getCategoryParts" class="com.mt.actions.ajaxActions.GetCategoryParts">
+            <interceptor-ref name="basic"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
+        <action name="getSubCategoryParts" class="com.mt.actions.ajaxActions.GetSubcategoryParts">
             <interceptor-ref name="basic"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
@@ -213,10 +246,6 @@
             <result >jsp/common/ajax.jsp</result>
         </action>
 
-        <action name="getImage" class="com.mt.actions.GetImage">
-            <interceptor-ref name="basic"/>
-        </action>
-        
         <action name="getParts" class="com.mt.actions.ajaxActions.GetParts">
             <interceptor-ref name="basic"/>
             <result >jsp/common/ajax.jsp</result>
@@ -231,8 +260,57 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
+        
+        <action name="getVendorsList" class="com.mt.actions.ajaxActions.GetVendors">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        
+        <action name="getCartItems" class="com.mt.actions.ajaxActions.GetCartItemsList">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
 
+        <action name="getCartVendorsList" class="com.mt.actions.ajaxActions.GetCartVendorsList">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
 
+        <action name="getCartVendorItemsList" class="com.mt.actions.ajaxActions.GetCartVendorItemsList">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
+        <action name="getRFQsSent" class="com.mt.actions.ajaxActions.GetRFQsSent">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
+        <action name="getRFQsReceived" class="com.mt.actions.ajaxActions.GetRFQsReceived">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
+        <action name="getRFQItemsList" class="com.mt.actions.ajaxActions.GetRFQItemsList">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
+        <action name="getRFQ" class="com.mt.actions.ajaxActions.GetRFQ">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
+        <action name="sendRFQ" class="com.mt.actions.ajaxActions.SendRFQ">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        
+        <!-- //     Ajax Actions    -->
+
+        <action name="getImage" class="com.mt.actions.GetImage">
+            <interceptor-ref name="basic"/>
+        </action>
         
     </package>
 </struts>

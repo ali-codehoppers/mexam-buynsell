@@ -25,5 +25,12 @@
         <mapping class="com.mt.hibernate.entities.LookUp"/>                                                              
         <mapping class="com.mt.hibernate.entities.Part"/>                                                                      
         <mapping class="com.mt.hibernate.entities.Inventory"/>                                                                              
+        <mapping class="com.mt.hibernate.entities.Broadcast"/>                                                                                      
+        <mapping class="com.mt.hibernate.entities.Vendor"/>                                                                                              
+        <mapping class="com.mt.hibernate.entities.Cart"/>                                                                                                      
+        <mapping class="com.mt.hibernate.entities.CartItem"/>                                                                                                              
+        <mapping class="com.mt.hibernate.entities.RFQ"/>                                                                                                      
+        <mapping class="com.mt.hibernate.entities.RFQItem"/>                                                                                                              
+        
     </session-factory>
 </hibernate-configuration>

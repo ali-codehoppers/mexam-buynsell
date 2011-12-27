@@ -23,7 +23,8 @@ public class GetManufacturers extends ActionSupport {
         parts = partService.getAll();
         manufacturers = new ArrayList<String>();
         for (Part part : parts) {
-            manufacturers.add(part.getManufacturer());
+            if(!manufacturers.contains(part.getManufacturer()))
+                manufacturers.add(part.getManufacturer());
         }
         jsonString = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(manufacturers);
         return SUCCESS;

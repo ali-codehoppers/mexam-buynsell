@@ -21,7 +21,8 @@ import javax.persistence.OneToMany;
 @Entity
 @javax.persistence.Table(name = "companies")
 @NamedQueries({
-    @NamedQuery(name = "Company.findByName", query = "select u from Company u where u.name like ?")})
+    @NamedQuery(name = "Company.findByName", query = "select u from Company u where u.name like ?")
+})
 public class Company implements Serializable {
 
     @Expose
@@ -48,6 +49,8 @@ public class Company implements Serializable {
     private String companyCategory;
     private List<User> users;
     private List<Inventory> inventorys;
+    private List<Broadcast> broadcasts;
+    private List<Vendor> vendors;
 
     public void setId(int id) {
         this.id = id;
@@ -100,7 +103,14 @@ public class Company implements Serializable {
     public void setInventorys(List<Inventory> inventorys) {
         this.inventorys = inventorys;
     }
-    
+
+    public void setBroadcasts(List<Broadcast> broadcasts) {
+        this.broadcasts = broadcasts;
+    }
+
+    public void setVendors(List<Vendor> vendors) {
+        this.vendors = vendors;
+    }
 
     @Id
     @GeneratedValue
@@ -161,4 +171,13 @@ public class Company implements Serializable {
         return inventorys;
     }
 
+    @OneToMany(targetEntity = Broadcast.class, fetch = FetchType.LAZY, mappedBy = "companyId")
+    public List<Broadcast> getBroadcasts() {
+        return broadcasts;
+    }
+
+    @OneToMany(targetEntity = Vendor.class, fetch = FetchType.LAZY, mappedBy = "companyId")
+    public List<Vendor> getVendors() {
+        return vendors;
+    }
 }

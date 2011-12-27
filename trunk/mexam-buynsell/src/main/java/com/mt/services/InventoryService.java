@@ -20,6 +20,11 @@ public class InventoryService {
         return inventoryDao.getById(id);
     }
 
+    public List<Inventory> findBySearchString(String searchString)
+    {
+        return inventoryDao.findBySearchString("%"+searchString+"%", "%"+searchString+"%");
+    }
+    
     public void update(Inventory transientObject) {
         inventoryDao.update(transientObject);
     }
