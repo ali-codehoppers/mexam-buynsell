@@ -40,6 +40,4 @@ public class SearchPart extends ActionSupport {
         return searchResultJson;
     }
     
-    
-    
 }

@@ -46,7 +46,7 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
         delete(getById(id));
     }
 
-    private Session getSession() {
+    public Session getSession() {
         return sessionFactory.getCurrentSession();
 //        return SessionFactoryUtils.getSession(sessionFactory, true);
     }

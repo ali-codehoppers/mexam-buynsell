@@ -14,13 +14,12 @@ public class GetParts extends ActionSupport {
     private List<PartBasic> partBasics;
     private PartService partService;
     private String jsonString = "";
-
     private String manufacturer;
 
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
-    
+
     public void setPartService(PartService partService) {
         this.partService = partService;
     }
@@ -28,14 +27,14 @@ public class GetParts extends ActionSupport {
     @Override
     public String execute() throws Exception {
         parts = partService.findByManufacturer(manufacturer);
-        System.out.println("Parts = " + parts.size());
+        //System.out.println("Parts = " + parts.size());
         partBasics = new ArrayList<PartBasic>();
         for (Part part : parts) {
-            System.out.println("Parts is: ID:" + part.getId() + "\t NO: " + part.getPartNo());
+            //System.out.println("Parts is: ID:" + part.getId() + "\t NO: " + part.getPartNo());
             PartBasic partBasic = new PartBasic(part.getId(), part.getPartNo(), part.getManufacturer());
             partBasics.add(partBasic);
         }
-        System.out.println("PartsBasic = " + partBasics.size());
+        //System.out.println("PartsBasic = " + partBasics.size());
         jsonString = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(partBasics);
         return SUCCESS;
     }
@@ -48,9 +47,9 @@ public class GetParts extends ActionSupport {
 
         @Expose
         private int value;
-        @Expose        
+        @Expose
         private String label;
-        @Expose        
+        @Expose
         private String desc;
 
         public void setDesc(String desc) {
@@ -82,6 +81,5 @@ public class GetParts extends ActionSupport {
         public int getValue() {
             return value;
         }
-
-     }
+    }
 }

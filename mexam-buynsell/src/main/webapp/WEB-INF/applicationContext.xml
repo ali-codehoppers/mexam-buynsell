@@ -78,6 +78,16 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean id="abstractCompanyDao" class="com.mt.dao.CompanyDao" abstract="true">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+
+<!--    <bean id="abstractCompanyDao" class="com.mt.dao.CompanyDao" abstract="true">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean> -->
+
+
     <bean id="abstractDaoFinderImp" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
         <property name="interceptorNames" value="finderAdvisor" />
     </bean>
@@ -179,8 +189,19 @@
             <value>com.mt.idao.ICompanyDao</value>
         </property>
         <property name="target">
-            <bean parent="abstractDaoGeneric">
+            <bean parent="abstractCompanyDao">
                 <constructor-arg value="com.mt.hibernate.entities.Company" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="broadcastDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.IBroadcastDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.Broadcast" />
             </bean>
         </property>
     </bean>
@@ -195,6 +216,62 @@
             </bean>
         </property>
     </bean>
+
+    <bean id="vendorDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.IVendorDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.Vendor" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="cartDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.ICartDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.Cart" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="cartItemDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.ICartItemDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.CartItem" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="rfqDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.IRFQDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.RFQ" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="rfqItemDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.IRFQItemDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.RFQItem" />
+            </bean>
+        </property>
+    </bean>
+
 
     <bean id="categoryService" class="com.mt.services.CategoryService">
         <constructor-arg ref="categoryDao" />
@@ -235,5 +312,29 @@
     <bean id="lookUpService" class="com.mt.services.LookUpService">
         <constructor-arg ref="lookUpDao" />
     </bean>       
+
+    <bean id="broadcastService" class="com.mt.services.BroadcastService">
+        <constructor-arg ref="broadcastDao" />
+    </bean> 
+    
+    <bean id="vendorService" class="com.mt.services.VendorService">
+        <constructor-arg ref="vendorDao" />
+    </bean> 
+    
+    <bean id="cartService" class="com.mt.services.CartService">
+        <constructor-arg ref="cartDao" />
+    </bean> 
+    
+    <bean id="cartItemService" class="com.mt.services.CartItemService">
+        <constructor-arg ref="cartItemDao" />
+    </bean> 
+    
+    <bean id="rFQService" class="com.mt.services.RFQService">
+        <constructor-arg ref="rfqDao" />
+    </bean> 
+    
+    <bean id="rFQItemService" class="com.mt.services.RFQItemService">
+        <constructor-arg ref="rfqItemDao" />
+    </bean> 
 
 </beans>

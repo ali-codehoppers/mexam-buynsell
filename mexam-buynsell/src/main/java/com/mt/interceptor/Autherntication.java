@@ -39,8 +39,6 @@ public class Autherntication extends AbstractInterceptor
         }
         else
         {
-            System.out.println("authenticated");
-            //set user in stack for the action called
             invocation.getStack().setValue("user", user);
             return invocation.invoke();
         }

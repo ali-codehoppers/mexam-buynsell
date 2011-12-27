@@ -96,7 +96,7 @@
                     select: function( event, ui ) {
                         $( "#manufacturer" ).val( ui.item.value);
                         manufacturer = ui.item.value;
-                         $("#partNo").val('')                    
+                        $("#partNo").val('')                    
                         getParts();
                         return false;
                     }
@@ -161,9 +161,10 @@
                             Condition:
                         </div>                        
                         <div style="float: left; width: 50%">                        
-                            <!--                            <s:textfield name="condition"/> -->
+                            <!--                   
+                            <s:textfield name="condition"/> -->
 
-                            <s:select name="condition" list="inventoryCondition" listKey="code" listValue="description" headerKey="0" headerValue="--Inventory Condition--" />                        
+                            <s:select name="condition" list="inventoryCondition" listKey="description" listValue="description" headerKey="0" headerValue="--Inventory Condition--" />                        
                         </div>
                     </div>
                     <div>
