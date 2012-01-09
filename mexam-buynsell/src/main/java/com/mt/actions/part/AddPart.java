@@ -16,6 +16,9 @@ import java.util.List;
 
 public class AddPart extends AuthenticatedAction {
 
+    private String message;
+    private String error = "";
+    private String info;
     private String subCatId;
     private int subCategoryId;
     private Inventory inventory;
@@ -40,7 +43,6 @@ public class AddPart extends AuthenticatedAction {
 //    public void setSubCategoryId(String subCategoryId) {
 //        this.subCatId = subCategoryId;
 //    }
-
     public void setSubCategoryId(int subCategoryId) {
         this.subCategoryId = subCategoryId;
     }
@@ -120,6 +122,9 @@ public class AddPart extends AuthenticatedAction {
         part.setPartNo(partNo);
         SubCategory subCategory = subCategoryService.getById(subCategoryId);
         part.setSubcategory(subCategory);
+        part.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        part.setCreatedBy(getUser().getId());
+        part.setUpdatedBy(getUser().getId());
 
         partService.addNew(part);
 
@@ -136,6 +141,8 @@ public class AddPart extends AuthenticatedAction {
         inventory.setUpdatedBy(getUser().getId());
         inventoryService.addNew(inventory);
 
+        message="Part and Inventory added successfully.";
+        
         return SUCCESS;
     }
 
@@ -149,5 +156,17 @@ public class AddPart extends AuthenticatedAction {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public String getInfo() {
+        return info;
     }
 }

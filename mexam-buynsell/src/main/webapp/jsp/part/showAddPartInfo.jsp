@@ -114,7 +114,7 @@
 
                 </div>
 
-                <div id="content_1" class="content" style="display: block; height: 300px">
+                <div id="content_1" class="content" style="display: block; min-height: 300px">
                     <div>
                         <div>
                             <div style="float: left; width: 30%">                        

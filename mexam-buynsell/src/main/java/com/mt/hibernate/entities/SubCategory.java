@@ -1,13 +1,12 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -16,27 +15,20 @@ import org.hibernate.annotations.NamedQuery;
 
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "subcategories")
 @NamedQueries(
   {
     @NamedQuery(name = "SubCategory.findByName", query = "select c from SubCategory c where c.name like ?")
   })
-public class SubCategory implements Serializable
+public class SubCategory extends BaseEntity
 {
-
-    @Expose
-    private int id;
     @Expose
     private String name;
     @Expose
     private int categoryId;
     private Category category;
     private List<Part> parts;
-
-    public void setId(int id)
-    {
-        this.id = id;
-    }
 
     public void setName(String name)
     {
@@ -66,13 +58,6 @@ public class SubCategory implements Serializable
     {
         this.name = name;
         this.categoryId = categoryId;
-    }
-
-    @Id
-    @GeneratedValue
-    public int getId()
-    {
-        return id;
     }
 
     public String getName()

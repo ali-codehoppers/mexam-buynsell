@@ -8,22 +8,21 @@ import com.google.gson.annotations.Expose;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "cartItems")
 @NamedQueries({
     @NamedQuery(name = "CartItem.findByVendor", query = "select v from CartItem v inner join fetch v.inventory where v.cartId=cast(? as string) and v.inventory.companyId= cast(? as string)")
 })
-public class CartItem {
+public class CartItem extends BaseEntity{
 
-    @Expose
-    private int id;
     @Expose
     private int cartId;
     private Cart cart;
@@ -42,10 +41,6 @@ public class CartItem {
         this.cartId = cartId;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
@@ -58,11 +53,6 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    @Id
-    @GeneratedValue
-    public int getId() {
-        return id;
-    }
 
     @ManyToOne(targetEntity = Cart.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "cartId")

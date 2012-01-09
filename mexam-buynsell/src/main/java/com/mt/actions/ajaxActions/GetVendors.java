@@ -62,7 +62,8 @@ public class GetVendors extends AuthenticatedAction {
             searchString="name";            
         }
         
-        allVendors = companyService.getBy(searchField, searchString, searchOper, sidx, sord);
+        //allVendors = companyService.getBy(searchField, searchString, searchOper, sidx, sord);
+        allVendors = companyService.getAll();
         vendors = new ArrayList<Company>();
         for (Company company : allVendors) {
             State state = company.getState();

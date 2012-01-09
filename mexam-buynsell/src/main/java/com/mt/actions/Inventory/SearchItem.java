@@ -9,7 +9,9 @@ import com.google.gson.annotations.Expose;
 import com.mt.hibernate.entities.Inventory;
 import com.mt.services.InventoryService;
 import com.opensymphony.xwork2.ActionSupport;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class SearchItem extends ActionSupport {
@@ -54,6 +56,8 @@ public class SearchItem extends ActionSupport {
         
         @Expose
         private String companyName;
+        @Expose
+        private String date;
         
         public InventoryExtended(Inventory inventory) {
             this.setId(inventory.getId());
@@ -67,6 +71,11 @@ public class SearchItem extends ActionSupport {
             this.setCompany(inventory.getCompany());
             this.setCreatedBy(inventory.getCreatedBy());
             this.setCreationDate(inventory.getCreationDate());
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            if(this.getUpdateDate()!=null && this.getUpdateDate().toString().length()>0)
+                this.date = df.format(this.getUpdateDate());
+            else
+                this.date = df.format(this.getCreationDate());
             this.companyName = inventory.getCompany().getName();
         }
     }

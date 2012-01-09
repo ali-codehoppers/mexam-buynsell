@@ -13,8 +13,9 @@ public class VendorService {
     }
 
     public List<Vendor> findByCompany(int companyId) {
-        return vendorDao.findByCompany(""+companyId);
+        return vendorDao.findByCompany("" + companyId);
     }
+
 
     public Integer addNew(Vendor newInstance) {
         return vendorDao.addNew(newInstance);

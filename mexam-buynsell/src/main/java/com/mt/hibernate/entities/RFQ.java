@@ -5,14 +5,12 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -20,15 +18,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "rfqs")
 @NamedQueries({
     @NamedQuery(name = "RFQ.findBySender", query = "select r from RFQ r where r.senderId= cast(? as string)"),
     @NamedQuery(name = "RFQ.findByReceiver", query = "select r from RFQ r where r.receiverId= cast(? as string)")})
 
-public class RFQ implements Serializable {
+public class RFQ extends BaseEntity {
 
-    @Expose
-    private int id;
     @Expose
     private int senderId;
     private User Sender;
@@ -45,16 +42,6 @@ public class RFQ implements Serializable {
     private String title;
     @Expose
     private String message;
-    private long createdBy;
-    private long updatedBy;
-    @Expose
-    private Timestamp creationDate;
-    @Expose
-    private Timestamp updateDate;
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setReceiver(Company Receiver) {
         this.Receiver = Receiver;
@@ -90,28 +77,6 @@ public class RFQ implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public void setUpdateDate(Timestamp updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public void setCreatedBy(long createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public void setUpdatedBy(long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    @Id
-    @GeneratedValue
-    public int getId() {
-        return id;
     }
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
@@ -157,21 +122,4 @@ public class RFQ implements Serializable {
         return title;
     }
 
-    @Column(updatable = false)
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
-
-    @Column(insertable = false, updatable = false)
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
-
-    public long getCreatedBy() {
-        return createdBy;
-    }
-
-    public long getUpdatedBy() {
-        return updatedBy;
-    }
 }

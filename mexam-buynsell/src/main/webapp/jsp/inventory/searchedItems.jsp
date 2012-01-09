@@ -25,14 +25,13 @@
             function AddCartItem(id)
             {
                 var combo_id = "combo_qty_"+id;
-                alert(getSelectedValue(combo_id));
+
                 //redirect("addToCart?inventoryId="+id+"&quantity='"+getSelectedValue(combo_id)+"'");
                 window.location="/mexam-buynsell/addToCart?inventoryId="+id+"&quantity="+getSelectedValue(combo_id);
             }
             
             function getSelectedValue(combo_id)
             {
-                alert(combo_id);
                 return $("#"+combo_id).val();
             }
             

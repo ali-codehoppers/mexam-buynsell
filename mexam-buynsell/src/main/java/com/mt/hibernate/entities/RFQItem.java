@@ -5,22 +5,18 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "RFQItems")
-public class RFQItem implements Serializable{
-
-    @Expose
-    private int id;
+public class RFQItem extends BaseEntity{
     @Expose
     private int rfqId;
     private RFQ rfq;
@@ -32,12 +28,6 @@ public class RFQItem implements Serializable{
     private int quantity;
     @Expose
     private int price;
-    private long createdBy;
-    private long updatedBy;
-    @Expose
-    private Timestamp creationDate;
-    @Expose
-    private Timestamp updateDate;
 
     public void setRfq(RFQ rfq) {
         this.rfq = rfq;
@@ -45,10 +35,6 @@ public class RFQItem implements Serializable{
 
     public void setRfqId(int rfqId) {
         this.rfqId = rfqId;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setInventory(Inventory inventory) {
@@ -67,27 +53,6 @@ public class RFQItem implements Serializable{
         this.price = price;
     }
 
-    public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public void setUpdateDate(Timestamp updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public void setCreatedBy(long createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public void setUpdatedBy(long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    @Id
-    @GeneratedValue
-    public int getId() {
-        return id;
-    }
 
     @ManyToOne(targetEntity = RFQ.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "rfqId")
@@ -117,23 +82,5 @@ public class RFQItem implements Serializable{
 
     public int getPrice() {
         return price;
-    }
-
-    @Column(updatable = false)
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
-
-    @Column(insertable = false, updatable = false)
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
-
-    public long getCreatedBy() {
-        return createdBy;
-    }
-
-    public long getUpdatedBy() {
-        return updatedBy;
     }
 }

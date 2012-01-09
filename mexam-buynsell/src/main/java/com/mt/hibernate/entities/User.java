@@ -5,12 +5,9 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -21,10 +18,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "User.findByName", query = "select u from User u where u.firstName like ? or u.lastName like ?"),
     @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username like ?")})
-public class User implements Serializable{
-
-    @Expose
-    private int id;
+public class User extends BaseEntity {
     @Expose
     private String firstName;
     @Expose
@@ -45,12 +39,7 @@ public class User implements Serializable{
     private String password;
     @Expose
     private int companyId;
-    private Company company;    
-
-    
-    public void setId(int id) {
-        this.id = id;
-    }
+    private Company company;
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -59,7 +48,6 @@ public class User implements Serializable{
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
 
     public void setAddress(String address) {
         this.address = address;
@@ -89,21 +77,12 @@ public class User implements Serializable{
         this.password = password;
     }
 
-    
     public void setCompany(Company company) {
         this.company = company;
     }
 
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
-    }
-
-    
-    
-    @Id
-    @GeneratedValue
-    public int getId() {
-        return id;
     }
 
     public String getFirstName() {
@@ -143,16 +122,15 @@ public class User implements Serializable{
     public String getUsername() {
         return username;
     }
-    
+
     @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "companyId")
     public Company getCompany() {
         return company;
     }
+
     @Column(insertable = false, updatable = false, name = "companyId")
     public int getCompanyId() {
         return companyId;
     }
-    
-    
 }

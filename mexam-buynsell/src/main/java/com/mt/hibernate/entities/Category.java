@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
@@ -16,25 +18,18 @@ import org.hibernate.annotations.NamedQuery;
  * @author CodeHopper
  */
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "categories")
 @NamedQueries(
   {
     @NamedQuery(name = "Category.findByName", query = "select c from Category c where c.name like ?"),
     @NamedQuery(name = "Category.findEagerCategoryList", query = "select c from Category c left join fetch c.subCategorys")
   })
-public class Category implements Serializable
+public class Category extends BaseEntity
 {
-
-    @Expose
-    private int id;
     @Expose
     private String name;
     private List<SubCategory> subCategorys;
-
-    public void setId(int id)
-    {
-        this.id = id;
-    }
 
     public void setName(String name)
     {
@@ -51,22 +46,9 @@ public class Category implements Serializable
         
     }
 
-    public Category(int id, String name)
-    {
-        this.id = id;
-        this.name = name;
-    }
-
     public Category(String name)
     {
         this.name = name;
-    }
-
-    @Id
-    @GeneratedValue
-    public int getId()
-    {
-        return id;
     }
 
     public String getName()

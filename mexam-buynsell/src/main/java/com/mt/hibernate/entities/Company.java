@@ -5,13 +5,12 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -19,14 +18,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "companies")
 @NamedQueries({
-    @NamedQuery(name = "Company.findByName", query = "select u from Company u where u.name like ?")
+    @NamedQuery(name = "Company.findByName", query = "select u from Company u where u.name like ?"),
+        @NamedQuery(name = "Company.findBySearchString", query = "select v from Company v where v.address like ? or v.city like ? or v.name like ?")            
 })
-public class Company implements Serializable {
+public class Company extends BaseEntity {
 
-    @Expose
-    private int id;
     @Expose
     private String name;
     @Expose
@@ -51,10 +50,6 @@ public class Company implements Serializable {
     private List<Inventory> inventorys;
     private List<Broadcast> broadcasts;
     private List<Vendor> vendors;
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -110,12 +105,6 @@ public class Company implements Serializable {
 
     public void setVendors(List<Vendor> vendors) {
         this.vendors = vendors;
-    }
-
-    @Id
-    @GeneratedValue
-    public int getId() {
-        return id;
     }
 
     public String getName() {
