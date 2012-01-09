@@ -20,6 +20,18 @@ public class ShowAddBroadcast extends ActionSupport {
         this.lookUpService = lookUpService;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     @Override
     public String execute() throws Exception {
         inventoryCondition = lookUpService.findByName("INVENTORY_CONDITION");
