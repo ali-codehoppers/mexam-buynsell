@@ -1,23 +1,19 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "broadcasts")
-public class Broadcast implements Serializable {
+public class Broadcast extends BaseEntity {
 
-    @Expose
-    private int id;
     @Expose
     private int companyId;
     private Company company;
@@ -42,18 +38,9 @@ public class Broadcast implements Serializable {
     private String message;
     @Expose
     private String description;
-    private long createdBy;
-    private long updatedBy;
-    @Expose
-    private Timestamp creationDate;
-    private Timestamp updateDate;
     @Expose
     private String subCategoryId;
     private SubCategory subCategory;
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setCompany(Company company) {
         this.company = company;
@@ -103,22 +90,6 @@ public class Broadcast implements Serializable {
         this.quantity = quantity;
     }
 
-    public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public void setUpdateDate(Timestamp updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public void setCreatedBy(long createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public void setUpdatedBy(long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
     public void setMessage(String message) {
         this.message = message;
     }
@@ -132,12 +103,6 @@ public class Broadcast implements Serializable {
     }
 
     public Broadcast() {
-    }
-
-    @Id
-    @GeneratedValue
-    public int getId() {
-        return id;
     }
 
     public String getDescription() {
@@ -195,24 +160,6 @@ public class Broadcast implements Serializable {
 
     public int getQuantity() {
         return quantity;
-    }
-
-    @Column(updatable = false)
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
-
-    @Column(insertable = false, updatable = false)
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
-
-    public long getCreatedBy() {
-        return createdBy;
-    }
-
-    public long getUpdatedBy() {
-        return updatedBy;
     }
 
     public String getMessage() {

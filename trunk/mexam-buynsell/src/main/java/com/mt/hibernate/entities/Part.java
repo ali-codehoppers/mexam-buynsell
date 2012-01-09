@@ -1,13 +1,12 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -15,17 +14,18 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "parts")
+
 @NamedQueries({
     @NamedQuery(name = "Part.findByName", query = "select c from Part c where c.partNo like ?"),
     @NamedQuery(name = "Part.findByCategory", query = "select p from Part p inner join p.subcategory as sub where sub.categoryId = cast(? as string)"),
     @NamedQuery(name = "Part.findByManufacturer", query = "select p from Part p where p.manufacturer like ?"),    
     @NamedQuery(name = "Part.findBySearchString", query = "select p from Part p where p.partNo like ? or p.manufacturer like ? or p.name like ?")            
 })
-public class Part implements Serializable {
+public class Part extends BaseEntity {
 
-    @Expose
-    private int id;
+
     @Expose
     private String partNo;
     @Expose
@@ -47,10 +47,6 @@ public class Part implements Serializable {
     private String model;
     @Expose
     private String description;
-    
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setPartNo(String partNo) {
         this.partNo = partNo;
@@ -98,12 +94,6 @@ public class Part implements Serializable {
     
 
     public Part() {
-    }
-
-    @Id
-    @GeneratedValue
-    public int getId() {
-        return id;
     }
 
     public String getPartNo() {

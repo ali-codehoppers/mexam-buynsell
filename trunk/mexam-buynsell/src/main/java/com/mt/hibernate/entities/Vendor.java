@@ -5,12 +5,9 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -21,10 +18,8 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "Vendor.findByCompany", query = "select v from Vendor v where v.companyId = cast(? as string)")
 })
-public class Vendor implements Serializable {
+public class Vendor extends BaseEntity {
 
-    @Expose
-    private int id;
     @Expose
     private int companyId;
     private Company company;
@@ -35,10 +30,6 @@ public class Vendor implements Serializable {
     private String notes;
     @Expose
     private int priority;
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setCompany(Company company) {
         this.company = company;
@@ -62,12 +53,6 @@ public class Vendor implements Serializable {
 
     public void setVendorId(int vendorId) {
         this.vendorId = vendorId;
-    }
-
-    @Id
-    @GeneratedValue
-    public int getId() {
-        return id;
     }
 
     public String getNotes() {

@@ -19,6 +19,10 @@ public class CompanyService {
     public List<Company> getBy(String searchField, String searchString, String searchOperator, String sortField, String sortOrder) {
         return  iCompanyDao.getBy(searchField,searchString,searchOperator,sortField,sortOrder);        
     }
+    
+    public List<Company> findBySearchString(String searchString) {
+        return iCompanyDao.findBySearchString("%" + searchString + "%", "%" + searchString + "%", "%" + searchString + "%");
+    }
 
     public Integer addNew(Company newInstance) {
         return iCompanyDao.addNew(newInstance);

@@ -26,10 +26,10 @@ public class HelloWorld extends ActionSupport
  //       List<Category> categoryList =  categoryService.findByName("Access Control");
  //       if(categoryList==null|| categoryList.isEmpty())
           {
-            category = new Category(1,"Motor Controls");
-            categoryService.addNew(category);
-            category = new Category(2,null);
-            categoryService.addNew(category);            
+//            category = new Category(1,"Motor Controls");
+//            categoryService.addNew(category);
+//            category = new Category(2,null);
+//            categoryService.addNew(category);            
           }
  //       else
  //           message+=". Records already exist. Size = " + categoryList.size() + "Name = "+ categoryList.get(0).getName();

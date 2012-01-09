@@ -79,8 +79,7 @@ public class GetRFQsReceived extends AuthenticatedAction {
         return jsonString;
     }
 
-    private class RFQExtended extends RFQ 
-    {
+    private class RFQExtended extends RFQ {
         @Expose
         private String senderName;
         @Expose
@@ -101,7 +100,11 @@ public class GetRFQsReceived extends AuthenticatedAction {
             this.setCreatedBy(rfq.getCreatedBy());
             this.setUpdatedBy(rfq.getUpdatedBy());
             this.setCreationDate(rfq.getCreationDate());
-            this.date = this.getCreationDate().toString();
+            if (this.getUpdateDate() != null && this.getUpdateDate().toString().length() > 0) {
+                this.date = this.getUpdateDate().toString();
+            } else {
+                this.date = this.getCreationDate().toString();
+            }
             this.senderName = rfq.getSender().getFirstName();
             this.senderCompanyName = rfq.getSender().getCompany().getName();
         }

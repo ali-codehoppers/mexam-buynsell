@@ -14,6 +14,8 @@ import java.sql.Timestamp;
 public class AddInventory extends AuthenticatedAction {
 
     private String message;
+    private String error;
+    private String info;
     private Inventory inventory;
     private String partNo;
     private String manufacturer;
@@ -57,6 +59,9 @@ public class AddInventory extends AuthenticatedAction {
         this.quantity = quantity;
     }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     @Override
     public String execute() throws Exception {
@@ -87,4 +92,11 @@ public class AddInventory extends AuthenticatedAction {
     public String getMessage() {
         return message;
     }
+    public String getError() {
+        return error;
+    }
+    public String getInfo() {
+        return info;
+    }
+    
 }
