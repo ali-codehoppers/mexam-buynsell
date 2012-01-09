@@ -83,27 +83,43 @@
         <title>Mexam BuynSell</title>
     </head>
     <body>
-        <div style="width: 100%;"> 
-            <form method="POST" action="">
-                <div style="float: left; width: 100%">
-                    <div style="float: left; height: 400px"> 
-                        <select id="countries" size="25" style="width: 250px; " onchange="getSubCategories(this.value)">
-                        </select>
-                    </div>
-                    <div style="float: left; height: 400px"> 
-                        <select id="subcategories" size="25" style="width: 250px;" onchange="showAddButton(this.value)">
-                        </select>                
-                        <s:textfield name="subCategoryId" id="subCategoryId" cssStyle="display:none" />
-                    </div>
-                    <div style=""> 
-                        <div>
-                            <input id="buttonAddNew" type="button" value="Add New" style="display: none" onclick="redirect()" >
-                        </div>
+
+        <jsp:include page="../common/header.jspf" />
+        <div id="container" class="container" style="min-height: 335px;">
+            <div id="content">
+                <div id="title"> 
+                    <div style="margin:auto">
+                        <h1 style="width: 100%; text-align: center" id="listTitle">Login</h1>
+                        <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
                     </div>
                 </div>
 
-            </form>
+                <div id="formContainder">
+                    <form method="POST" action="">
+                        <div style="float: left; width: 100%">
+                            <div style="float: left; height: 400px"> 
+                                <select id="countries" size="25" style="width: 250px; " onchange="getSubCategories(this.value)">
+                                </select>
+                            </div>
+                            <div style="float: left; height: 400px"> 
+                                <select id="subcategories" size="25" style="width: 250px;" onchange="showAddButton(this.value)">
+                                </select>                
+                                <s:textfield name="subCategoryId" id="subCategoryId" cssStyle="display:none" />
+                            </div>
+                            <div style=""> 
+                                <div>
+                                    <input id="buttonAddNew" type="button" value="Add New" style="display: none" onclick="redirect()" >
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
         </div>
+
+        <jsp:include page="../common/footer.jspf" />
     </body>
 
 </html>

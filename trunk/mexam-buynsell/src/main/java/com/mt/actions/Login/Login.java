@@ -17,6 +17,9 @@ import java.util.Map;
  */
 public class Login extends ActionSupport {
 
+    private String message;
+    private String error = "";
+    private String info;
     private String userName;
     private String password;
     private User user;
@@ -41,6 +44,7 @@ public class Login extends ActionSupport {
         userList = userService.findByUsername(userName);
 
         if (userList == null || userList.isEmpty()) {
+            error="The username or password you entered is incorrect.";
             return "fail";
         } else {
             for (int i = 0; i < userList.size(); i++) {
@@ -50,9 +54,21 @@ public class Login extends ActionSupport {
                     return SUCCESS;
                 }
             }
+            error="The username or password you entered is incorrect.";
         }
-
-
         return "fail";
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+    
 }

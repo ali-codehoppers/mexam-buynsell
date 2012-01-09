@@ -24,14 +24,14 @@
 
        
             <!--        Login            -->
-        <action name="showLogin" class="com.mt.actions.DoNothing">
+        <action name="showLogin" class="com.mt.actions.Login.ShowLogin">
             <interceptor-ref name="basic"/>
             <result name="success">jsp/login/login.jsp</result>
         </action>
         <action name="login" class="com.mt.actions.Login.Login">
             <interceptor-ref name="basic"/>
             <result name="success" type="redirect">home</result>
-            <result name="fail" type="redirect">showLogin</result>            
+            <result name="fail" type="redirect">showLogin?error=${error}</result>            
         </action>
             <!-- //     Login    -->
 

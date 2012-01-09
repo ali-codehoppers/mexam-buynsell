@@ -337,191 +337,116 @@
         <title>Buy & Sell</title>
     </head>
     <body>
+        <jsp:include page="common/header.jspf" />
 
-        <table width="990" border="0" align="center" cellpadding="0" cellspacing="0">
-            <tr>
-                <td height="73"><table width="990" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="695"><img src="images/logo.jpg" height="71" alt="" /></td>
-                            <td width="295" align="right">
-                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                    <tr>
-                                        <td align="right" valign="top">
-                                            <form action="#" method="post">
-                                                <input type="text" name="search" class="search" value="Search..." onBlur="if (this.value == ''){this.value = 'Search...'; }" onFocus="if (this.value== 'Search...') {this.value = ''; }" />
-                                                <div id="btn_">Go</div>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left"><a href="#">Advance Search</a></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+        <div id="container" class="container" style="min-height: 335px;">
+            <div id="content">
+                <table width="990" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="29%" valign="top">
+                                        <table width="69%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td colspan="3" align="center" valign="middle" class="nav_top_bg">MEXAM - BUY &amp; SELL</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" align="center" class="nav_middle_bg">
+                                                    <table id="listParts" width="261" border="0" cellspacing="0" cellpadding="0" style="padding-left:5px; padding-right: 5px">
 
-            <tr>
-                <td height="130" valign="bottom">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td height="56" align="left" valign="bottom">
-                                <table border="0" cellspacing="0" cellpadding="0">
-                                    <tr>
-                                        <td width="77" align="center" valign="middle" class="navigation_radius">HOME</td>
-                                        <td width="100" align="center"><a href="#" class="topnav">ABOUT US</a></td>
-                                        <td width="53" align="center"><a href="#" class="topnav">BUY</a></td>
-                                        <td width="66" align="center"><a href="#" class="topnav">SELL</a></td>
-                                        <td width="100" align="center"><a href="#" class="topnav">FEATURES</a></td>
-                                        <td width="100" align="center"><a href="#" class="topnav">CONTACT US</a></td>
-                                        <td width="100" align="center" nowrap="nowrap"><a href="#" class="topnav">SITE MAP</a></td>
-                                        <td width="26">&nbsp;</td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td align="center" class="login_bg">
-                                <form id="form1" name="form1" method="post" action="">
-                                    <table width="200" border="0" cellspacing="0" cellpadding="3">
-                                        <tr>
-                                            <td colspan="2">MEMBER LOGIN</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <input type="text" name="search" class="input_" value="Username" onBlur="if (this.value == ''){this.value = 'Username'; }" onFocus="if (this.value== 'Username') {this.value = ''; }" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2"><input type="text" name="Password" class="input_" value="Password" onBlur="if (this.value == ''){this.value = 'Password'; }" onFocus="if (this.value== 'Password') {this.value = ''; }" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td width="109"><input type="checkbox" name="checkbox" id="checkbox" />
-                                                <label for="checkbox">Remember Me</label></td>
-                                            <td width="79"><a href="#"><img src="images/signin.jpg" alt="" width="73" height="25" border="0" /></a></td>
-                                        </tr>
-                                    </table>
-                                </form></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="29%" valign="top">
-                                <table width="69%" border="0" cellspacing="0" cellpadding="0">
-                                    <tr>
-                                        <td colspan="3" align="center" valign="middle" class="nav_top_bg">MEXAM - BUY &amp; SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" align="center" class="nav_middle_bg">
-                                            <table id="listParts" width="261" border="0" cellspacing="0" cellpadding="0" style="padding-left:5px; padding-right: 5px">
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" align="center" valign="middle" class="nav_bottom_bg" style="height:10px"></td>
+                                            </tr>
 
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" align="center" valign="middle" class="nav_bottom_bg" style="height:10px"></td>
-                                    </tr>
-
-                                </table></td>
-                            <td width="71%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                    <tr>
-                                        <td width="70%" valign="top" class="Buy_sell_banner"><table width="300" border="0" cellspacing="0" cellpadding="0">
-                                                <tr>
-                                                    <td width="24" height="164">&nbsp;</td>
-                                                    <td width="139">&nbsp;</td>
-                                                    <td width="137">&nbsp;</td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="center">&nbsp;</td>
-                                                    <td align="left"><a href="#"><img src="images/read_more.png" alt="" width="98" height="26" border="0" /></a></td>
-                                                    <td align="left"><a href="#"><img src="images/read_more.png" alt="" width="98" height="26" border="0" /></a></td>
-                                                </tr>
-                                            </table></td>
-                                        <td width="30%" align="right" valign="bottom"><img src="images/ad_banner.jpg" width="199" height="215" alt="" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td height="34" colspan="2" align="center"><h1 id="listTitle">PRODUCTS</h1></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" align="center"><img src="images/under_line.jpg" width="553" height="16" alt="" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" bgcolor="#333333">
-                                            <div id='parts' style="background-color: #333; height: auto;">
-                                                <div class='product' style="background-color: #333; padding:10px; background: #00ff">
-                                                    <div class='productImage'>
-                                                        <a href="images/tavolini-1-b.jpg">
-                                                            <img src="images/default.png" alt="" width="192" style="border:3px solid #ccc;" height="192" border="0">
-                                                        </a>
+                                        </table></td>
+                                    <td width="71%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="70%" valign="top" class="Buy_sell_banner"><table width="300" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="24" height="164">&nbsp;</td>
+                                                            <td width="139">&nbsp;</td>
+                                                            <td width="137">&nbsp;</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center">&nbsp;</td>
+                                                            <td align="left"><a href="#"><img src="images/read_more.png" alt="" width="98" height="26" border="0" /></a></td>
+                                                            <td align="left"><a href="#"><img src="images/read_more.png" alt="" width="98" height="26" border="0" /></a></td>
+                                                        </tr>
+                                                    </table></td>
+                                                <td width="30%" align="right" valign="bottom"><img src="images/ad_banner.jpg" width="199" height="215" alt="" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td height="34" colspan="2" align="center"><h1 id="listTitle">PRODUCTS</h1></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" align="center"><img src="images/under_line.jpg" width="553" height="16" alt="" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" bgcolor="#333333">
+                                                    <div id='parts' style="background-color: #333; height: auto;">
+                                                        <div class='product' style="background-color: #333; padding:10px; background: #00ff">
+                                                            <div class='productImage'>
+                                                                <a href="images/tavolini-1-b.jpg">
+                                                                    <img src="images/default.png" alt="" width="192" style="border:3px solid #ccc;" height="192" border="0">
+                                                                </a>
+                                                            </div>
+                                                            <div >
+                                                                <h2><a href=""> WLC Series </a></h2>
+                                                                <div class="productDesc">Waterline Controls Electronic Water Level Control System</div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div >
-                                                        <h2><a href=""> WLC Series </a></h2>
-                                                        <div class="productDesc">Waterline Controls Electronic Water Level Control System</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-            </tr>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
 
-        </table>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <td align="center" valign="top" bgcolor="#ececec"><table width="990" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td colspan="6" align="center" valign="top"><img src="images/top_cat.jpg" width="990" height="23" alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td width="39" align="left"><img src="images/cat_left.jpg" width="30" height="40" alt="" /></td>
-                            <td width="455" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
-                            <td width="123" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
-                            <td width="123" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
-                            <td width="211" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
-                            <td width="39" align="right"><img src="images/cat_right.jpg" width="30" height="40" alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td height="31" align="left">&nbsp;</td>
-                            <td align="center" valign="middle"><strong>Video Recorders</strong></td>
-                            <td align="center" valign="middle"><strong>Video Recorders</strong></td>
-                            <td align="center"><strong>Video Recorders</strong></td>
-                            <td align="center"><strong>Video Recorders</strong></td>
-                            <td align="right">&nbsp;</td>
-                        </tr>
-                    </table></td>
-            </tr>
-        </table>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <td align="center" valign="top">&nbsp;</td>
-            </tr>
-            <tr>
-                <td align="center" valign="top"  class="footer"><table width="990" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="298" height="91" align="left">Copyright © 2012 Buy&amp;Sell, All rights reserved<br />
-                                e-mail: <a href="#" class="footer">info@buy&amp;sell.com</a></td>
-                            <td width="692" align="right"><a href="#" class="footer">About  Us</a> |   <a href="#" class="footer">Buy</a> |   <a href="#" class="footer">Sell</a> |   <a href="#" class="footer">Contact us</a> |   <a href="#" class="footer">Order Catalog</a><br />
-                                <a href="#" class="footer">Site Map</a> |<a href="#" class="footer"> My Account</a> |   <a href="#" class="footer">Terms and Conditions of Sale</a> |<a href="#" class="footer"> Terms and Conditions of Use</a><br /></td>
-                        </tr>
-                    </table></td>
-            </tr>
-        </table>
+                </table>
+                
+                 <jsp:include page="common/adFooter.jspf" />
+<!--                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td align="center" valign="top" bgcolor="#ececec"><table width="990" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td colspan="6" align="center" valign="top"><img src="images/top_cat.jpg" width="990" height="23" alt="" /></td>
+                                </tr>
+                                <tr>
+                                    <td width="39" align="left"><img src="images/cat_left.jpg" width="30" height="40" alt="" /></td>
+                                    <td width="455" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
+                                    <td width="123" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
+                                    <td width="123" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
+                                    <td width="211" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
+                                    <td width="39" align="right"><img src="images/cat_right.jpg" width="30" height="40" alt="" /></td>
+                                </tr>
+                                <tr>
+                                    <td height="31" align="left">&nbsp;</td>
+                                    <td align="center" valign="middle"><strong>Video Recorders</strong></td>
+                                    <td align="center" valign="middle"><strong>Video Recorders</strong></td>
+                                    <td align="center"><strong>Video Recorders</strong></td>
+                                    <td align="center"><strong>Video Recorders</strong></td>
+                                    <td align="right">&nbsp;</td>
+                                </tr>
+                            </table></td>
+                    </tr>
+                </table>-->
+
+            </div>
+        </div>
+        <jsp:include page="common/footer.jspf" />
     </body>
 </html>
