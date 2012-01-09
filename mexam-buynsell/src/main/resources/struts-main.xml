@@ -101,7 +101,7 @@
             <interceptor-ref name="basic"/>
             <result name="success">jsp/inventory/searchItems.jsp</result>
         </action>
-                <action name="searchItemFrag" class="com.mt.actions.Inventory.SearchItem">
+        <action name="searchItemFrag" class="com.mt.actions.Inventory.SearchItem">
             <interceptor-ref name="basic"/>
             <result name="success">jsp/inventory/searchItemsFrag.jsp</result>
         </action>
@@ -365,6 +365,12 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
+
+        <action name="addCartItem" class="com.mt.actions.ajaxActions.AddCartItem">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        
         
         <!-- //     Ajax Actions    -->
 
