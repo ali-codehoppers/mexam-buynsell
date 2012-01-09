@@ -12,6 +12,7 @@ import com.mt.services.CompanyService;
 import com.mt.services.StateService;
 import com.mt.services.UserService;
 import com.opensymphony.xwork2.ActionSupport;
+import java.sql.Timestamp;
 
 /**
  *
@@ -132,6 +133,7 @@ public class Register extends ActionSupport {
         company.setWebAddress(webAddress);
         company.setCompanyCategory(companyCategoryId);
         company.setZip(zip);
+        company.setCreationDate(new Timestamp(System.currentTimeMillis()));
         Integer addNewCompany = companyService.addNew(company);
 
         user = new User();
@@ -140,6 +142,8 @@ public class Register extends ActionSupport {
         user.setPassword(password);
         user.setUsername(userName);
         user.setEmail(email);
+        user.setCompany(company);
+        user.setCreationDate(new Timestamp(System.currentTimeMillis()));
         Integer addNewUser = userService.addNew(user);
 
 
