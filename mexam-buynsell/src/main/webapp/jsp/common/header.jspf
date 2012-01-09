@@ -1,0 +1,68 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="windows-1252" %>
+<div id="header" class="header" style="width: 100%; margin: auto;">
+    <div id="header_Top" style="margin: auto">
+        <table width="990px" border="0" cellspacing="0" cellpadding="0" style="margin: auto">
+            <tr>
+                <td width="695"><img src="images/logo.jpg" height="71" alt="" /></td>
+                <td width="295" align="right">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="right" valign="top">
+                                <form action="#" method="post">
+                                    <input type="text" name="search" class="search" value="Search..." onBlur="if (this.value == ''){this.value = 'Search...'; }" onFocus="if (this.value== 'Search...') {this.value = ''; }" />
+                                    <div id="btn_">Go</div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left"><a href="#">Advance Search</a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="header_Bottom" style="margin: auto">
+        <div style="width: 990px; margin: auto;">
+            <div style="float: left; min-height: 100%; display:table-cell; vertical-align:bottom; min-width: 790px; ">
+                <table border="0" cellspacing="0" cellpadding="0" style="height: 100%; margin-top: 72px;">
+                    <tr>
+                        <td width="66" align="center"><a href="#" class="topnav">HOME</a></td>
+                        <td width="100" align="center"><a href="#" class="topnav">ABOUT US</a></td>
+                        <td width="53" align="center"><a href="#" class="topnav">BUY</a></td>
+                        <td width="77" align="center" valign="middle" class="navigation_radius">SELL</td>
+                        <td width="100" align="center"><a href="#" class="topnav">FEATURES</a></td>
+                        <td width="100" align="center"><a href="#" class="topnav">CONTACT US</a></td>
+                        <td width="100" align="center" nowrap="nowrap"><a href="#" class="topnav">SITE MAP</a></td>
+                        <td width="26">&nbsp;</td>
+                    </tr>
+                </table>
+            </div>
+            <div style="float: left">
+                <form id="form1" name="form1" method="post" action="" style="margin: auto;">
+                    <table width="200" border="0" cellspacing="0" cellpadding="2">
+                        <tr>
+                            <td colspan="2">MEMBER LOGIN</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="text" name="search" class="input_" value="Username" onBlur="if (this.value == ''){this.value = 'Username'; }" onFocus="if (this.value== 'Username') {this.value = ''; }" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="text" name="Password" class="input_" value="Password" onBlur="if (this.value == ''){this.value = 'Password'; }" onFocus="if (this.value== 'Password') {this.value = ''; }" /></td>
+                        </tr>
+                        <tr>
+                            <td width="109"><input type="checkbox" name="checkbox" id="checkbox" />
+                                <label for="checkbox">Remember Me</label></td>
+                            <td width="79"><a href="#"><img src="images/signin.jpg" alt="" width="73" height="25" border="0" /></a></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>
+    </div>
+
+</div>
