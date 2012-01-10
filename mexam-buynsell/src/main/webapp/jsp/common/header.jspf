@@ -1,4 +1,4 @@
-<%-- any content can be specified here e.g.: --%>
+<%@page import="com.mt.hibernate.entities.User"%>
 <%@ page pageEncoding="windows-1252" %>
 <div id="header" class="header" style="width: 100%; margin: auto;">
     <div id="header_Top" style="margin: auto">
@@ -25,7 +25,7 @@
     </div>
     <div id="header_Bottom" style="margin: auto">
         <div style="width: 990px; margin: auto;">
-            <div style="float: left; min-height: 100%; display:table-cell; vertical-align:bottom; min-width: 790px; ">
+            <div style="float: left; min-height: 100%; display:table-cell; vertical-align:bottom; min-width: 720px; ">
                 <table border="0" cellspacing="0" cellpadding="0" style="height: 100%; margin-top: 72px;">
                     <tr>
                         <td width="66" align="center"><a href="#" class="topnav">HOME</a></td>
@@ -40,29 +40,63 @@
                 </table>
             </div>
             <div style="float: left">
-                <form id="form1" name="form1" method="post" action="" style="margin: auto;">
-                    <table width="200" border="0" cellspacing="0" cellpadding="2">
+                <% if (session.getAttribute("user") == null) {%> 
+                <form id="loginFormComp" name="loginFormComp" method="post" action="login" style="margin: auto;">
+                    <table width="200" border="0" cellspacing="0" cellpadding="1">
                         <tr>
                             <td colspan="2">MEMBER LOGIN</td>
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input type="text" name="search" class="input_" value="Username" onBlur="if (this.value == ''){this.value = 'Username'; }" onFocus="if (this.value== 'Username') {this.value = ''; }" /></td>
+                                <input type="text" id="userName" name="userName" class="input_" value="Username" onBlur="if (this.value == ''){this.value = 'Username'; }" onFocus="if (this.value== 'Username') {this.value = ''; }" />
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="2"><input type="text" name="Password" class="input_" value="Password" onBlur="if (this.value == ''){this.value = 'Password'; }" onFocus="if (this.value== 'Password') {this.value = ''; }" /></td>
+                            <td colspan="2">
+                                <input type="password" id="password" name="password" class="input_" value="Password" onBlur="if (this.value == ''){this.value = 'Password'; }" onFocus="if (this.value== 'Password') {this.value = ''; }" />
+                            </td>
                         </tr>
                         <tr>
                             <td width="109"><input type="checkbox" name="checkbox" id="checkbox" />
                                 <label for="checkbox">Remember Me</label></td>
-                            <td width="79"><a href="#"><img src="images/signin.jpg" alt="" width="73" height="25" border="0" /></a></td>
+                            <td width="79"><a href="javascript:onSignInClick()"><img src="images/signin.jpg" alt="" width="73" height="25" border="0" /></a></td>
                         </tr>
                     </table>
                 </form>
+                <% } else {%>
+                <table width="270" border="0" cellspacing="0" cellpadding="1">
+                    <tr style="font-size: 14px; color: #ffffff; text-align: center;">
+                        <td colspan="1" style="text-align: right;">Welcome,  <%= ((User) session.getAttribute("user")).getFirstName()%> </td>
+                        <td colspan="1" style="text-align: left;">&nbsp;&nbsp;|&nbsp; <a href="logout"> Sign Out</a></td>
+                    </tr>
+                </table>
+
+                <% }%>
+
             </div>
             <div style="clear: both">
             </div>
         </div>
     </div>
-
+    <script type="text/javascript">
+        function checkField(){
+            var check=true;
+            if($("#Username").val()==""||$("#Username").val()=="Username"){
+                $("#errorUsername").show();
+                $("#errorUsername").css("color","red");
+                $("#errorUsername").css("font-weight","bold");
+                check=false;
+            }
+            if($("#Password").val()==""||$("#Password").val()=="Password"){
+                $("#errorPassword").show();
+                $("#errorPassword").css("color","red");
+                $("#errorPassword").css("font-weight","bold");
+                check=false;
+            }
+            return check;
+        }
+        function onSignInClick(){
+            $("#loginFormComp").submit();
+        }
+    </script>
 </div>

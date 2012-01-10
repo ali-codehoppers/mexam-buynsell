@@ -25,6 +25,7 @@ public class Login extends ActionSupport {
     private User user;
     private List<User> userList;
     private UserService userService;
+    private String jsonString = "";
 
     public void setPassword(String password) {
         this.password = password;
@@ -44,7 +45,7 @@ public class Login extends ActionSupport {
         userList = userService.findByUsername(userName);
 
         if (userList == null || userList.isEmpty()) {
-            error="The username or password you entered is incorrect.";
+            error = "The username or password you entered is incorrect.";
             return "fail";
         } else {
             for (int i = 0; i < userList.size(); i++) {
@@ -54,7 +55,7 @@ public class Login extends ActionSupport {
                     return SUCCESS;
                 }
             }
-            error="The username or password you entered is incorrect.";
+            error = "The username or password you entered is incorrect.";
         }
         return "fail";
     }
@@ -70,5 +71,8 @@ public class Login extends ActionSupport {
     public String getInfo() {
         return info;
     }
-    
+
+    public String getJsonString() {
+        return error;
+    }
 }

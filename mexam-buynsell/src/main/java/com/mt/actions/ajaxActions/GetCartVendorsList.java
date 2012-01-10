@@ -62,7 +62,8 @@ public class GetCartVendorsList extends AuthenticatedAction {
         }
 
         List<Cart> cartList = cartService.findByUser(getUser().getId());
-        if (cartList.size() > 0) {
+        if (cartList.size() > 0) 
+        {
             cart = cartService.findByUser(getUser().getId()).get(0);
         } else {
             cart = new Cart();

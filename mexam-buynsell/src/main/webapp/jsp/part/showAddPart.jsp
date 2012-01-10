@@ -89,7 +89,7 @@
             <div id="content">
                 <div id="title"> 
                     <div style="margin:auto">
-                        <h1 style="width: 100%; text-align: center" id="listTitle">Login</h1>
+                        <h1 style="width: 100%; text-align: center" id="listTitle">Add Part</h1>
                         <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
                     </div>
                 </div>

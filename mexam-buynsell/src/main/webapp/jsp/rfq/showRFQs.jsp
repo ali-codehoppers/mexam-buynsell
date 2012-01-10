@@ -28,10 +28,10 @@
                     //colNames:['PartNo','Name','Quantity','Price'],
                     colNames:['Received Date','Subject','Sent By','Company'],
                     colModel:[
-                        {name:'cell.date',index:'date', width:200, align:"center",sortable:true},                                                
-                        {name:'cell.title',index:'title', width:200, sortable:true},
-                        {name:'cell.senderName',index:'senderName', width:200, sortable:true},                        
-                        {name:'cell.senderCompanyName',index:'senderCompanyName', width:200, sortable:true}                        
+                        {name:'cell.date',index:'date', width:200, align:"center",sortable:true, formatter:isNewFormatter},                                                
+                        {name:'cell.title',index:'title', width:200, sortable:true,formatter:isNewFormatter},
+                        {name:'cell.senderName',index:'senderName', width:200, sortable:true,formatter:isNewFormatter},                        
+                        {name:'cell.senderCompanyName',index:'senderCompanyName', width:200, sortable:true,formatter:isNewFormatter}                        
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
@@ -43,7 +43,7 @@
                     onSelectRow: function(ids) {
                         if(ids != null && ids>0) {
                             rfqId=ids;
-                            getRFQ(ids);
+                            getRFQ(ids,1);
                             jQuery("#rfqItemsList").jqGrid('setGridParam',{url:'getRFQItemsList?rfqId='+rfqId,page:1});
                             jQuery("#rfqItemsList").trigger('reloadGrid');
                             $( "#dialog" ).dialog( "open" );
@@ -70,9 +70,9 @@
                     //colNames:['PartNo','Name','Quantity','Price'],
                     colNames:['Date','Subject','Sent To'],
                     colModel:[
-                        {name:'cell.date',index:'date', width:200, align:"center",sortable:true},                                                
-                        {name:'cell.title',index:'title', width:200, sortable:true},
-                        {name:'cell.receiverCompanyName',index:'receiverCompanyName', width:200, sortable:true}
+                        {name:'cell.date',index:'date', width:200, align:"center",sortable:true,formatter:isNewFormatter},                                                
+                        {name:'cell.title',index:'title', width:200, sortable:true,formatter:isNewFormatter},
+                        {name:'cell.receiverCompanyName',index:'receiverCompanyName', width:200, sortable:true,formatter:isNewFormatter}
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
@@ -84,7 +84,7 @@
                     onSelectRow: function(ids) {
                         if(ids != null && ids>0) {
                             rfqId=ids;
-                            getRFQ(ids);
+                            getRFQ(ids,2);
                             jQuery("#rfqItemsList").jqGrid('setGridParam',{url:'getRFQItemsList?rfqId='+rfqId,page:1});
                             jQuery("#rfqItemsList").trigger('reloadGrid');
                             $( "#dialog" ).dialog( "open" );
@@ -100,6 +100,16 @@
                         id: "id"
                     }
                 });
+             
+             
+                function isNewFormatter (cellvalue, options, rowObject)
+                {
+                    if(rowObject.cell.isNew==true)
+                        return "<b>"+cellvalue+"</b>";
+                    else
+                        return cellvalue;
+                }
+
              
                 jQuery("#rfqsListSent").jqGrid('navGrid','#pager_s',{edit:false,add:false,del:true});
                 
@@ -144,7 +154,7 @@
                
             });
   
-            function getRFQ(id)
+            function getRFQ(id,caller)
             {
                 $.ajax({
                     type:       "get",
@@ -156,7 +166,22 @@
                         jQuery("#div_sender").html(data.senderName);                
                         jQuery("#div_senderCompany").html(data.senderCompanyName);                                        
                         jQuery("#div_message").html(data.message);                         
-                        jQuery("#div_date").html(data.date);        
+                        jQuery("#div_date").html(data.date);
+                        if(caller==1)
+                            setIsRead(id,true);
+                    }
+                });
+            }
+            
+            function setIsRead(id,val)
+            {
+                $.ajax({
+                    type:       "get",
+                    url:        "setRFQIsRead",
+                    data:       {rfqId:id, value:val},
+                    success:    function(msg) {
+                        jQuery("#rfqsListReceived").trigger('reloadGrid');
+                        jQuery("#rfqsListSent").trigger('reloadGrid');
                     }
                 });
             }

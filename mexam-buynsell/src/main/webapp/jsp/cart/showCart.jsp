@@ -94,6 +94,7 @@
                     viewrecords: true,
                     sortorder: "desc",
                     caption: "Cart",
+                    multiselect: true,
                     jsonReader : { 
                         root: "rows", 
                         page: "page", 
@@ -108,14 +109,12 @@
                 
             });
                 
-                
-                
-                
             function sendRFQ(){
+                var parts = jQuery("#cartList").jqGrid('getGridParam','selarrrow');
                 $.ajax({
                     type:       "get",
                     url:        "sendRFQ",
-                    data:       {vendorId: vendorId},
+                    data:       {vendorId: vendorId, parts:parts},
                     success:    function(msg) {
                         jQuery("#cartVendorList").trigger('reloadGrid');
                         jQuery("#cartList").trigger('reloadGrid');
@@ -123,7 +122,22 @@
                     }
                 });
                 return false;
-            }
+            }  
+                
+                
+//            function sendRFQ(){
+//                $.ajax({
+//                    type:       "get",
+//                    url:        "sendRFQ",
+//                    data:       {vendorId: vendorId},
+//                    success:    function(msg) {
+//                        jQuery("#cartVendorList").trigger('reloadGrid');
+//                        jQuery("#cartList").trigger('reloadGrid');
+//                        alert("RFQ sent successfully.");
+//                    }
+//                });
+//                return false;
+//            }
                 
         </script>
         <title>Buy & Sell</title>
