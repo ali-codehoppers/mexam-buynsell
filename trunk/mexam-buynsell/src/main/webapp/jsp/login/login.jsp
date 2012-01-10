@@ -24,6 +24,7 @@
                 {
                     $("#messageError").hide();                        
                 }
+                $("#loginFormComp").hide(); 
             });
             
             function submitForm()

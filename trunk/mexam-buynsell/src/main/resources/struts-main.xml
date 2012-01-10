@@ -33,8 +33,13 @@
             <result name="success" type="redirect">home</result>
             <result name="fail" type="redirect">showLogin?error=${error}</result>            
         </action>
-            <!-- //     Login    -->
+        
+        <action name="logout" class="com.mt.actions.Login.Logout">
+            <interceptor-ref name="basic"/>
+            <result name="success" type="redirect">home</result>
+        </action>
 
+            <!-- //     Login    -->
 
                 
             <!--      Part    -->
@@ -371,6 +376,16 @@
             <result >jsp/common/ajax.jsp</result>
         </action>
         
+        <action name="ajaxLogin" class="com.mt.actions.ajaxActions.AjaxLogin">
+            <interceptor-ref name="basic"/>
+            <result name="fail" type="redirect">showLogin?error=${error}</result>            
+        </action>
+
+        <action name="setRFQIsRead" class="com.mt.actions.ajaxActions.SetRFQIsRead">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
         
         <!-- //     Ajax Actions    -->
 
