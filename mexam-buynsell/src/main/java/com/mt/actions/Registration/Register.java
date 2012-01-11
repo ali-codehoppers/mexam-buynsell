@@ -4,7 +4,6 @@
  */
 package com.mt.actions.Registration;
 
-import com.mt.actions.Company.*;
 import com.mt.hibernate.entities.Company;
 import com.mt.hibernate.entities.State;
 import com.mt.hibernate.entities.User;
@@ -14,22 +13,19 @@ import com.mt.services.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 import java.sql.Timestamp;
 
-/**
- *
- * @author CodeHopper
- */
+
 public class Register extends ActionSupport {
 
     private String name;
     private String address;
     private String city;
 //    private int countryId;
-    private int stateId;
+    private int stateVal;
     private String phoneNo;
     private String faxNo;
     private String zip;
     private String webAddress;
-    private String companyCategoryId;
+    private String companyCategory;
     private String fistName;
     private String lastName;
     private String email;
@@ -67,12 +63,12 @@ public class Register extends ActionSupport {
         this.phoneNo = phoneNo;
     }
 
-    public void setStateId(int stateId) {
-        this.stateId = stateId;
+    public void setState(int state) {
+        this.stateVal = state;
     }
 
     public void setCompanyCategoryId(String companyCategoryId) {
-        this.companyCategoryId = companyCategoryId;
+        this.companyCategory = companyCategoryId;
     }
 
     public void setZip(String zip) {
@@ -121,7 +117,7 @@ public class Register extends ActionSupport {
 
     @Override
     public String execute() throws Exception {
-        State state = stateService.getById(stateId);
+        State state = stateService.getById(stateVal);
 
         company = new Company();
         company.setName(name);
@@ -131,7 +127,7 @@ public class Register extends ActionSupport {
         company.setFaxNo(faxNo);
         company.setState(state);
         company.setWebAddress(webAddress);
-        company.setCompanyCategory(companyCategoryId);
+        company.setCompanyCategory(companyCategory);
         company.setZip(zip);
         company.setCreationDate(new Timestamp(System.currentTimeMillis()));
         Integer addNewCompany = companyService.addNew(company);

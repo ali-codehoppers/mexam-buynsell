@@ -1,5 +1,6 @@
 package com.mt.actions.Registration;
 
+import com.google.gson.GsonBuilder;
 import com.mt.actions.Company.*;
 import com.mt.hibernate.entities.Country;
 import com.mt.hibernate.entities.LookUp;
@@ -17,6 +18,8 @@ public class ShowRegistration extends ActionSupport {
     private List<LookUp> companyCategories;
     private CountryService countryService;
     private LookUpService lookUpService;
+    private String countriesJson;
+    private String categoriesJson;
 
     public void setCountryService(CountryService countryService) {
         this.countryService = countryService;
@@ -31,6 +34,8 @@ public class ShowRegistration extends ActionSupport {
 
         countries = countryService.getAll();
         companyCategories = lookUpService.findByName("COMPANY_CATEGORY");
+        countriesJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(countries);
+        categoriesJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(companyCategories);
         return SUCCESS;
     }
 
@@ -41,8 +46,16 @@ public class ShowRegistration extends ActionSupport {
     public List<LookUp> getCompanyCategories() {
         return companyCategories;
     }
-    
+
     public List<State> getStates() {
         return new ArrayList<State>();
+    }
+
+    public String getCategoriesJson() {
+        return categoriesJson;
+    }
+
+    public String getCountriesJson() {
+        return countriesJson;
     }
 }
