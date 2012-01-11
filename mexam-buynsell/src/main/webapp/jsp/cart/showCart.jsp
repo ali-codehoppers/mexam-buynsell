@@ -26,7 +26,7 @@
                     height: 180,
                     colNames:['ID','Name','Address','City','State','Phone','Fax'],
                     colModel:[
-                        {name:'id',index:'id', width:55},                                                
+                        {name:'id',index:'id', width:55, align:"center"},                                                
                         {name:'cell.name',index:'name', width:200, align:"center",sortable:true},                        
                         {name:'cell.address',index:'address', width:300, sortable:"false",editable:"false"},
                         {name:'cell.city',index:'city', width:100, sortable:"false",editable:false},                        
@@ -81,7 +81,7 @@
                     height: 100,
                     colNames:['ID','Part No','Manufacturer','Price','Quantity'],
                     colModel:[
-                        {name:'id',index:'id', width:55},                                                
+                        {name:'id',index:'id', width:55, align:"center"},                                                
                         {name:'cell.partNo',index:'partNo', width:200, align:"center",sortable:true},
                         {name:'cell.manufacturer',index:'manufacturer', width:200, align:"center",sortable:true},                        
                         {name:'cell.price',index:'price', width:200, align:"center",sortable:true},                        
@@ -107,37 +107,66 @@
                 });
                 jQuery("#cartList").jqGrid('navGrid','#pagerCart',{edit:false,add:false,del:true});
                 
+                
+                $( "#dialog" ).dialog({
+                    autoResize:true,
+                    autoOpen: false,
+                    modal: true,
+                    width:'auto'
+                });
+                
+                $( ".ui-jqgrid-titlebar-close").hide();
             });
                 
             function sendRFQ(){
-                var parts = jQuery("#cartList").jqGrid('getGridParam','selarrrow');
-                $.ajax({
-                    type:       "get",
-                    url:        "sendRFQ",
-                    data:       {vendorId: vendorId, parts:parts},
-                    success:    function(msg) {
-                        jQuery("#cartVendorList").trigger('reloadGrid');
-                        jQuery("#cartList").trigger('reloadGrid');
-                        alert("RFQ sent successfully.");
-                    }
-                });
-                return false;
+                var partIds = jQuery("#cartList").jqGrid('getGridParam','selarrrow');
+                var partIdsString = partIds.toString();
+                var subject = $("#subject").val();
+                var message = $("#message").val();
+                
+                if(partIdsString.length>0)
+                {
+                    $.ajax({
+                        type:       "get",
+                        url:        "sendRFQforItems",
+                        data:       {vendorId: vendorId,subject:subject,message:message, parts: partIdsString},
+                        success:    function(msg) 
+                        {
+                            $("#subject").val("");
+                            $("#message").val("");
+                            $( "#dialog" ).dialog('close');
+                            jQuery("#cartVendorList").trigger('reloadGrid');
+                            jQuery("#cartList").trigger('reloadGrid');
+                            alert("RFQ sent successfully.");
+                        }
+                    });
+                }
+                //return false;
             }  
                 
+            function showDialog()
+            {
+                var partIds = jQuery("#cartList").jqGrid('getGridParam','selarrrow');
+                var partIdsString = partIds.toString();
+                if(partIdsString.length>0)
+                    $( "#dialog" ).dialog( "open" );
+                else
+                    alert("Please select an item to send RFQ.");
+            }
                 
-//            function sendRFQ(){
-//                $.ajax({
-//                    type:       "get",
-//                    url:        "sendRFQ",
-//                    data:       {vendorId: vendorId},
-//                    success:    function(msg) {
-//                        jQuery("#cartVendorList").trigger('reloadGrid');
-//                        jQuery("#cartList").trigger('reloadGrid');
-//                        alert("RFQ sent successfully.");
-//                    }
-//                });
-//                return false;
-//            }
+            //            function sendRFQ(){
+            //                $.ajax({
+            //                    type:       "get",
+            //                    url:        "sendRFQ",
+            //                    data:       {vendorId: vendorId},
+            //                    success:    function(msg) {
+            //                        jQuery("#cartVendorList").trigger('reloadGrid');
+            //                        jQuery("#cartList").trigger('reloadGrid');
+            //                        alert("RFQ sent successfully.");
+            //                    }
+            //                });
+            //                return false;
+            //            }
                 
         </script>
         <title>Buy & Sell</title>
@@ -163,9 +192,47 @@
                     <div id="pagerCart"></div>
                 </div>
                 <div style="width: 100px; margin: auto; min-height: 50px">
-                    <a id="sendRFQ" href="javascript:sendRFQ()" class="btn" style="display: none; margin-top: 30px; min-width: 200px">Send RFQ to selected Vendor</a>
+                    <a id="sendRFQ" href="javascript:showDialog()" class="btn" style="display: none; margin-top: 30px; min-width: 200px">Send RFQ to selected Items</a>
                 </div>
             </div>
+            <div id="dialog" title="RFQ">
+
+                <div style="margin:auto">
+                    <h1 style="width: 100%; text-align: center" id="listTitle">Send RFQ</h1>
+                    <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
+                </div>
+                <div style="min-width: 500px;">
+                    <div style="float: left; width: 20%;">
+                        <h3 style="font: normal 18px 'Trebuchet MS'; color: #444; margin: auto">Subject : </h3>
+                    </div>
+                    <div style="width: 80%; text-align: left">
+                        <input id="subject" name="subject" class="field_big" style="min-width: 300px;" />
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+
+                <div style="margin-top: 20px; min-width: 500px;">
+                    <div style="float: left; width: 20%;">
+                        <h3 style="font: normal 18px 'Trebuchet MS'; color: #444;margin: auto">Message : </h3>
+                    </div>
+                    <div style=" text-align: left">
+                        <textarea id="message" name="message" class="field_big" rows="5" style="min-width: 350px; min-height: 100px;"></textarea>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+                <div style="clear: both">
+                </div>
+                <div style="width: 100px; margin: auto; ">
+                    <a href="javascript:sendRFQ()" class="btn" style="margin-top: 25px; margin-bottom: 15px;">Send</a>
+                    <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
+                </div>
+
+                <div style="clear: both">
+                </div>
+                <!--                                                <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>-->
+            </div>
+
+
         </div>
         <jsp:include page="../common/footer.jspf" />
     </body>
