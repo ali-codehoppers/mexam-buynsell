@@ -55,10 +55,6 @@
             <interceptor-ref name="basic"/>
             <result name="success">jsp/part/viewPart.jsp</result>
         </action>
-        <action name="viewPart__" class="com.mt.actions.part.ViewPart">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/part/viewPart__.jsp</result>
-        </action>
         <action name="showAddPart" class="com.mt.actions.part.ShowAddPart">
             <interceptor-ref name="authenticated"/>
             <result name="success">jsp/part/addPart.jsp</result>
@@ -229,9 +225,15 @@
             <result name="success">jsp/registration/newRegistration.jsp</result>
         </action>
 
+        <action name="showRegistration_1" class="com.mt.actions.Registration.ShowRegistration">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/registration/newRegistration_1.jsp</result>
+        </action>
+
         <action name="register" class="com.mt.actions.Registration.Register">
             <interceptor-ref name="basic"/>
-            <result name="success" type="redirect">viewRegistration?messeage=${message}&amp;companyId=${company.id}&amp;userId=${user.id} </result>
+<!--            <result name="success" type="redirect">viewRegistration?messeage=${message}&amp;companyId=${company.id}&amp;userId=${user.id} </result>-->
+            <result name="success" type="redirect">home</result>
         </action>
 
         <action name="viewRegistration" class="com.mt.actions.Registration.ViewRegistration">

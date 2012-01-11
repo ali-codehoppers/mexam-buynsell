@@ -66,7 +66,8 @@ public class GetRFQsReceived extends AuthenticatedAction {
         }
 
         rfqs = rFQService.findByReceiver(company.getId());
-        for (RFQ rfq : rfqs) {
+        for (RFQ rfq : rfqs) 
+        {
             rFQExtendeds.add(new RFQExtended(rfq));
         }
 
