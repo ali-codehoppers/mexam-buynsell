@@ -106,10 +106,6 @@
             <interceptor-ref name="basic"/>
             <result name="success">jsp/inventory/searchItems.jsp</result>
         </action>
-        <action name="searchItemFrag" class="com.mt.actions.Inventory.SearchItem">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/inventory/searchItemsFrag.jsp</result>
-        </action>
                 
             <!-- //     Inventory    -->
 
@@ -386,7 +382,10 @@
             <result >jsp/common/ajax.jsp</result>
         </action>
 
-        
+        <action name="sendRFQforItems" class="com.mt.actions.ajaxActions.SendRFQforItems">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
         <!-- //     Ajax Actions    -->
 
         <action name="getImage" class="com.mt.actions.GetImage">

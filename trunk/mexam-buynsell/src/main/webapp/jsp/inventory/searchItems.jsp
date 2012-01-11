@@ -8,8 +8,6 @@
         <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>        
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/> 
-        <script type="text/javascript" src="js/menu/menu.js"></script>   
-        <link href="css/menu/menu.css" rel="stylesheet" type="text/css" />
         <link href="css/css_sheet.css" rel="stylesheet" type="text/css" />
         <style>
             .searchBox
@@ -132,15 +130,19 @@
             
             function addCombo(item_id, qty) {
                 var combo = document.getElementById(item_id);
-                for(var i=1;i<=qty;i++)
+                if(combo!=null)
                 {
-                    var option = document.createElement("option");
-                    option.text = i;
-                    option.value = i;
-                    try {
-                        combo.add(option, null); //Standard
-                    }catch(error) {
-                        combo.add(option); // IE only
+                    for(var i=1;i<=qty;i++)
+                    {
+                        var option = document.createElement("option");
+                        option.text = i;
+                        option.value = i;
+                        try {
+                            combo.add(option, null); //Standard
+                        }
+                        catch(error) {
+                            combo.add(option); // IE only
+                        }
                     }
                 }
             }
@@ -171,7 +173,7 @@
                 html+=item.partNo;
                 html+="</div>";
                 html+="<div class='item_Price'>";
-                html+=item.cond+"  $"+item.price;
+                html+=item.cond+"&nbsp;&nbsp;&nbsp;  $"+item.price;
                 html+="</div>";
                 html+="</div>";
                 html+="<div>";
@@ -197,67 +199,30 @@
                 html+="<div style='float: left; width: 30%'>";
                 html+="<div style='float:left; margin-top: 10%; float: right; margin:auto'>";
             <% if (session.getAttribute("user") != null) {%> 
-                        html+="<div class='item_desc_label'>";
-                        html+="Qty: ";
-                        html+="<select class='field_big' name='combo_qty_"+item.id+"' id='combo_qty_"+item.id+"' style='margin-top:25px; height:25px; width: 50px; text-align: center; font-size: 13pt'></select>";
-                        html+="</div>";
-                        html+="<div style='text-align: center; height: auto;'>";
-                        html+="<a href='javascript:AddCartItem("+item.id+")' class='btn' style='text-align: center;'>Add to Cart</a>";
-                        html+="</div>";
-            <% }%>        
-                         html+="</div>";
-                         html+="</div>";
-                         html+="</div>";
-                         html+="</div>";
-                         html+="<div style='clear: both'>";
-                         html+="</div>";
-                         html+="</div>";
-                         html+="<div style='border: 1px solid #999999;'>";
-                         html+="<div style='padding: 8px; padding-left: 10px'>";
-                         html+=item.companyName;
-                         html+="</div>";
-                         html+="</div>";
-                         html+="</div>";
-                         return html;
-                     }
-            
-                     function getListItemHtml(item)
-                     {
-                         var html="<div style='width:40%; float:left'>";
-                         html+="<div style='font-size:18pt'>";
-                         html+="<span style='font-size:16pt'><a href='viewPart?partId="+item.id+"'>"+ item.partNo +"</a></span>";
-                         html+="<span style='font-size:12pt; margin-left:20pt'>("+ item.manufacturer +")</span>";                
-                         html+="</div>";
-                         html+="<div style='font-size:10pt;font-style:italic'>";
-                         html+=item.description;                
-                         html+="</div>";                
-                         html+="</div>";
-                         html+="<div style='width:10%;float:left'>";
-                         html+=item.cond
-                         html+="</div>";                
-                         html+="<div style='width:35%;float:left'>";
-                         html+=item.companyName
-                         html+="</div>";                
-                         html+="<div style='width:15%;float:left'>";
-            <% if (session.getAttribute("User") != null) {%> 
-            <%= ((User) session.getAttribute("User")).getFirstName()%> 
-                            html+="<div style='text-align: center'>";
-                            Qty: 
-                                //    html+="<input id='inp_qty' name='inp_qty' value='1' style='width:40%;text-align: center '/>";
-                            html+=" <select name='combo_qty_"+item.id+"' id='combo_qty_"+item.id+"' style='width:40%;text-align: center '/>";                
-                            html+="</div>";
-                            html+="<div style='text-align: center'>";
-                            //html+="<a href='#' onclick='redirect("+item+")'>Add to Cart</a>";
-                            html+="<input type='button' onclick='AddCartItem("+item.id+")' value='Add to Cart'/>";                        
-                            html+="</div>";
-            <% }%>                     
-                    html+="</div>";                
-                    html+="<div style='clear:both'>";
+                    html+="<div class='item_desc_label'>";
+                    html+="Qty: ";
+                    html+="<select class='field_big' name='combo_qty_"+item.id+"' id='combo_qty_"+item.id+"' style='margin-top:25px; height:25px; width: 50px; text-align: center; font-size: 13pt'></select>";
                     html+="</div>";
-                
+                    html+="<div style='text-align: center; height: auto;'>";
+                    html+="<a href='javascript:AddCartItem("+item.id+")' class='btn' style='text-align: center;'>Add to Cart</a>";
+                    html+="</div>";
+            <% }%>        
+                    html+="</div>";
+                    html+="</div>";
+                    html+="</div>";
+                    html+="</div>";
+                    html+="<div style='clear: both'>";
+                    html+="</div>";
+                    html+="</div>";
+                    html+="<div style='border: 1px solid #999999;'>";
+                    html+="<div style='padding: 8px; padding-left: 10px'>";
+                    html+=item.companyName;
+                    html+="</div>";
+                    html+="</div>";
+                    html+="</div>";
                     return html;
                 }
-        </script>
+         </script>
         <title>Buy & Sell</title>
     </head>
     <body>

@@ -225,10 +225,10 @@
             subscript   : { visible : true, tags : ['sub'], tooltip : "Subscript" },
             superscript : { visible : true, tags : ['sup'], tooltip : "Superscript" },
 
-            separator03 : { visible : true, separator : true },
+            separator03 : { visible : false, separator : true },
 
-            undo : { visible : true, tooltip : "Undo" },
-            redo : { visible : true, tooltip : "Redo" },
+            undo : { visible : false, tooltip : "Undo" },
+            redo : { visible : false, tooltip : "Redo" },
 
             separator04 : { visible : true, separator : true },
 
@@ -271,7 +271,7 @@
             },
 
             insertImage : {
-                visible : true,
+                visible : false,
                 exec    : function()
                 {
                     if ( $.browser.msie )

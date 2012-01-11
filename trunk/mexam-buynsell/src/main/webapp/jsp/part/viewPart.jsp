@@ -77,11 +77,11 @@
 
                     <div id="prodDescCont" style="float: left">
                         <div id="prodDesc" style="text-align: left">
-                            <s:property value="part.description"/><br>
+                            <s:property value="part.description" escape="false"/><br>
                         </div>
 
                         <div id="prodLongDesc" style="max-width: 530px">
-                            <s:property value="part.overview"/><br>
+                            <s:property value="part.overview" escape="false"/><br>
                         </div>
                     </div>
                 </div>

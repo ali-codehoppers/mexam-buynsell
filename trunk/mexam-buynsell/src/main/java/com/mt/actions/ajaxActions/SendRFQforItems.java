@@ -1,24 +1,16 @@
 package com.mt.actions.ajaxActions;
 
 import com.mt.actions.AuthenticatedAction;
-import com.mt.hibernate.entities.Cart;
-import com.mt.hibernate.entities.CartItem;
-import com.mt.hibernate.entities.Company;
-import com.mt.hibernate.entities.RFQ;
-import com.mt.hibernate.entities.RFQItem;
-import com.mt.services.CartItemService;
-import com.mt.services.CartService;
-import com.mt.services.CompanyService;
-import com.mt.services.RFQItemService;
-import com.mt.services.RFQService;
+import com.mt.hibernate.entities.*;
+import com.mt.services.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SendRFQforParts extends AuthenticatedAction {
+public class SendRFQforItems extends AuthenticatedAction {
 
     private int vendorId = 0;
-    private String parts = "";
+    private String parts;
     private Cart cart;
     private List<CartItem> cartItems;
     private CartService cartService;
@@ -26,11 +18,12 @@ public class SendRFQforParts extends AuthenticatedAction {
     private CompanyService companyService;
     private RFQ rfq;
     private RFQService rFQService;
-    private String jsonString = "";
+    private String jsonString;
     private RFQItemService rFQItemService;
     private List<Integer> partids;
-    //private String partids[];
-
+    private String subject;
+    private String message;
+    
     public void setVendorId(int vendorId) {
         this.vendorId = vendorId;
     }
@@ -57,6 +50,14 @@ public class SendRFQforParts extends AuthenticatedAction {
 
     public void setParts(String parts) {
         this.parts = parts;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     @Override
@@ -86,8 +87,8 @@ public class SendRFQforParts extends AuthenticatedAction {
         cartItems = cartItemService.findByVendor(cart.getId(), vendorId);
 
         rfq = new RFQ();
-        rfq.setTitle("Some Title");
-        rfq.setMessage("RFQ Message");
+        rfq.setTitle(subject);
+        rfq.setMessage(message);
         rfq.setSender(getUser());
         rfq.setId(getUser().getId());
         rfq.setReceiver(receiver);
@@ -102,7 +103,7 @@ public class SendRFQforParts extends AuthenticatedAction {
 
         List<RFQItem> rFQItems = new ArrayList<RFQItem>();
         for (CartItem cartItem : cartItems) {
-            if (partids.contains(cartItem.getInventoryId())) {
+            if (partids.contains(cartItem.getId())) {
                 RFQItem item = new RFQItem();
                 item.setInventory(cartItem.getInventory());
                 item.setInventoryId(cartItem.getInventoryId());

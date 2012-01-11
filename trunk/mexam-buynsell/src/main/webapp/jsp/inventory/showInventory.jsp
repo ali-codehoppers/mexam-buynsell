@@ -44,7 +44,7 @@
                     jQuery("#inventoryList").jqGrid('addRowData',i+1,mydata[i]);
                 }
                 jQuery("#inventoryList").jqGrid('navGrid','#pager',{edit:false,add:false,del:false});
- 
+                $( ".ui-jqgrid-titlebar-close").hide();
             });
             
             

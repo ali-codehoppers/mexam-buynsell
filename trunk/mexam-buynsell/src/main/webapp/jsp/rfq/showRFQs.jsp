@@ -70,9 +70,9 @@
                     //colNames:['PartNo','Name','Quantity','Price'],
                     colNames:['Date','Subject','Sent To'],
                     colModel:[
-                        {name:'cell.date',index:'date', width:200, align:"center",sortable:true,formatter:isNewFormatter},                                                
-                        {name:'cell.title',index:'title', width:200, sortable:true,formatter:isNewFormatter},
-                        {name:'cell.receiverCompanyName',index:'receiverCompanyName', width:200, sortable:true,formatter:isNewFormatter}
+                        {name:'cell.date',index:'date', width:200, align:"center",sortable:true},                                                
+                        {name:'cell.title',index:'title', width:200, sortable:true},
+                        {name:'cell.receiverCompanyName',index:'receiverCompanyName', width:200, sortable:true}
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
@@ -151,7 +151,7 @@
                     modal: true,
                     width:'auto'
                 });
-               
+               $( ".ui-jqgrid-titlebar-close").hide();
             });
   
             function getRFQ(id,caller)
