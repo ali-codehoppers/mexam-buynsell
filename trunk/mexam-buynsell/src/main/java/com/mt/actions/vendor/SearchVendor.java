@@ -5,7 +5,9 @@
 package com.mt.actions.vendor;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 import com.mt.hibernate.entities.Company;
+import com.mt.hibernate.entities.Vendor;
 import com.mt.services.CompanyService;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
@@ -40,4 +42,5 @@ public class SearchVendor extends ActionSupport {
         this.companys = companys;
     }
 
+    
 }
