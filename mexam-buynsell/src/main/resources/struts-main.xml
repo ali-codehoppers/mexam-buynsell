@@ -162,7 +162,7 @@
 
         <action name="searchVendor" class="com.mt.actions.vendor.SearchVendor">
             <interceptor-ref name="authenticated"/>
-            <result name="success">jsp/vendor/searchedVendors.jsp</result>
+            <result name="success">jsp/vendor/searchVendor.jsp</result>
         </action>
 
         <action name="showSearchVendor" class="com.mt.actions.DoNothing">
@@ -388,6 +388,12 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
+        
+        <action name="addVendorAjax" class="com.mt.actions.ajaxActions.AddVendorAjax">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        
         <!-- //     Ajax Actions    -->
 
         <action name="getImage" class="com.mt.actions.GetImage">

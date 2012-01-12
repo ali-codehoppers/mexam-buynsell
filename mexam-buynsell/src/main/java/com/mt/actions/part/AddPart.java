@@ -1,18 +1,13 @@
 package com.mt.actions.part;
 
 import com.mt.actions.AuthenticatedAction;
-import com.mt.hibernate.entities.Company;
-import com.mt.hibernate.entities.Inventory;
-import com.mt.hibernate.entities.LookUp;
-import com.mt.hibernate.entities.Part;
-import com.mt.hibernate.entities.SubCategory;
-import com.mt.services.CompanyService;
-import com.mt.services.InventoryService;
-import com.mt.services.LookUpService;
-import com.mt.services.PartService;
-import com.mt.services.SubCategoryService;
+import com.mt.hibernate.entities.*;
+import com.mt.services.*;
+import com.mt.util.ImageUtil;
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 
 public class AddPart extends AuthenticatedAction {
 
@@ -39,6 +34,10 @@ public class AddPart extends AuthenticatedAction {
     private String condition;
     private double price;
     private String quantity;
+    private File image;
+    private String imageContentType;
+    private String imageFilename;
+    private ImageService imageService;
 
 //    public void setSubCategoryId(String subCategoryId) {
 //        this.subCatId = subCategoryId;
@@ -107,6 +106,22 @@ public class AddPart extends AuthenticatedAction {
         this.companyService = companyService;
     }
 
+    public void setImage(File image) {
+        this.image = image;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
+    public void setImageFileName(String imageFilename) {
+        this.imageFilename = imageFilename;
+    }
+
+    public void setImageService(ImageService imageService) {
+        this.imageService = imageService;
+    }
+
     @Override
     public String execute() throws Exception {
 
@@ -141,8 +156,22 @@ public class AddPart extends AuthenticatedAction {
         inventory.setUpdatedBy(getUser().getId());
         inventoryService.addNew(inventory);
 
-        message="Part and Inventory added successfully.";
-        
+        String fileName = UUID.randomUUID().toString();
+        new ImageUtil().SaveImage(image, fileName, getExtension(imageFilename));
+
+        if (image != null) {
+            Image tmpImage = new Image();
+            tmpImage.setContentType(imageContentType);
+            tmpImage.setFileName(fileName);
+            tmpImage.setPart(part);
+            tmpImage.setOrgFileName(imageFilename);
+            tmpImage.setExtension(getExtension(imageFilename));
+            imageService.addNew(tmpImage);
+        }
+
+
+        message = "Part and Inventory added successfully.";
+
         return SUCCESS;
     }
 
@@ -168,5 +197,15 @@ public class AddPart extends AuthenticatedAction {
 
     public String getInfo() {
         return info;
+    }
+
+    private String getExtension(String fileName) {
+        if (fileName != null && fileName.length() > 0) {
+            int index = fileName.lastIndexOf('.');
+            if (index > -1) {
+                return fileName.substring(index + 1, fileName.length());
+            }
+        }
+        return null;
     }
 }

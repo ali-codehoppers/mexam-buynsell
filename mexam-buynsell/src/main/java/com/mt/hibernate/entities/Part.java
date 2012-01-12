@@ -2,16 +2,7 @@ package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -113,7 +104,7 @@ public class Part extends BaseEntity {
         return manufacturer;
     }
 
-    @OneToMany(targetEntity = Image.class, fetch = FetchType.LAZY, mappedBy = "productId")
+    @OneToMany(targetEntity = Image.class, fetch = FetchType.LAZY, mappedBy = "partId")
     public List<Image> getImages() {
         return images;
     }

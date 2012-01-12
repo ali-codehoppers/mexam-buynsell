@@ -1,9 +1,3 @@
-<%-- 
-    Document   : seachPart
-    Created on : Nov 28, 2011, 11:29:09 AM
-    Author     : AmierHaider
---%>
-
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
 <!DOCTYPE html>
 <html>

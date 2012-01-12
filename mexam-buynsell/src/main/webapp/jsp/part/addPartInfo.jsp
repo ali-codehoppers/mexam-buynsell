@@ -136,7 +136,7 @@
                 </div>
 
                 <div id="formContainder">
-                    <form id ="addPart" method="POST" action="addPart">
+                    <form id ="addPart" method="POST" action="addPart" enctype="multipart/form-data">
                         <input name="subCategoryId" id="subCategoryId" style="display:none"/>
                         <div id="tabs">
                             <ul>
@@ -218,8 +218,16 @@
                                 </div>
                             </div>
                             <div id="image" style="min-height: 300px">
-
-
+                                <div style="margin-top: 50px; margin-bottom: 50px">
+                                    <div style="float: left; width: 28%; margin: 5px; text-align: right; vertical-align: middle; margin-top: 20px;">                        
+                                        Image:
+                                    </div>                        
+                                    <div style="float: left; width: 58%; margin: 5px; text-align: left;">                        
+                                        <input type="file" name="image" id="image" accept="image/*"> 
+                                    </div>
+                                </div>
+                                <div style="clear: both">
+                                </div>
                             </div>
                             <div id="detailInfo">
                                 <div>

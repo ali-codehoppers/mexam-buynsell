@@ -6,14 +6,7 @@ package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 
 @Entity
 @javax.persistence.Table(name = "images")
@@ -23,7 +16,7 @@ public class Image implements Serializable {
     @Expose
     private int id;
     @Expose
-    private int productId;
+    private int partId;
     @Expose
     private String name;
     @Expose
@@ -52,8 +45,8 @@ public class Image implements Serializable {
         this.description = description;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setPartId(int partId) {
+        this.partId = partId;
     }
 
     public void setContentType(String contentType) {
@@ -108,9 +101,9 @@ public class Image implements Serializable {
         return part;
     }
 
-    @Column(insertable = false, updatable = false, name = "productId")
-    public int getProductId() {
-        return productId;
+    @Column(insertable = false, updatable = false, name = "partId")
+    public int getPartId() {
+        return partId;
     }
 
     public String getExtension() {
