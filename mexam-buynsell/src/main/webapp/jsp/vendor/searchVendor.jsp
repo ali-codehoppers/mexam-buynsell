@@ -35,7 +35,7 @@
             .item_Title
             {
                 float: left;
-                min-width: 80%;
+                min-width: 60%;
                 font-size: 18px;
                 font-weight: bold;
                 padding-bottom: 5px;
@@ -44,7 +44,7 @@
             .item_Price
             {
                 float: left;
-                min-width: 20%;
+                min-width: 40%;
                 font-size: 16px;
                 font-weight: bold;
                 text-align: right;
@@ -133,16 +133,16 @@
                 html+="<img style='width: 90%' src='images/default.png'/>";
                 html+="</div>";
                 html+="<div style='font-size: 10px'>";
-                html+="Last Update: "+item.creationDate;
+                html+="Last Update: "+item.date;
                 html+="</div>";
                 html+="</div>";
                 html+="<div style='float: left; margin-left: 20px; width: 80%'>";
                 html+="<div id='item_title' style='width: 100%; color: #083152;'>";
                 html+="<div class='item_Title' >";
-                html+=item.state;
+                html+=item.name;
                 html+="</div>";
                 html+="<div class='item_Price'>";
-                html+=item.cond+"&nbsp;&nbsp;&nbsp;  $"+item.price;
+                html+=item.stateString+" - "+item.countryString;
                 html+="</div>";
                 html+="</div>";
                 html+="<div>";
