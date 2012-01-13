@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @javax.persistence.Table(name = "states")
@@ -49,7 +51,7 @@ public class State implements Serializable {
     public void setCompanys(List<Company> companys) {
         this.companys = companys;
     }
-    
+
     public State() {
     }
 
@@ -59,17 +61,20 @@ public class State implements Serializable {
         return id;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 150)
     public String getName() {
         return name;
     }
 
-    @Column(insertable = false, updatable = false, name="countryId")
+    @NotEmpty
+    @Column(insertable = false, updatable = false, name = "countryId")
     public int getCountryId() {
         return countryId;
     }
 
     @ManyToOne(targetEntity = Country.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="countryId")
+    @JoinColumn(name = "countryId")
     public Country getCountry() {
         return country;
     }

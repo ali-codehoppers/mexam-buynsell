@@ -16,13 +16,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "companies")
 @NamedQueries({
     @NamedQuery(name = "Company.findByName", query = "select u from Company u where u.name like ?"),
-        @NamedQuery(name = "Company.findBySearchString", query = "select v from Company v where v.address like ? or v.city like ? or v.name like ?")            
+    @NamedQuery(name = "Company.findBySearchString", query = "select v from Company v where v.address like ? or v.city like ? or v.name like ?")
 })
 public class Company extends BaseEntity {
 
@@ -107,14 +109,19 @@ public class Company extends BaseEntity {
         this.vendors = vendors;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 150)
     public String getName() {
         return name;
     }
 
+    @Length(max = 255)
     public String getAddress() {
         return address;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 50)
     public String getCity() {
         return city;
     }
@@ -125,23 +132,28 @@ public class Company extends BaseEntity {
         return state;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "stateId")
     public int getStateId() {
         return stateId;
     }
 
+    @Length(min = 6, max = 25)
     public String getFaxNo() {
         return faxNo;
     }
 
+    @Length(min = 6, max = 25)
     public String getPhoneNo() {
         return phoneNo;
     }
 
+    @Length(min = 6, max = 50)
     public String getWebAddress() {
         return webAddress;
     }
 
+    @Length(min = 3, max = 15)
     public String getZip() {
         return zip;
     }

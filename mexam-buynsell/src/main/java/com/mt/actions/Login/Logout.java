@@ -18,6 +18,5 @@ public class Logout extends ActionSupport {
             session.remove("user");
         }
         return SUCCESS;
-
     }
 }

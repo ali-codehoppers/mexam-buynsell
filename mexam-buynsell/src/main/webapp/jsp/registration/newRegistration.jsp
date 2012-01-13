@@ -130,12 +130,22 @@
                         <h3 style="width: 100%; text-align: center">Required Company Information</h3>
 
                         <div>
+<!--                             <div>
+                                <div style="float: left; margin: 5px; text-align: left; vertical-align: middle; margin-left: 30%; color: #cd0a0a">                        
+                                    
+                                </div>                        
+                                <div style="clear: both"></div>
+                            </div>-->
+
                             <div>
                                 <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Name:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
                                     <input id="name" name="name" class="field_big"/>
+                                    <s:fielderror ><param>userName</param></s:fielderror>
+                                </div>
+                                <div style="float: left; width: 48%; margin: 5px;">                        
                                 </div>
                             </div>
                             <div>

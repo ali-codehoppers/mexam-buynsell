@@ -31,7 +31,8 @@
         <action name="login" class="com.mt.actions.Login.Login">
             <interceptor-ref name="basic"/>
             <result name="success" type="redirect">home</result>
-            <result name="fail" type="redirect">showLogin?error=${error}</result>            
+            <result name="input">jsp/login/login.jsp</result>
+            <result name="fail" type="chain">showLogin</result>            
         </action>
         
         <action name="logout" class="com.mt.actions.Login.Logout">

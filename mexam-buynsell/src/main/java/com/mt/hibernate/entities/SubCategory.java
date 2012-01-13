@@ -12,17 +12,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
-
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "subcategories")
-@NamedQueries(
-  {
+@NamedQueries({
     @NamedQuery(name = "SubCategory.findByName", query = "select c from SubCategory c where c.name like ?")
-  })
-public class SubCategory extends BaseEntity
-{
+})
+public class SubCategory extends BaseEntity {
+
     @Expose
     private String name;
     @Expose
@@ -30,57 +30,50 @@ public class SubCategory extends BaseEntity
     private Category category;
     private List<Part> parts;
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setCategory(Category category)
-    {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
-    public void setCategoryId(int categoryId)
-    {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
-    public void setParts(List<Part> parts)
-    {
-        this.parts= parts;
+    public void setParts(List<Part> parts) {
+        this.parts = parts;
     }
 
-    public SubCategory()
-    {
+    public SubCategory() {
     }
 
-    public SubCategory(String name, int categoryId)
-    {
+    public SubCategory(String name, int categoryId) {
         this.name = name;
         this.categoryId = categoryId;
     }
 
-    public String getName()
-    {
+    @NotEmpty
+    @Length(min = 4, max = 150)
+    public String getName() {
         return name;
     }
 
-    @Column(insertable = false, updatable = false, name="categoryId")
-    public int getCategoryId()
-    {
+    @NotEmpty
+    @Column(insertable = false, updatable = false, name = "categoryId")
+    public int getCategoryId() {
         return categoryId;
     }
 
     @ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="categoryId")
-    public Category getCategory()
-    {
+    @JoinColumn(name = "categoryId")
+    public Category getCategory() {
         return category;
     }
 
     @OneToMany(targetEntity = Part.class, fetch = FetchType.LAZY, mappedBy = "subcategoryId")
-    public List<Part> getParts()
-    {
+    public List<Part> getParts() {
         return parts;
     }
 }

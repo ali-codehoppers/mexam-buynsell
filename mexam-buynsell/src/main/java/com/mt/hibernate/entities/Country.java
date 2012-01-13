@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -18,12 +20,10 @@ import org.hibernate.annotations.NamedQuery;
  */
 @Entity
 @javax.persistence.Table(name = "countries")
-@NamedQueries(
-  {
+@NamedQueries({
     @NamedQuery(name = "Country.findByName", query = "select c from Country c where c.name like ?")
-  })
-public class Country implements Serializable
-{
+})
+public class Country implements Serializable {
 
     @Expose
     private int id;
@@ -31,53 +31,45 @@ public class Country implements Serializable
     private String name;
     private List<State> states;
 
-    public void setId(int id)
-    {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setStates(List<State> states)
-    {
+    public void setStates(List<State> states) {
         this.states = states;
     }
 
-    public Country()
-    {
-        
+    public Country() {
     }
 
-    public Country(int id, String name)
-    {
+    public Country(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Country(String name)
-    {
+    public Country(String name) {
         this.name = name;
     }
 
     @Id
     @GeneratedValue
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
 
-    public String getName()
-    {
+    @NotEmpty
+    @Length(min = 4, max = 150)
+    public String getName() {
         return name;
     }
 
-    @OneToMany(targetEntity = State.class, fetch = FetchType.LAZY, mappedBy = "countryId" )
-    @JoinColumn(name="countryId")
-    public List<State> getStates()
-    {
+    @OneToMany(targetEntity = State.class, fetch = FetchType.LAZY, mappedBy = "countryId")
+    @JoinColumn(name = "countryId")
+    public List<State> getStates() {
         return states;
     }
 }

@@ -5,13 +5,9 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @javax.persistence.Table(name = "users")
@@ -19,6 +15,7 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "User.findByName", query = "select u from User u where u.firstName like ? or u.lastName like ?"),
     @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username like ?")})
 public class User extends BaseEntity {
+
     @Expose
     private String firstName;
     @Expose
@@ -85,18 +82,25 @@ public class User extends BaseEntity {
         this.companyId = companyId;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 50)
     public String getFirstName() {
         return firstName;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 50)
     public String getLastName() {
         return lastName;
     }
 
+    @Length(max = 255)
     public String getAddress() {
         return address;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 50)
     public String getCity() {
         return city;
     }
@@ -115,10 +119,14 @@ public class User extends BaseEntity {
         return email;
     }
 
+    @NotEmpty
+    @Length(min = 6, max = 15)
     public String getPassword() {
         return password;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 50)
     public String getUsername() {
         return username;
     }

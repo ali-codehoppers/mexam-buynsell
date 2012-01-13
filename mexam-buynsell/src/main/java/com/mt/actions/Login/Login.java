@@ -40,6 +40,18 @@ public class Login extends ActionSupport {
     }
 
     @Override
+    public void validate() 
+    {
+        if (userName==null|| userName.length() == 0) {
+            addFieldError("userName", "User Name is required");
+        }
+        
+        if (password==null|| password.length() == 0) {
+            addFieldError("password", getText("Password is required"));
+        }
+    }
+
+    @Override
     public String execute() throws Exception {
 
         userList = userService.findByUsername(userName);
