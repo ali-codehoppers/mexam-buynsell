@@ -16,8 +16,8 @@ import java.util.List;
 
 public class AddToCart extends AuthenticatedAction {
 
-    private int inventoryId;
-    private int quantity;
+    private int inventoryId = 0;
+    private int quantity = 0;
     private Cart cart;
     private CompanyService companyService;
     private CartService cartService;
@@ -44,22 +44,31 @@ public class AddToCart extends AuthenticatedAction {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
+
+    @Override
+    public void validate() {
+        if (quantity < 0) {
+            addFieldError("quantity", "Quantity must be greater than or equal to zero.");
+        }
+        if (inventoryId < 1) {
+            addFieldError("inventoryId", "No inventory with this ID found.");
+        }
+    }
+
     @Override
     public String execute() throws Exception {
-        //Company company = companyService.getById(getUser().getCompanyId());
-
         List<Cart> cartList = cartService.findByUser(getUser().getId());
-        if (cartList.size() > 0) {
+        if (cartList.size() > 0) 
+        {
             cart = cartService.findByUser(getUser().getId()).get(0);
         }
-        else
+        else 
         {
             cart = new Cart();
             cart.setUser(getUser());
             cartService.addNew(cart);
         }
-        
+
         Inventory inventory = inventoryService.getById(inventoryId);
         cartItem = new CartItem();
         cartItem.setCart(cart);

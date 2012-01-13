@@ -10,8 +10,10 @@ import com.mt.hibernate.entities.Inventory;
 import com.mt.services.CompanyService;
 import com.mt.services.InventoryService;
 import java.sql.Timestamp;
+import java.util.Map;
+import org.apache.struts2.interceptor.SessionAware;
 
-public class AddInventory extends AuthenticatedAction {
+public class AddInventory extends AuthenticatedAction implements SessionAware {
 
     private String message;
     private String error;
@@ -22,10 +24,10 @@ public class AddInventory extends AuthenticatedAction {
     private String condition;
     private double price;
     private String description;
-    private String quantity;
-    
+    private int quantity = 0;
     private InventoryService inventoryService;
     private CompanyService companyService;
+    private Map session;
 
     public void setCompanyService(CompanyService companyService) {
         this.companyService = companyService;
@@ -55,12 +57,38 @@ public class AddInventory extends AuthenticatedAction {
         this.partNo = partNo;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setSession(Map map) {
+        this.session = map;
+    }
+
+    @Override
+    public void validate() {
+        if (quantity < 0) {
+            addFieldError("quantity", "Quantity must be greater than or equal to zero.");
+        }
+        if (partNo == null || partNo.length() < 1) {
+            addFieldError("partNo", "Part Number is missing.");
+        }
+        if (manufacturer == null || manufacturer.length() < 1) {
+            addFieldError("manufacturer", "Manufacturer is missing.");
+        }
+        if (condition == null || condition.length() < 1) {
+            addFieldError("condition", "Please specify inventory condition.");
+        }
+        if (price < 0) {
+            addFieldError("price", "Price can't be less than 0.");
+        }
+
+        
+        
     }
 
     @Override
@@ -72,13 +100,13 @@ public class AddInventory extends AuthenticatedAction {
         inventory.setPartNo(partNo);
         inventory.setDescription(description);
         inventory.setPrice(price);
-        inventory.setQuantity(Integer.parseInt(quantity));
+        inventory.setQuantity(quantity);
         inventory.setCond(condition);
         inventory.setManufacturer(manufacturer);
         inventory.setCompany(company);
         inventory.setCreationDate(new Timestamp(System.currentTimeMillis()));
         inventory.setCreatedBy(getUser().getId());
-        inventory.setUpdatedBy(getUser().getId());        
+        inventory.setUpdatedBy(getUser().getId());
         inventoryService.addNew(inventory);
 
         message = "Inventory added sucessfully";
@@ -92,11 +120,12 @@ public class AddInventory extends AuthenticatedAction {
     public String getMessage() {
         return message;
     }
+
     public String getError() {
         return error;
     }
+
     public String getInfo() {
         return info;
     }
-    
 }

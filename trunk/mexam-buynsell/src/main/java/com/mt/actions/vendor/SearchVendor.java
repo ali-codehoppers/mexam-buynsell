@@ -62,6 +62,7 @@ public class SearchVendor extends ActionSupport {
         private String countryString;
 
         public CompanyExtended(Company company) {
+            this.setId(company.getId());
             this.setName(company.getName());
             this.setAddress(company.getAddress());
             this.setCity(company.getCity());

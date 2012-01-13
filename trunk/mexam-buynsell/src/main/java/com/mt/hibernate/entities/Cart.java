@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -45,13 +46,13 @@ public class Cart extends BaseEntity{
         this.items = items;
     }
 
-
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     public User getUser() {
         return User;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "userId")
     public int getUserId() {
         return userId;

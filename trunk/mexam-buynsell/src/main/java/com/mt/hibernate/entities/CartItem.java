@@ -5,15 +5,8 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -21,7 +14,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "CartItem.findByVendor", query = "select v from CartItem v inner join fetch v.inventory where v.cartId=cast(? as string) and v.inventory.companyId= cast(? as string)")
 })
-public class CartItem extends BaseEntity{
+public class CartItem extends BaseEntity {
 
     @Expose
     private int cartId;
@@ -53,13 +46,13 @@ public class CartItem extends BaseEntity{
         this.quantity = quantity;
     }
 
-
     @ManyToOne(targetEntity = Cart.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "cartId")
     public Cart getCart() {
         return cart;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "cartId")
     public int getCartId() {
         return cartId;
@@ -71,6 +64,7 @@ public class CartItem extends BaseEntity{
         return inventory;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "inventoryId")
     public int getInventoryId() {
         return inventoryId;

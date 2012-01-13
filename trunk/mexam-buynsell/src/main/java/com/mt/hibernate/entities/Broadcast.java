@@ -1,13 +1,9 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -109,6 +105,7 @@ public class Broadcast extends BaseEntity {
         return description;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "companyId")
     public int getCompanyId() {
         return companyId;
@@ -120,6 +117,7 @@ public class Broadcast extends BaseEntity {
         return company;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "countryId")
     public String getCountryId() {
         return countryId;
@@ -131,6 +129,7 @@ public class Broadcast extends BaseEntity {
         return country;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "subCategoryId")
     public String getSubCategoryId() {
         return subCategoryId;
@@ -142,14 +141,19 @@ public class Broadcast extends BaseEntity {
         return subCategory;
     }
 
+    @NotEmpty
     public String getCond() {
         return cond;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 50)
     public String getManufacturer() {
         return manufacturer;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 150)
     public String getPartNo() {
         return partNo;
     }
@@ -166,10 +170,13 @@ public class Broadcast extends BaseEntity {
         return message;
     }
 
+    @NotEmpty
+    @Length(min = 6, max = 150)
     public String getSubject() {
         return subject;
     }
 
+    @NotEmpty
     public String getBroadcastType() {
         return broadcastType;
     }

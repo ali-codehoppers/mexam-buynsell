@@ -6,16 +6,9 @@ package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -23,7 +16,6 @@ import javax.persistence.OneToMany;
 @NamedQueries({
     @NamedQuery(name = "RFQ.findBySender", query = "select r from RFQ r where r.senderId= cast(? as string)"),
     @NamedQuery(name = "RFQ.findByReceiver", query = "select r from RFQ r where r.receiverId= cast(? as string)")})
-
 public class RFQ extends BaseEntity {
 
     @Expose
@@ -91,11 +83,13 @@ public class RFQ extends BaseEntity {
         return Receiver;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "senderId")
     public int getSenderId() {
         return senderId;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "receiverId")
     public int getReceiverId() {
         return receiverId;
@@ -118,8 +112,8 @@ public class RFQ extends BaseEntity {
         return message;
     }
 
+    @Length(min = 4, max = 150)
     public String getTitle() {
         return title;
     }
-
 }

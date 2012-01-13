@@ -133,7 +133,7 @@
                 html+="<img style='width: 90%' src='images/default.png'/>";
                 html+="</div>";
                 html+="<div style='font-size: 10px'>";
-                html+="Last Update: "+item.date;
+                html+="Created: "+item.date;
                 html+="</div>";
                 html+="</div>";
                 html+="<div style='float: left; margin-left: 20px; width: 80%'>";
@@ -169,7 +169,7 @@
                 html+="<div style='float:left; margin-top: 10%; float: right; margin:auto'>";
             <% if (session.getAttribute("user") != null) {%> 
                     html+="<div style='text-align: center; height: auto;'>";
-                    html+="<a href='javascript:AddCartItem("+item.id+")' class='btn' style='text-align: center;'>Add Vendor</a>";
+                    html+="<a href='javascript:AddVendor("+item.id+")' class='btn' style='text-align: center;'>Add Vendor</a>";
                     html+="</div>";
             <% }%>        
                     html+="</div>";

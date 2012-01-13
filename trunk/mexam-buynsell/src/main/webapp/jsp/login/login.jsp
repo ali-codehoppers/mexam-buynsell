@@ -9,6 +9,15 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/> 
         <link href="css/css_sheet.css" rel="stylesheet" type="text/css" />
         <style>
+            .fieldError
+            {
+                color: red;
+                margin: 2px;
+                margin-left: 15px;
+                margin-right: 5px;
+
+            }
+
 
         </style>
 
@@ -65,15 +74,30 @@
                             </tr>
                         </table>
                     </div>
-                    <form id ="login" method="POST" action="login">
+                    <s:form id ="login" method="POST" action="login" theme="simple">
                         <div>
+
+                            <!--                            <div>
+                                                            <div style="float: left; margin: 5px; text-align: left; vertical-align: middle; margin-left: 30%; color: #cd0a0a">                        
+                            <s:fielderror ></s:fielderror>
+                        </div>                        
+                        <div style="clear: both"></div>
+                    </div>-->
+
                             <div>
                                 <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                                    User Name:
+                                    User Name :
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input class="field_big" name="userName"/>
+                                    <div style="float: left;">                        
+                                        <input class="field_big" name="userName"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <s:fielderror theme="simple"><s:param>userName</s:param></s:fielderror>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
+
                             </div>
 
                             <div>
@@ -81,7 +105,14 @@
                                     Password:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input type="password" class="field_big" name="password"/>
+                                    <div style="float: left;">  
+                                        <input type="password" class="field_big" name="password"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <s:fielderror theme="simple"><s:param>password</s:param></s:fielderror>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>
                         </div>
@@ -94,8 +125,7 @@
                             <div style="clear: both"></div>
                         </div>
                         <div style="clear: both"></div> 
-
-                    </form>
+                    </s:form>
 
                 </div>
             </div>

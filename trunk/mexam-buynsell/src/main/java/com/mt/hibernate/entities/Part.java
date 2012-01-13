@@ -3,19 +3,19 @@ package com.mt.hibernate.entities;
 import com.google.gson.annotations.Expose;
 import java.util.List;
 import javax.persistence.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "parts")
-
 @NamedQueries({
     @NamedQuery(name = "Part.findByName", query = "select c from Part c where c.partNo like ?"),
     @NamedQuery(name = "Part.findByCategory", query = "select p from Part p inner join p.subcategory as sub where sub.categoryId = cast(? as string)"),
-    @NamedQuery(name = "Part.findByManufacturer", query = "select p from Part p where p.manufacturer like ?"),    
-    @NamedQuery(name = "Part.findBySearchString", query = "select p from Part p where p.partNo like ? or p.manufacturer like ? or p.name like ?")            
+    @NamedQuery(name = "Part.findByManufacturer", query = "select p from Part p where p.manufacturer like ?"),
+    @NamedQuery(name = "Part.findBySearchString", query = "select p from Part p where p.partNo like ? or p.manufacturer like ? or p.name like ?")
 })
 public class Part extends BaseEntity {
-
 
     @Expose
     private String partNo;
@@ -82,15 +82,17 @@ public class Part extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
-    
 
     public Part() {
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 150)
     public String getPartNo() {
         return partNo;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "subcategoryId")
     public int getSubcategoryId() {
         return subcategoryId;
@@ -123,17 +125,14 @@ public class Part extends BaseEntity {
         return overview;
     }
 
+    @NotEmpty
+    @Length(max = 500)
     public String getDescription() {
         return description;
     }
 
-    public String getModel() {
-        return model;
-    }
-
+    @Length(min = 4, max = 150)
     public String getName() {
         return name;
     }
-    
-    
 }

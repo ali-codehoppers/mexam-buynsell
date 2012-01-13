@@ -13,14 +13,13 @@ import com.mt.services.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 import java.sql.Timestamp;
 
-
 public class Register extends ActionSupport {
 
     private String name;
     private String address;
     private String city;
 //    private int countryId;
-    private int stateVal;
+    private int stateVal = 0;
     private String phoneNo;
     private String faxNo;
     private String zip;
@@ -113,6 +112,44 @@ public class Register extends ActionSupport {
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Override
+    public void validate() {
+        if (fistName.length() == 0) {
+            addFieldError("fistName", "First name is required");
+        }
+
+        if (lastName.length() == 0) {
+            addFieldError("lastName", getText("Last name is required"));
+        }
+
+        if (address.length() == 0) {
+            addFieldError("address", getText("Address is required"));
+        }
+
+        if (city.length() == 0) {
+            addFieldError("city", getText("City is required"));
+        }
+
+        if (stateVal == 0) {
+            addFieldError("state", getText("State is required"));
+        }
+
+        if (companyCategory.length() == 0) {
+            addFieldError("companyCategory", getText("Company category is required"));
+        }
+        if (userName.length() == 0) {
+            addFieldError("userName", getText("Username is required"));
+        }
+        if (password.length() == 0) {
+            addFieldError("password", getText("Password is required"));
+        }
+
+        if (verifyPassword.length() == 0 || password.compareTo(verifyPassword) != 0) {
+            addFieldError("verifyPassword", getText("Both passwords does not match"));
+        }
+
     }
 
     @Override

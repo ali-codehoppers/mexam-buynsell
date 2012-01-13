@@ -10,15 +10,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "inventories")
 @NamedQueries({
-    @NamedQuery(name = "Inventory.findBySearchString", query = "select p from Inventory p where  p.partNo like ? or p.manufacturer like ?")            
+    @NamedQuery(name = "Inventory.findBySearchString", query = "select p from Inventory p where  p.partNo like ? or p.manufacturer like ?")
 })
-
 public class Inventory extends BaseEntity {
+
     @Expose
     private String partNo;
     @Expose
@@ -26,15 +28,14 @@ public class Inventory extends BaseEntity {
     @Expose
     private String cond;
     @Expose
-    private double price;
+    private double price=0;
     @Expose
-    private int quantity;
+    private int quantity=0;
     @Expose
     private String description;
     @Expose
     private int companyId;
     private Company company;
-
 
     public void setCompany(Company company) {
         this.company = company;
@@ -68,10 +69,9 @@ public class Inventory extends BaseEntity {
         this.quantity = quantity;
     }
 
-
     public Inventory() {
     }
-    
+
     @Column(insertable = false, updatable = false, name = "companyId")
     public int getCompanyId() {
         return companyId;
@@ -87,14 +87,20 @@ public class Inventory extends BaseEntity {
         return company;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 150)
     public String getCond() {
         return cond;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 150)
     public String getManufacturer() {
         return manufacturer;
     }
 
+    @NotEmpty
+    @Length(min = 4, max = 150)
     public String getPartNo() {
         return partNo;
     }

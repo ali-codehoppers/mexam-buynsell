@@ -5,13 +5,8 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @javax.persistence.Table(name = "vendors")
@@ -69,6 +64,7 @@ public class Vendor extends BaseEntity {
         return vendor;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "vendorId")
     public int getVendorId() {
         return vendorId;
@@ -80,6 +76,7 @@ public class Vendor extends BaseEntity {
         return company;
     }
 
+    @NotEmpty
     @Column(insertable = false, updatable = false, name = "companyId")
     public int getCompanyId() {
         return companyId;
