@@ -88,6 +88,7 @@
         </action>
         <action name="addInventory" class="com.mt.actions.Inventory.AddInventory">
             <interceptor-ref name="authenticated"/>
+            <result name="input">showAddInventory</result>
             <result name="success" type="redirect">showAddInventory?message=${message}&amp;error=${error}&amp;info=${info}</result>
         </action>
         <action name="showInventory" class="com.mt.actions.Inventory.ShowInventory">

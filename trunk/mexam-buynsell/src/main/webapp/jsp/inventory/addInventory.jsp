@@ -164,15 +164,28 @@
                                     Manufacturer:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input id="manufacturer" name="manufacturer" class="field_big"/>
+                                    <div style="float: left;">    
+                                        <input id="manufacturer" name="manufacturer" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <s:fielderror theme="simple"><s:param>manufacturer</s:param></s:fielderror>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
                             <div>
                                 <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Part #:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input id="partNo" name="partNo" class="field_big"/>
+                                <div style="float: left; width: 48%; margin: 5px;">   
+                                    <div style="float: left;">    
+                                        <input id="partNo" name="partNo" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <s:fielderror theme="simple"><s:param>partNo</s:param></s:fielderror>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>
 
@@ -180,8 +193,15 @@
                                 <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Condition:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <select id="condition" name="condition" class="field_big" style="min-width: 20%">                       
+                                <div style="float: left; width: 48%; margin: 5px;">    
+                                    <div style="float: left;">    
+                                        <select id="condition" name="condition" class="field_big" style="min-width: 20%">     
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <s:fielderror theme="simple"><s:param>condition</s:param></s:fielderror>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                     </select>
                                 </div>
                             </div>
@@ -189,25 +209,45 @@
                                 <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Price:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input name="price" class="field_big"/>
+                                <div style="float: left; width: 48%; margin: 5px;">      
+                                    <div style="float: left;">    
+                                        <input name="price" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <s:fielderror theme="simple"><s:param>price</s:param></s:fielderror>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>
                             <div>
                                 <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Quantity
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input name="quantity" class="field_big"/>
+                                <div style="float: left; width: 48%; margin: 5px;"> 
+                                    <div style="float: left;">    
+                                        <input name="quantity" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <s:fielderror theme="simple"><s:param>quantity</s:param></s:fielderror>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>
                             <div>
                                 <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Description/Notes
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <textarea name="description" class="field_big">
-                                    </textarea>
+                                <div style="float: left; width: 48%; margin: 5px;">
+                                    <div style="float: left;">    
+                                        <textarea name="description" class="field_big">
+                                        </textarea>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <s:fielderror theme="simple"><s:param>description</s:param></s:fielderror>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>     
                         </div>

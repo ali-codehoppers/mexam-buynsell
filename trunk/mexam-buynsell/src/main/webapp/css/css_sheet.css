@@ -279,3 +279,12 @@ A.h1_sub:hover {
     padding:0px 0px 0px 0px;
     margin: 0px 0px 0px 0px;
 }
+
+.fieldError
+{
+    color: red;
+    margin: 2px;
+    margin-left: 15px;
+    margin-right: 5px;
+
+}

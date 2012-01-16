@@ -24,7 +24,7 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
     private String condition;
     private double price;
     private String description;
-    private int quantity = 0;
+    private Integer quantity = 0;
     private InventoryService inventoryService;
     private CompanyService companyService;
     private Map session;
@@ -57,7 +57,7 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
         this.partNo = partNo;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -86,9 +86,6 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
         if (price < 0) {
             addFieldError("price", "Price can't be less than 0.");
         }
-
-        
-        
     }
 
     @Override
