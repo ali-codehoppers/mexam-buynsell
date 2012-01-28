@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
+<%@taglib uri="errortags" prefix="ch"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,7 +31,7 @@
                 
                 companyCategoriesHtml="";
                 for (var i = 0; i< companyCategories.length; i++) {
-                    companyCategoriesHtml += '<option value="' + companyCategories[i].id + '">' + companyCategories[i].description + '</option>';
+                    companyCategoriesHtml += '<option value="' + companyCategories[i].description + '">' + companyCategories[i].description + '</option>';
                 }
                 $("#companyCategory").html(companyCategoriesHtml);
                 
@@ -127,33 +128,43 @@
                 <div id="formContainder" style="margin-left: 50px;">
                     <form id ="register" method="POST" action="register">
 
-                        <h3 style="width: 100%; text-align: center">Required Company Information</h3>
+                        <h3 style="width: 100%; text-align: center;margin-bottom: 15px;">Required Company Information</h3>
 
                         <div>
-<!--                             <div>
-                                <div style="float: left; margin: 5px; text-align: left; vertical-align: middle; margin-left: 30%; color: #cd0a0a">                        
-                                    
-                                </div>                        
-                                <div style="clear: both"></div>
-                            </div>-->
+                            <!--                             <div>
+                                                            <div style="float: left; margin: 5px; text-align: left; vertical-align: middle; margin-left: 30%; color: #cd0a0a">                        
+                                                                
+                                                            </div>                        
+                                                            <div style="clear: both"></div>
+                                                        </div>-->
 
                             <div>
                                 <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Name:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input id="name" name="name" class="field_big"/>
-                                    <s:fielderror ><param>userName</param></s:fielderror>
+                                    <div style="float: left;">    
+                                        <input id="name" name="name" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_name"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                </div>
+
                             </div>
                             <div>
                                 <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Address:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <textarea id="address" name="address" class="field_big" style="min-height: 75px; min-width: 250px; "></textarea>
+                                    <div style="float: left;">    
+                                        <textarea id="address" name="address" class="field_big" style="min-height: 75px; min-width: 250px; "></textarea>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_address"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
                             <div>
@@ -161,7 +172,14 @@
                                     City:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input id="city" name="city" class="field_big"/>
+                                    <div style="float: left;">    
+                                        <input id="city" name="city" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_city"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>
                             <div>
@@ -169,8 +187,14 @@
                                     Country:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <select id="country" name="country" class="field_big" style="min-width: 20%" onchange="javascript:populateStates(this.value)">                       
-                                    </select>
+                                    <div style="float: left;">    
+                                        <select id="country" name="country" class="field_big" style="min-width: 20%" onchange="javascript:populateStates(this.value)"></select>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_country"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>
                             <div>
@@ -178,8 +202,15 @@
                                     State:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <select id="state" name="state" class="field_big" style="min-width: 20%">                       
-                                    </select>
+                                    <div style="float: left;">    
+                                        <select id="state" name="stateVal" class="field_big" style="min-width: 20%">                       
+                                        </select>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_state"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>
                             <div>
@@ -187,7 +218,14 @@
                                     Phone Number:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input name="phoneNo" id="phoneNo" class="field_big"/>
+                                    <div style="float: left;">    
+                                        <input name="phoneNo" id="phoneNo" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_phoneNo"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>
                             <div>
@@ -195,15 +233,29 @@
                                     Fax Number:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input name="faxNo" id="faxNo" class="field_big"/>
+                                    <div style="float: left;">    
+                                        <input name="faxNo" id="faxNo" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_faxNo"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>
                             <div>
                                 <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Zip:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input name="zip" id="zip" class="field_big"/>
+                                <div style="float: left; width: 48%; margin: 5px;">       
+                                    <div style="float: left;">    
+                                        <input name="zip" id="zip" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_zip"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>
 
@@ -211,17 +263,29 @@
                                 <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Web Address:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input name="webAddress" id="webAddress" class="field_big"/>
+                                <div style="float: left; width: 48%; margin: 5px;">    
+                                    <div style="float: left;">    
+                                        <input name="webAddress" id="webAddress" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_webAddress"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                 </div>
                             </div>    
                             <div>
                                 <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Company Category:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <select id="companyCategory" name="companyCategory" class="field_big" style="min-width: 20%">                       
-                                    </select>
+                                <div style="float: left; width: 48%; margin: 5px;">   
+                                    <div style="float: left;">    
+                                        <select id="companyCategory" name="companyCategoryId" class="field_big" style="min-width: 20%"></select>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_companyCategory"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
                         </div>
@@ -232,10 +296,30 @@
 
                             <div>
                                 <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                                    Name:
+                                    First Name:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input id="fistName" name="fistName" class="field_big"/>
+                                    <div style="float: left;">    
+                                        <input id="firstName" name="firstName" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_firstName"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+                                </div>
+                            </div>
+                            <div>
+                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                    Last Name:
+                                </div>                        
+                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                    <div style="float: left;">    
+                                        <input id="lastName" name="lastName" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_lastName"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
                             <div>
@@ -243,15 +327,27 @@
                                     Email:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input id="email" name="email" class="field_big"/>
+                                    <div style="float: left;">    
+                                        <input id="email" name="email" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_email"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
                             <div>
                                 <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     User Name::
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input id="userName" name="userName" class="field_big"/>
+                                <div style="float: left; width: 48%; margin: 5px;">     
+                                    <div style="float: left;">    
+                                        <input id="userName" name="userName" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_userName"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
                             <div>
@@ -259,9 +355,30 @@
                                     Password:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input id="userName" name="userName" class="field_big"/>
+                                    <div style="float: left;">    
+                                        <input type="password" id="password" name="password" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_password"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
+                            <div>
+                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                    Verify Password:
+                                </div>                        
+                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                    <div style="float: left;">    
+                                        <input type="password" id="verifyPassword" name="verifyPassword" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_verifyPassword"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+                                </div>
+                            </div>
+
                         </div>
                         <div style="clear: both">
                         </div>

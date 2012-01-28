@@ -69,9 +69,9 @@
     </head>
     <body>
 
-
-        <jsp:include page="../common/header.jspf" />
-
+        <jsp:include page="../common/header.jspf" >
+            <jsp:param name="currentTab" value="broadcast"/>
+        </jsp:include>
         <div id="container" class="container" style="min-height: 335px; width: 100%">
             <div id="content">
                 <div id="title"> 

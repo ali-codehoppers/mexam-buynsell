@@ -151,7 +151,7 @@
                     modal: true,
                     width:'auto'
                 });
-               $( ".ui-jqgrid-titlebar-close").hide();
+                $( ".ui-jqgrid-titlebar-close").hide();
             });
   
             function getRFQ(id,caller)
@@ -193,7 +193,9 @@
     </head>
     <body>
 
-        <jsp:include page="../common/header.jspf" />
+        <jsp:include page="../common/header.jspf" >
+            <jsp:param name="currentTab" value="rfq"/>
+        </jsp:include>
         <div id="container" class="container" style="min-height: 335px;">
             <div id="content">
                 <div id="title"> 
@@ -226,7 +228,7 @@
 
                 <div id="dialog" title="RFQ">
                     <div style="margin:auto">
-                        <h1 style="width: 100%; text-align: center" id="listTitle">RFQ</h1>
+                        <h1 style="width: 100%; text-align: center" id="dialogTitle">RFQ</h1>
                         <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
                     </div>
                     <div>

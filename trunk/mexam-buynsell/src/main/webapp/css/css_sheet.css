@@ -124,7 +124,8 @@ A:hover {
     border-top:1px solid #3a3a3a;
 }
 
-.navigation_radius{clear:both; margin:0 auto; height:50px; background-color:#fff;
+.navigation_radius{
+    margin:0 auto; height:50px; background-color:#fff;
                    font: bold 13px Arial, Verdana, Helvetica, sans-serif;
                    color: #333;
                    position:relative; 
@@ -135,7 +136,7 @@ A:hover {
                    border-top-left-radius: 5px 5px;
                    border-bottom-right-radius: 5% 5%;
                    border-top-right-radius: 5px;
-                   padding:2px 0px;
+                   
 
                    border-radius: 10px 10px 0px 0px}
 A.topnav:active,  A.topnav:link, A.topnav:visited {
@@ -287,4 +288,16 @@ A.h1_sub:hover {
     margin-left: 15px;
     margin-right: 5px;
 
+}
+
+.sub_menu{
+    z-index: 99;
+}
+
+.part_bottom_bar
+{
+    background:#F0F0F0; 
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    border-radius:8px;
 }
