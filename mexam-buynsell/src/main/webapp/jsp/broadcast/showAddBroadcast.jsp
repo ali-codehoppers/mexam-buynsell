@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
+<%@taglib uri="errortags" prefix="ch"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -52,6 +53,7 @@
                     $("#messageSuccess").hide();                        
                 }
                 getCategories();
+                getSubCategories(1)
                 getMfgs();
             });
             
@@ -106,6 +108,7 @@
                             var html = '<option value="' + data[i].id + '">' + data[i].name + '</option>';
                             $("#subcategories").append(html);
                         }
+                        $("#subCategoryId").val(data[0].id);
                     }
                 });
                 $("#buttonAddNew").hide();
@@ -185,7 +188,10 @@
         <title>Buy & Sell</title>
     </head>
     <body>
-        <jsp:include page="../common/header.jspf" />
+        <jsp:include page="../common/header.jspf" >
+            <jsp:param name="currentTab" value="broadcast"/>
+        </jsp:include>
+
         <div id="container" class="container" style="min-height: 335px;">
             <div id="content">
 
@@ -210,9 +216,16 @@
                                     Broadcast Type:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">
-                                    <input type="radio" name="broadcastType" value="WTS"> WTS</input>
-                                    <input type="radio" name="broadcastType" value="WTB"> WTB</input>
-                                    <input type="radio" name="broadcastType" value="RFQ"> RFQ</input>
+                                    <div style="float: left;">   
+                                        <input type="radio" name="broadcastType" value="WTS"> WTS</input>
+                                        <input type="radio" name="broadcastType" value="WTB"> WTB</input>
+                                        <input type="radio" name="broadcastType" value="RFQ"> RFQ</input>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="addBroadcast_broadcastType"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
                                     <!--<s:radio id="broadcastType" name="broadcastType" list="broadcastType" listKey="id" listValue="description"/> -->
                                 </div>
                             </div>
@@ -222,18 +235,22 @@
                                     Categories:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <select id="categories" class="field_big" name="categories" style="width: 250px; " onchange="getSubCategories(this.value)">
-                                    </select>
+                                    <select id="categories" class="field_big" name="categories" style="width: 250px; " onchange="getSubCategories(this.value)"></select>
                                 </div>
                             </div>
                             <div>
                                 <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     Sub Categories:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <select id="subcategories" style="width: 250px;" onchange="setSubCategory(this.value)">
-                                    </select>
-                                    <input name="subCategoryId" id="subCategoryId" style="display:none" />
+                                <div style="float: left; width: 48%; margin: 5px;">   
+                                    <div style="float: left;">   
+                                        <select id="subcategories" style="width: 250px;" onchange="setSubCategory(this.value)" class="field_big"></select>
+                                        <input name="subCategoryId" id="subCategoryId" style="display:none" />
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="addBroadcast_subCategoryId"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
 
@@ -242,7 +259,13 @@
                                     Manufacturer:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input id="manufacturer" name="manufacturer" class="field_big"/>
+                                    <div style="float: left;">   
+                                        <input id="manufacturer" name="manufacturer" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="addBroadcast_manufacturer"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
                             <div>
@@ -250,7 +273,13 @@
                                     Part #:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input id="partNo" name="partNo" class="field_big"/>
+                                    <div style="float: left;">   
+                                        <input id="partNo" name="partNo" class="field_big"></input>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="addBroadcast_partNo"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
 
@@ -259,8 +288,13 @@
                                     Condition:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <select id="condition" name="condition" class="field_big" style="min-width: 20%">                       
-                                    </select>
+                                    <div style="float: left;">   
+                                        <select id="condition" name="condition" class="field_big" style="min-width: 20%"></select>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="addBroadcast_condition"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
                             <div>
@@ -268,7 +302,13 @@
                                     Price:
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input name="price" class="field_big"/>
+                                    <div style="float: left;">   
+                                        <input name="price" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="addBroadcast_price"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
                             <div>
@@ -276,7 +316,13 @@
                                     Quantity
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <input name="quantity" class="field_big"/>
+                                    <div style="float: left;">   
+                                        <input name="quantity" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="addBroadcast_quantity"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>
                             <div>
@@ -284,8 +330,7 @@
                                     Description/Notes
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
-                                    <textarea name="description" class="field_big" rows="3" style="height: 50px; min-width: 300px">
-                                    </textarea>
+                                    <textarea name="description" class="field_big" rows="3" style="height: 50px; min-width: 300px"></textarea>
                                 </div>
                             </div>   
 
@@ -295,7 +340,13 @@
                                     Subject: 
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;"> 
-                                    <input name="subject" class="field_big"/>
+                                    <div style="float: left;">   
+                                        <input name="subject" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="addBroadcast_subject"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
                                 </div>
                             </div>     
 
@@ -305,8 +356,7 @@
                                     Message: 
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">    
-                                    <textarea name="broadcastMessage" class="field_big" rows="3" style="height: 50px; min-width: 300px">
-                                    </textarea>
+                                    <textarea name="broadcastMessage" class="field_big" rows="3" style="height: 50px; min-width: 300px"></textarea>
                                 </div>
                             </div>     
                             <br/>
@@ -316,6 +366,7 @@
                             <a href="javascript:submitForm()" class="btn">Submit</a>
                             <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
                         </div>
+                    </form>
                 </div>
             </div>
         </div>

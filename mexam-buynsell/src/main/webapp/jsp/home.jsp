@@ -67,7 +67,7 @@
             .partImage
             {
                 height: auto;
-                width: auto;
+                max-width: 180px;
                 overflow: hidden;
                 text-align: center;
             }
@@ -269,10 +269,10 @@
                 html+="<a href='viewPart?partId="+part.id+"'>";
                 if(part.images.length>0)
                 {
-                    html+="<img src='getImage?imageId="+part.images[0].id+"'/>";
+                    html+="<img src='getImage?imageId="+part.images[0].id+"&imageType=2'/>";
                 }
                 else
-                    html+="<img src='images/default.png'/>";
+                    html+="<img src='images/no-product-image.jpg'/>";
                     
                 html+="</a>";
                 html+="</div>";

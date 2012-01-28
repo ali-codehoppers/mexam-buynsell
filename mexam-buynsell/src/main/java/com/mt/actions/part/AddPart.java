@@ -7,9 +7,11 @@ import com.mt.util.ImageUtil;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import org.apache.struts2.interceptor.SessionAware;
 
-public class AddPart extends AuthenticatedAction {
+public class AddPart extends AuthenticatedAction implements SessionAware {
 
     private String message;
     private String error = "";
@@ -33,11 +35,12 @@ public class AddPart extends AuthenticatedAction {
     private String manufacturer;
     private String condition;
     private double price;
-    private String quantity;
+    private Integer quantity;
     private File image;
     private String imageContentType;
     private String imageFilename;
     private ImageService imageService;
+    private Map session;
 
 //    public void setSubCategoryId(String subCategoryId) {
 //        this.subCatId = subCategoryId;
@@ -74,7 +77,7 @@ public class AddPart extends AuthenticatedAction {
         this.partNo = partNo;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -122,8 +125,42 @@ public class AddPart extends AuthenticatedAction {
         this.imageService = imageService;
     }
 
+    public void setSession(Map map) {
+        this.session = map;
+    }
+
     @Override
     public String execute() throws Exception {
+
+        boolean valid = true;
+        if (quantity == null || quantity < 1) {
+            session.put("addPart_quantity", "Quantity must be greater than zero.");
+            valid = false;
+        }
+        if (partNo == null || partNo.length() < 1) {
+            session.put("addPart_partNo", "Part Number is missing.");
+            valid = false;
+        }
+        if (manufacturer == null || manufacturer.length() < 1) {
+            session.put("addPart_manufacturer", "Manufacturer is missing.");
+            valid = false;
+        }
+        if (condition == null || condition.length() < 1) {
+            session.put("addPart_condition", "Please specify inventory condition.");
+            valid = false;
+        }
+        if (price <= 0) {
+            session.put("addPart_price", "Price must be greater than zero.");
+            valid = false;
+        }
+
+
+
+        if (!valid) {
+            return INPUT;
+        }
+
+
 
         Company company = companyService.getById(getUser().getCompanyId());
 
@@ -147,7 +184,7 @@ public class AddPart extends AuthenticatedAction {
         inventory.setPartNo(partNo);
         inventory.setDescription(description);
         inventory.setPrice(price);
-        inventory.setQuantity(Integer.parseInt(quantity));
+        inventory.setQuantity(quantity);
         inventory.setCond(condition);
         inventory.setManufacturer(manufacturer);
         inventory.setCompany(company);
@@ -157,9 +194,8 @@ public class AddPart extends AuthenticatedAction {
         inventoryService.addNew(inventory);
 
         String fileName = UUID.randomUUID().toString();
-        new ImageUtil().SaveImage(image, fileName, getExtension(imageFilename));
-
         if (image != null) {
+             new ImageUtil().SaveImage(image, fileName, getExtension(imageFilename));
             Image tmpImage = new Image();
             tmpImage.setContentType(imageContentType);
             tmpImage.setFileName(fileName);
@@ -208,4 +244,57 @@ public class AddPart extends AuthenticatedAction {
         }
         return null;
     }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getFeatures() {
+        return features;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public String getPartNo() {
+        return partNo;
+    }
+
+    public PartService getPartService() {
+        return partService;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public String getSpecifications() {
+        return specifications;
+    }
+
+    public String getSubCatId() {
+        return subCatId;
+    }
+
+    public int getSubCategoryId() {
+        return subCategoryId;
+    }
+    
 }

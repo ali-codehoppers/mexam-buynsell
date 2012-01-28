@@ -71,25 +71,63 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
 
     @Override
     public void validate() {
-        if (quantity < 0) {
-            addFieldError("quantity", "Quantity must be greater than or equal to zero.");
-        }
-        if (partNo == null || partNo.length() < 1) {
-            addFieldError("partNo", "Part Number is missing.");
-        }
-        if (manufacturer == null || manufacturer.length() < 1) {
-            addFieldError("manufacturer", "Manufacturer is missing.");
-        }
-        if (condition == null || condition.length() < 1) {
-            addFieldError("condition", "Please specify inventory condition.");
-        }
-        if (price < 0) {
-            addFieldError("price", "Price can't be less than 0.");
-        }
+//        boolean valid = true;
+//        if (quantity == null || quantity < 1) {
+//            session.put("addInventory_quantity", "Quantity must be greater than zero.");
+//            valid = false;
+//        }
+//        if (partNo == null || partNo.length() < 1) {
+//            session.put("addInventory_partNo", "Part Number is missing.");
+//            valid = false;
+//        }
+//        if (manufacturer == null || manufacturer.length() < 1) {
+//            session.put("addInventory_manufacturer", "Manufacturer is missing.");
+//            valid = false;
+//        }
+//        if (condition == null || condition.length() < 1) {
+//            session.put("addInventory_condition", "Please specify inventory condition.");
+//            valid = false;
+//        }
+//        if (price <= 0) {
+//            session.put("addInventory_price", "Price must be greater than zero.");
+//            valid = false;
+//        }
+//
+//        if (!valid) {
+//            addFieldError("error", "Some fields are missing.");
+//        }
     }
 
     @Override
     public String execute() throws Exception {
+
+        boolean valid = true;
+        if (quantity == null || quantity < 1) {
+            session.put("addInventory_quantity", "Quantity must be greater than zero.");
+            valid = false;
+        }
+        if (partNo == null || partNo.length() < 1) {
+            session.put("addInventory_partNo", "Part Number is missing.");
+            valid = false;
+        }
+        if (manufacturer == null || manufacturer.length() < 1) {
+            session.put("addInventory_manufacturer", "Manufacturer is missing.");
+            valid = false;
+        }
+        if (condition == null || condition.length() < 1) {
+            session.put("addInventory_condition", "Please specify inventory condition.");
+            valid = false;
+        }
+        if (price <= 0) {
+            session.put("addInventory_price", "Price must be greater than zero.");
+            valid = false;
+        }
+
+        if (!valid) 
+        {
+            return INPUT;
+        }
+
 
         Company company = companyService.getById(getUser().getCompanyId());
 
@@ -124,5 +162,29 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
 
     public String getInfo() {
         return info;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public String getPartNo() {
+        return partNo;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 }

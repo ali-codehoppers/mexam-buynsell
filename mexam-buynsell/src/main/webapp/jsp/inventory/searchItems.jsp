@@ -81,6 +81,8 @@
                 background:transparent url(css/images/header_bg.gif) repeat-x 0 0;  
             }
 
+          
+
         </style>
 
         <script type="text/javascript">
@@ -96,9 +98,12 @@
             });
             function hideSuccess()
             {
-                $("#messageSuccess").hide();
+                $("#messageInfo").hide();
             }
-            
+            function hideSuccess(id)
+            {
+                $("#messageInfo"+id).hide();
+            }
             
             function AddCartItem(id)
             {
@@ -112,11 +117,13 @@
                     success:    function(msg) {
                         if(msg.length>0)
                         {
-                            $("#successMsg").html(msg);
-                            $("#messageInfo").show();
+                            $("#successMsg"+id).html(msg);
+                            $("#messageInfo"+id).show();
+                            setTimeout("hideSuccess("+id+")", 3000);
+                            getCartItemsCount();
                         }
                         else
-                            $("#messageInfo").hide();
+                            $("#messageInfo"+id).hide();
                     }
                 });
                 
@@ -146,7 +153,7 @@
                     }
                 }
             }
-            
+             
             function submitForm()
             {
                 
@@ -157,11 +164,28 @@
             function getItemHtml(item)
             {
             
-                var html="<div class='searchBox'>";
+                var ghtml="<table id='messageInfo"+item.id+"' width='100%' border='0' cellspacing='0' cellpadding='0' style='display:none;'>";
+                ghtml+="<tr>";
+                ghtml+="<td width='6%' align='right'><img src='images/success_left.jpg' alt='' width='38' height='34' /></td>";
+                ghtml+="<td id='successMsg"+item.id+"' width='88%' align='left' class='success_msg'></td>";
+                ghtml+="<td width='5%' align='right' class='success_msg'><a href='#'><img src='images/success_cross.jpg' alt='' width='18' height='18' border='0' onclick='hideSuccess("+item.id+")'/></a></td>";
+                ghtml+="<td width='1%' align='left'><img src='images/success_right.jpg' alt='' width='6' height='34' /></td>";
+                ghtml+="</tr>";
+                ghtml+="</table>";
+                var html=ghtml;
+                html+="<div class='searchBox'>";
                 html+="<div class='searchBox_Top'>";
                 html+="<div style='float: left; width: 15%'>";
                 html+="<div class='searchBox_Image'>";
-                html+="<img style='width: 90%' src='images/default.png'/>";
+                
+                if(item.images)
+                {
+                    html+="<img src='getImage?imageId="+part.images[0].id+"&imageType=2'/>";
+                }
+                else
+                    html+="<img style='width: 90%' src='images/no-product-image.jpg'/>";
+                
+                //                html+="<img style='width: 90%' src='images/default.png'/>";
                 html+="</div>";
                 html+="<div style='font-size: 10px'>";
                 html+="Last Update: "+item.date;
@@ -222,12 +246,14 @@
                     html+="</div>";
                     return html;
                 }
-         </script>
+        </script>
         <title>Buy & Sell</title>
     </head>
     <body>
 
-        <jsp:include page="../common/header.jspf" />
+        <jsp:include page="../common/header.jspf" >
+            <jsp:param name="currentTab" value="buy"/>
+        </jsp:include>
 
         <div id="container" class="container" style="min-height: 335px;">
             <div id="content">

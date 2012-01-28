@@ -40,7 +40,7 @@ public class AddVendorAjax extends AuthenticatedAction {
 
         boolean isFound = false;
         for (Vendor vendorF : company.getVendors()) {
-            if (vendorF.getId() == vendorId) {
+            if (vendorF.getVendorId() == vendorId) {
                 isFound = true;
                 break;
             }
@@ -74,6 +74,9 @@ public class AddVendorAjax extends AuthenticatedAction {
     }
 
     public String getMessage() {
+        return message;
+    }
+      public String getJsonString() {
         return message;
     }
 }

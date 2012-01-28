@@ -18,8 +18,9 @@
 
         <script type="text/javascript">
             var vendorId=0;
+            isCart=true;
             $(document).ready(function () {
-
+                
                 jQuery("#cartVendorList").jqGrid({
                     url:'getCartVendorsList',
                     datatype: "json",
@@ -116,6 +117,9 @@
                 });
                 
                 $( ".ui-jqgrid-titlebar-close").hide();
+                isCart=true;
+                var rowid=$("#cartVendorList").getDataIds()[0];
+                jQuery("#cartVendorList").setSelection(rowid, true);
             });
                 
             function sendRFQ(){
@@ -173,7 +177,9 @@
     </head>
     <body>
 
-        <jsp:include page="../common/header.jspf" />
+        <jsp:include page="../common/header.jspf" >
+            <jsp:param name="currentTab" value="buy"/>
+        </jsp:include>
         <div id="container" class="container" style="min-height: 335px;">
             <div id="content">
                 <div id="title"> 
@@ -186,7 +192,7 @@
                     <table id="cartVendorList"></table>
                     <div id="pager_v"></div>
                 </div>
-                <div id="vendorListContainer" style="margin: auto; width: 750px;">
+                <div id="cartListContainer" style="margin: auto; width: 750px;">
                     <div style="margin-top: 30px"> </div>
                     <table id="cartList"></table>        
                     <div id="pagerCart"></div>
@@ -198,7 +204,7 @@
             <div id="dialog" title="RFQ">
 
                 <div style="margin:auto">
-                    <h1 style="width: 100%; text-align: center" id="listTitle">Send RFQ</h1>
+                    <h1 style="width: 100%; text-align: center" id="titleDialog">Send RFQ</h1>
                     <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
                 </div>
                 <div style="min-width: 500px;">

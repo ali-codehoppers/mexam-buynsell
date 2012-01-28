@@ -8,6 +8,9 @@
         <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>        
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/> 
         <link href="css/css_sheet.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/lightbox/jquery.lightbox-0.5.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/lightbox/jquery.lightbox-0.5.css" media="screen" />
+
         <style>
             #prodDesc
             {
@@ -38,7 +41,30 @@
             {
                 font-size: 10pt!important;
             }
+            #prodImageCont
+            {
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
 
+
+            #gallery {
+                background-color: #444;
+                padding: 10px;
+                width: 520px;
+            }
+            #gallery ul { list-style: none; }
+            #gallery ul li { display: inline; }
+            #gallery ul img {
+                border: 5px solid #3e3e3e;
+                border-width: 5px 5px 20px;
+            }
+            #gallery ul a:hover img {
+                border: 5px solid #fff;
+                border-width: 5px 5px 20px;
+                color: #fff;
+            }
+            #gallery ul a:hover { color: #fff; }
 
         </style>
 
@@ -46,6 +72,7 @@
             $(document).ready(function () {
                 //alert(conditions);
                 $("#tabs").tabs();
+                $('#prodImageCont a').lightBox();
             });
  
             
@@ -68,10 +95,12 @@
                 <div id="prodDetailCont" style="margin-top: 10px">
                     <div id="prodImageCont" style="float: left">
                         <s:if test="part.images.get(0).id>0">
-                            <img src="getImage?imageId=<s:property value="part.images.get(0).id" />"/>
+                            <a href="getImage?imageId=<s:property value='part.images.get(0).id' />&imageType=0" title="">
+                                <img src="getImage?imageId=<s:property value='part.images.get(0).id' />&imageType=2"/>
+                            </a>
                         </s:if>
                         <s:else>
-                            <img src='images/default.png'/>
+                            <img src='images/no-product-image.jpg'/>
                         </s:else>
                     </div>
 

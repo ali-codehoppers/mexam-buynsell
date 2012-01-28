@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
+<%@taglib uri="errortags" prefix="ch"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -141,7 +142,9 @@
     </head>
     <body>
 
-        <jsp:include page="../common/header.jspf" />
+        <jsp:include page="../common/header.jspf" >
+            <jsp:param name="currentTab" value="sell"/>
+        </jsp:include>
 
         <div id="container" class="container" style="min-height: 335px;">
             <div id="content">
@@ -165,10 +168,10 @@
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
                                     <div style="float: left;">    
-                                        <input id="manufacturer" name="manufacturer" class="field_big"/>
+                                        <input id="manufacturer" name="manufacturer" class="field_big" value="${manufacturer}"/>
                                     </div>
                                     <div style="float: left;" class="fieldError">                        
-                                        <s:fielderror theme="simple"><s:param>manufacturer</s:param></s:fielderror>
+                                        <ch:errortag name="addInventory_manufacturer"></ch:errortag>
                                     </div>
                                     <div style="clear: both"></div> 
                                 </div>
@@ -179,10 +182,10 @@
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">   
                                     <div style="float: left;">    
-                                        <input id="partNo" name="partNo" class="field_big"/>
+                                        <input id="partNo" name="partNo" class="field_big" value="${partNo}"/>
                                     </div>
                                     <div style="float: left;" class="fieldError">                        
-                                        <s:fielderror theme="simple"><s:param>partNo</s:param></s:fielderror>
+                                        <ch:errortag name="addInventory_partNo"></ch:errortag>
                                     </div>
                                     <div style="clear: both"></div> 
 
@@ -195,75 +198,69 @@
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">    
                                     <div style="float: left;">    
-                                        <select id="condition" name="condition" class="field_big" style="min-width: 20%">     
+                                        <select id="condition" name="condition" class="field_big" style="min-width: 20%" ></select>
                                     </div>
-                                    <div style="float: left;" class="fieldError">                        
-                                        <s:fielderror theme="simple"><s:param>condition</s:param></s:fielderror>
+                                    <div style="float: left;" class="fieldError">  
+                                        <ch:errortag name="addInventory_condition"></ch:errortag>
+                                        <!--                                    <div style="float: left;" class="fieldError">                        
+                                                                            </div>-->
+                                        <div style="clear: both"></div> 
                                     </div>
-                                    <div style="clear: both"></div> 
+                                </div>
+                                <div>
+                                    <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                        Price:
+                                    </div>                        
+                                    <div style="float: left; width: 48%; margin: 5px;">      
+                                        <div style="float: left;">    
+                                            <input name="price" class="field_big"/>
+                                        </div>
+                                        <div style="float: left;" class="fieldError">  
+                                            <ch:errortag name="addInventory_price"></ch:errortag>
+                                        </div>
+                                        <div style="clear: both"></div> 
 
-                                    </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                                    Price:
-                                </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">      
-                                    <div style="float: left;">    
-                                        <input name="price" class="field_big"/>
-                                    </div>
-                                    <div style="float: left;" class="fieldError">                        
-                                        <s:fielderror theme="simple"><s:param>price</s:param></s:fielderror>
-                                    </div>
-                                    <div style="clear: both"></div> 
+                                <div>
+                                    <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                        Quantity
+                                    </div>                        
+                                    <div style="float: left; width: 48%; margin: 5px;"> 
+                                        <div style="float: left;">    
+                                            <input name="quantity" class="field_big"/>
+                                        </div>
+                                        <div style="float: left;" class="fieldError">                        
+                                            <ch:errortag name="addInventory_quantity"></ch:errortag>
+                                        </div>
+                                        <div style="clear: both"></div> 
 
+                                    </div>
                                 </div>
+                                <div>
+                                    <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                        Description/Notes
+                                    </div>                        
+                                    <div style="float: left; width: 48%; margin: 5px;">
+                                        <div style="float: left;">    
+                                            <textarea name="description" class="field_big" rows="3" style="height: 50px; min-width: 250px"></textarea>
+                                        </div>
+                                        <div style="float: left;" class="fieldError">                        
+                                            <ch:errortag name="addInventory_description"></ch:errortag>
+                                        </div>
+                                        <div style="clear: both"></div> 
+                                    </div>
+                                </div>     
                             </div>
-                            <div>
-                                <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                                    Quantity
-                                </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;"> 
-                                    <div style="float: left;">    
-                                        <input name="quantity" class="field_big"/>
-                                    </div>
-                                    <div style="float: left;" class="fieldError">                        
-                                        <s:fielderror theme="simple"><s:param>quantity</s:param></s:fielderror>
-                                    </div>
-                                    <div style="clear: both"></div> 
-
-                                </div>
+                            <div style="width: 100px; margin: auto">
+                                <a href="javascript:submitForm()" class="btn">Submit</a>
+                                <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
                             </div>
-                            <div>
-                                <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                                    Description/Notes
-                                </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">
-                                    <div style="float: left;">    
-                                        <textarea name="description" class="field_big">
-                                        </textarea>
-                                    </div>
-                                    <div style="float: left;" class="fieldError">                        
-                                        <s:fielderror theme="simple"><s:param>description</s:param></s:fielderror>
-                                    </div>
-                                    <div style="clear: both"></div> 
-                                </div>
-                            </div>     
-                        </div>
-                        <div style="width: 100px; margin: auto">
-                            <a href="javascript:submitForm()" class="btn">Submit</a>
-                            <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
-                        </div>
+                        </div> 
                     </form>
-
-
                 </div>
-
             </div>
         </div>
-        <jsp:include page="../common/adFooter.jspf" />
         <jsp:include page="../common/footer.jspf" />
-
     </body>
 </html>

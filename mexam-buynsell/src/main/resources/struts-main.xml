@@ -66,6 +66,7 @@
         </action>     
         <action name="addPart" class="com.mt.actions.part.AddPart">
             <interceptor-ref name="authenticated"/>
+            <result name="input" type="chain">showAddPartInfo</result>
             <result name="success" type="redirect">
                 <param name="location">showAddPart</param>
                 <param name="parse">false</param>
@@ -88,7 +89,7 @@
         </action>
         <action name="addInventory" class="com.mt.actions.Inventory.AddInventory">
             <interceptor-ref name="authenticated"/>
-            <result name="input">showAddInventory</result>
+            <result name="input" type="chain">showAddInventory</result>
             <result name="success" type="redirect">showAddInventory?message=${message}&amp;error=${error}&amp;info=${info}</result>
         </action>
         <action name="showInventory" class="com.mt.actions.Inventory.ShowInventory">
@@ -112,6 +113,7 @@
           
         <action name="showAddBroadcast" class="com.mt.actions.broadcast.ShowAddBroadcast">
             <interceptor-ref name="authenticated"/>
+            
             <result name="success">jsp/broadcast/showAddBroadcast.jsp</result>
         </action>
         
@@ -125,7 +127,7 @@
                 <param name="error">${error}</param>
                 <param name="info">${info}</param>
             </result>
-            
+            <result name="input" type="redirect">showAddBroadcast</result>
         </action>
 
         <action name="showBroadcasts" class="com.mt.actions.broadcast.ShowBroadcasts">
@@ -235,6 +237,7 @@
         <action name="register" class="com.mt.actions.Registration.Register">
             <interceptor-ref name="basic"/>
 <!--            <result name="success" type="redirect">viewRegistration?messeage=${message}&amp;companyId=${company.id}&amp;userId=${user.id} </result>-->
+            <result name="input" type="redirect">showRegistration</result>
             <result name="success" type="redirect">home</result>
         </action>
 
@@ -395,12 +398,33 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
+
+        <action name="getCartItemsCount" class="com.mt.actions.ajaxActions.GetCartItemsCount">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
         
         <!-- //     Ajax Actions    -->
 
         <action name="getImage" class="com.mt.actions.GetImage">
             <interceptor-ref name="basic"/>
         </action>
+        
+        <action name="payPalpay" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/paypal/payPalpay.jsp</result>
+        </action>
+        
+        <action name="payPalComplete" class="com.mt.actions.paypal.PayPalTransactionComplete">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/paypal/payPalpayComplete.jsp</result>
+        </action>
+
+        <action name="payPalListener" class="com.mt.actions.paypal.PayPalListener">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/paypal/payPalListener.jsp</result>
+        </action>
+
         
     </package>
 </struts>

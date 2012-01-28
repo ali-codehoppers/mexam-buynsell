@@ -12,8 +12,10 @@ import com.mt.services.StateService;
 import com.mt.services.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 import java.sql.Timestamp;
+import java.util.Map;
+import org.apache.struts2.interceptor.SessionAware;
 
-public class Register extends ActionSupport {
+public class Register extends ActionSupport implements SessionAware {
 
     private String name;
     private String address;
@@ -25,7 +27,7 @@ public class Register extends ActionSupport {
     private String zip;
     private String webAddress;
     private String companyCategory;
-    private String fistName;
+    private String firstName;
     private String lastName;
     private String email;
     private String userName;
@@ -37,6 +39,7 @@ public class Register extends ActionSupport {
     private UserService userService;
     private StateService stateService;
     private String message;
+    private Map session;
 
     public void setAddress(String address) {
         this.address = address;
@@ -62,8 +65,8 @@ public class Register extends ActionSupport {
         this.phoneNo = phoneNo;
     }
 
-    public void setState(int state) {
-        this.stateVal = state;
+    public void setStateVal(int stateVal) {
+        this.stateVal = stateVal;
     }
 
     public void setCompanyCategoryId(String companyCategoryId) {
@@ -90,8 +93,8 @@ public class Register extends ActionSupport {
         this.email = email;
     }
 
-    public void setFistName(String fistName) {
-        this.fistName = fistName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public void setLastName(String lastName) {
@@ -114,46 +117,78 @@ public class Register extends ActionSupport {
         this.userService = userService;
     }
 
+    public void setSession(Map map) {
+        this.session = map;
+    }
+
     @Override
     public void validate() {
-        if (fistName.length() == 0) {
-            addFieldError("fistName", "First name is required");
-        }
-
-        if (lastName.length() == 0) {
-            addFieldError("lastName", getText("Last name is required"));
-        }
-
-        if (address.length() == 0) {
-            addFieldError("address", getText("Address is required"));
-        }
-
-        if (city.length() == 0) {
-            addFieldError("city", getText("City is required"));
-        }
-
-        if (stateVal == 0) {
-            addFieldError("state", getText("State is required"));
-        }
-
-        if (companyCategory.length() == 0) {
-            addFieldError("companyCategory", getText("Company category is required"));
-        }
-        if (userName.length() == 0) {
-            addFieldError("userName", getText("Username is required"));
-        }
-        if (password.length() == 0) {
-            addFieldError("password", getText("Password is required"));
-        }
-
-        if (verifyPassword.length() == 0 || password.compareTo(verifyPassword) != 0) {
-            addFieldError("verifyPassword", getText("Both passwords does not match"));
-        }
-
     }
 
     @Override
     public String execute() throws Exception {
+
+        boolean valid = true;
+
+        if (name == null || name.length() == 0) {
+            session.put("register_name", "Name is required.");
+            valid = false;
+        }
+
+
+        if (address == null || address.length() == 0) {
+            session.put("register_address", "Address is required.");
+            valid = false;
+        }
+
+        if (city == null || city.length() == 0) {
+            session.put("register_city", "City is required.");
+            valid = false;
+        }
+
+        if (stateVal == 0) {
+            session.put("register_state", "State is required.");
+            valid = false;
+        }
+
+        if (phoneNo == null || phoneNo.length() == 0) {
+            session.put("register_phoneNo", "Phone number is required.");
+            valid = false;
+        }
+
+        if (companyCategory == null || companyCategory.length() == 0) {
+            session.put("register_companyCategory", "Company category is required.");
+            valid = false;
+        }
+
+        if (firstName == null || firstName.length() == 0) {
+            session.put("register_firstName", "First name is required.");
+            valid = false;
+        }
+
+        if (lastName == null || lastName.length() == 0) {
+            session.put("register_lastName", "Last name is required.");
+            valid = false;
+        }
+
+        if (userName == null || userName.length() == 0) {
+            session.put("register_userName", "Username is required.");
+            valid = false;
+        }
+        if (password == null || password.length() == 0) {
+            session.put("register_password", "Password is required.");
+            valid = false;
+        }
+
+        if (verifyPassword == null || verifyPassword.length() == 0 || password.compareTo(verifyPassword) != 0) {
+            session.put("register_verifyPassword", "Both passwords should be same.");
+            valid = false;
+        }
+
+        if (!valid) {
+            return INPUT;
+        }
+
         State state = stateService.getById(stateVal);
 
         company = new Company();
@@ -170,7 +205,7 @@ public class Register extends ActionSupport {
         Integer addNewCompany = companyService.addNew(company);
 
         user = new User();
-        user.setFirstName(fistName);
+        user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setPassword(password);
         user.setUsername(userName);
