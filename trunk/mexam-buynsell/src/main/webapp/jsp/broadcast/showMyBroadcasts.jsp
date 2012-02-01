@@ -18,9 +18,8 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                //var mydata = ${broadcastJson};                
                 jQuery("#broadcastList").jqGrid({
-                    url:'getBroadcastsList',
+                    url:'getMyBroadcastsList',
                     datatype: "json",
                     height: 250,
                     colNames:['Posted','Company','Country','Part #','Manufacturer', 'Condition', 'Qty','Price','Notes/Description'],                    

@@ -24,7 +24,7 @@
                     height: 250,
                     colNames:['ID','Name','Address','City','State','Phone','Fax'],
                     colModel:[
-                        {name:'id',index:'id', width:55},                                                
+                        {name:'id',index:'id', width:55,searchtype:"number"},                                                
                         {name:'cell.name',index:'name', width:150, align:"center",sortable:true},                        
                         {name:'cell.address',index:'address', width:300, sortable:"false",editable:"false"},
                         {name:'cell.city',index:'city', width:100, sortable:"false",editable:false},                        
@@ -49,7 +49,7 @@
                         id: "id"
                     }
                 });
-                jQuery("#vendorList").jqGrid('navGrid','#pager',{edit:false,add:false,del:true});
+                jQuery("#vendorList").jqGrid('navGrid','#pager',{edit:false,add:false,del:false});
             });
             
         </script>

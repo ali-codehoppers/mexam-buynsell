@@ -16,7 +16,7 @@ public class RecordsJson<T> {
     @Expose
     private int total;
     @Expose
-    private int records;
+    private long records;
     @Expose
     private List<GridRow> rows;
     private List<T> dataRecords;
@@ -38,7 +38,30 @@ public class RecordsJson<T> {
             try {
                 Class cls = t.getClass();
                 Method meth = cls.getMethod("getId", (Class[]) null);
-                id = (Integer)meth.invoke(t, new Object[0]);
+                id = (Integer) meth.invoke(t, new Object[0]);
+                //id = (Integer) retobj;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            GridRow row = new GridRow(id, t);
+            rows.add(row);
+        }
+    }
+
+    public RecordsJson(int page, int pageSize, long totalRecords, List<T> dataRecords) {
+        this.dataRecords = dataRecords;
+
+        this.page = page;
+        this.records = totalRecords;
+        this.total = (int) Math.ceil((double) totalRecords / pageSize);
+
+        rows = new ArrayList<GridRow>();
+        for (T t : dataRecords) {
+            int id = 0;
+            try {
+                Class cls = t.getClass();
+                Method meth = cls.getMethod("getId", (Class[]) null);
+                id = (Integer) meth.invoke(t, new Object[0]);
                 //id = (Integer) retobj;
             } catch (Exception e) {
                 e.printStackTrace();

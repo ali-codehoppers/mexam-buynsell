@@ -8,7 +8,6 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -71,5 +70,80 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
             query.setParameter(i, args[i]);
         }
         return query.list();
+    }
+
+    public long getRecordsCount(String[] searchFields, String[] searchStrings, String[] searchOperators) {
+        String baseQuery = "select count(obj) from " + type.getSimpleName() + " obj";
+        String comaparisonString = getComparisonQueryString(searchFields, searchStrings, searchOperators);
+        String qry = baseQuery + comaparisonString;
+        Query query = getSession().createQuery(qry);
+        //query.setParameter(sortString, qry)
+        return (Long) query.uniqueResult();
+    }
+
+    public List<T> getBy(String[] searchFields, String[] searchStrings, String[] searchOperators, String sortField, String sortOrder, int rows, int page) {
+        //String qry = "select obj from " + type.getSimpleName() +" obj";
+
+        String sortString = "";
+        String pageString = "";
+
+        String baseQuery = "select obj from " + type.getSimpleName() + " obj";
+        String comaparisonString = getComparisonQueryString(searchFields, searchStrings, searchOperators);
+
+        if (sortField != null && sortField.length() > 0) {
+            if (sortOrder != null && sortOrder.length() > 0) {
+                sortString = " order by " + sortField + " " + sortOrder;
+            } else {
+                sortString = " order by " + sortField;
+            }
+        }
+
+        if (rows != 0 && page != 0) {
+            pageString = " LIMIT " + 5 + ", " + rows;
+        }
+
+        //String qry=baseQuery+comaparisonString+sortString+pageString;
+        String qry = baseQuery + comaparisonString + sortString;
+        Query query = getSession().createQuery(qry).setFirstResult((page - 1)*rows).setMaxResults(rows);
+        return query.list();
+    }
+
+    private String getOperator(String operator) {
+        if (operator != null) {
+            if (operator.compareTo("lt") == 0) {
+                return " < ";
+            } else if (operator.compareTo("le") == 0) {
+                return " <= ";
+            } else if (operator.compareTo("gt") == 0) {
+                return " > ";
+            } else if (operator.compareTo("ge") == 0) {
+                return " >=";
+            } else if (operator.compareTo("eq") == 0) {
+                return " = ";
+            } else if (operator.compareTo("ne") == 0) {
+                return " <> ";
+            } else if (operator.compareTo("cn") == 0) {
+                return " LIKE ";
+            }
+        }
+        return " = ";
+    }
+
+    private String getComparisonQueryString(String[] searchFields, String[] searchStrings, String[] searchOperators) {
+        String comaparisonString = "";
+        if (searchFields != null && searchStrings != null && searchOperators != null && searchFields.length == searchStrings.length && searchFields.length == searchOperators.length) {
+            for (int i = 0; i < searchFields.length; i++) {
+                if (searchFields[i] != null && searchFields[i].length() > 0 && searchOperators != null && searchOperators.length > 0) {
+                    if (comaparisonString.length() > 0) {
+                        comaparisonString += " and ";
+                    }
+                    comaparisonString += searchFields[i] + getOperator(searchOperators[i]) + searchStrings[i];
+                }
+            }
+            if (comaparisonString.length() > 0) {
+                comaparisonString = " where " + comaparisonString;
+            }
+        }
+        return comaparisonString;
     }
 }

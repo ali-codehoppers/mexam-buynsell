@@ -24,6 +24,14 @@ public class SubCategoryService {
         return subCategoryDao.getById(id);
     }
 
+    public List<SubCategory> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return subCategoryDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return subCategoryDao.getRecordsCount(searchField, searchString, searchOperator);
+    }
+
     public void update(SubCategory transientObject) {
         subCategoryDao.update(transientObject);
     }

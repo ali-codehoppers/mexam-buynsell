@@ -1,5 +1,6 @@
 package com.mt.services;
 
+import com.mt.hibernate.entities.LookUp;
 import com.mt.hibernate.entities.Part;
 import com.mt.idao.IPartDao;
 import java.util.List;
@@ -34,6 +35,14 @@ public class PartService {
 
     public Part getById(Integer id) {
         return partDao.getById(id);
+    }
+
+    public List<Part> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return partDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return partDao.getRecordsCount(searchField, searchString, searchOperator);
     }
 
     public void update(Part transientObject) {

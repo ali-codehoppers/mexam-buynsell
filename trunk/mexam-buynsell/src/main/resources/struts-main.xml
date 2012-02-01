@@ -137,7 +137,7 @@
         
         <action name="showMyBroadcasts" class="com.mt.actions.broadcast.ShowMyBroadcasts">
             <interceptor-ref name="authenticated"/>
-            <result name="success" >jsp/broadcast/showBroadcasts.jsp</result>
+            <result name="success" >jsp/broadcast/showMyBroadcasts.jsp</result>
         </action>                
 
         
@@ -328,11 +328,19 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
+
         
         <action name="getVendorsList" class="com.mt.actions.ajaxActions.GetVendors">
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
+        
+        <action name="getMyVendorsList" class="com.mt.actions.ajaxActions.GetMyVendors">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        
+        
         
         <action name="getCartItems" class="com.mt.actions.ajaxActions.GetCartItemsList">
             <interceptor-ref name="authenticated"/>
@@ -404,6 +412,15 @@
             <result >jsp/common/ajax.jsp</result>
         </action>
         
+        <action name="getMyBroadcastsList" class="com.mt.actions.ajaxActions.GetMyBroadcasts">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        
+        <action name="getBroadcastsList" class="com.mt.actions.ajaxActions.GetBroadcasts">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
         <!-- //     Ajax Actions    -->
 
         <action name="getImage" class="com.mt.actions.GetImage">

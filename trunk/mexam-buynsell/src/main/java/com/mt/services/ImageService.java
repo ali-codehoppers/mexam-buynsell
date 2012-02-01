@@ -24,6 +24,14 @@ public class ImageService {
         return imageDao.getById(id);
     }
 
+    public List<Image> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return imageDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return imageDao.getRecordsCount(searchField, searchString, searchOperator);
+    }
+
     public void update(Image transientObject) {
         imageDao.update(transientObject);
     }

@@ -65,11 +65,6 @@ public class GetRFQItemsList extends AuthenticatedAction {
 
         Company company = companyService.getById(getUser().getCompanyId());
         rFQItemExtendeds = new ArrayList<RFQItemExtended>();
-        if (searchField == null) {
-            searchField = "name";
-            searchOper = "=";
-            searchString = "name";
-        }
 
         rfq = rFQService.getById(rfqId);
         if (rfq != null) {
@@ -77,7 +72,7 @@ public class GetRFQItemsList extends AuthenticatedAction {
                 RFQItemExtended itemEx = new RFQItemExtended(item);
                 rFQItemExtendeds.add(itemEx);
             }
-        }
+        } 
 
         RecordsJson<RFQItemExtended> recordsJson = new RecordsJson<RFQItemExtended>(page, rows, rFQItemExtendeds);
         jsonString = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(recordsJson);

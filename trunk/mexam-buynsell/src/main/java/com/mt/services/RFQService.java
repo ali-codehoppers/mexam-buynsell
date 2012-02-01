@@ -28,6 +28,14 @@ public class RFQService {
         return rFQDao.getById(id);
     }
 
+    public List<RFQ> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return rFQDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return rFQDao.getRecordsCount(searchField, searchString, searchOperator);
+    }
+
     public void update(RFQ transientObject) {
         rFQDao.update(transientObject);
     }

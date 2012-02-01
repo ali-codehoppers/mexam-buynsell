@@ -24,6 +24,14 @@ public class CountryService {
         return countryDao.getById(id);
     }
 
+    public List<Country> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return countryDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return countryDao.getRecordsCount(searchField, searchString, searchOperator);
+    }
+
     public void update(Country transientObject) {
         countryDao.update(transientObject);
     }

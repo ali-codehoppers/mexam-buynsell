@@ -189,7 +189,7 @@
             <value>com.mt.idao.ICompanyDao</value>
         </property>
         <property name="target">
-            <bean parent="abstractCompanyDao">
+            <bean parent="abstractDaoGeneric">
                 <constructor-arg value="com.mt.hibernate.entities.Company" />
             </bean>
         </property>

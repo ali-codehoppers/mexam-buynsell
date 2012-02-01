@@ -1,5 +1,6 @@
 package com.mt.services;
 
+import com.mt.hibernate.entities.Inventory;
 import com.mt.hibernate.entities.LookUp;
 import com.mt.idao.ILookUpDao;
 import java.util.List;
@@ -22,6 +23,14 @@ public class LookUpService {
 
     public LookUp getById(Integer id) {
         return lookUpDao.getById(id);
+    }
+
+    public List<LookUp> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return lookUpDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return lookUpDao.getRecordsCount(searchField, searchString, searchOperator);
     }
 
     public void update(LookUp transientObject) {

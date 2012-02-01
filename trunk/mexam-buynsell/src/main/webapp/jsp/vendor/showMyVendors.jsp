@@ -18,29 +18,59 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                var mydata = ${vendorJson};                
                 jQuery("#vendorList").jqGrid({
-                    //                   url:'getInventoryList',
-                    datatype: "localdata",
+                    url:'getMyVendorsList',
+                    datatype: "json",
                     height: 250,
-                    colNames:['Name','Notes'],
+                    colNames:['ID','Name','Notes'],
                     colModel:[
-                        {name:'vendorName',index:'vendorName', width:200, align:"center"},                        
-                        {name:'notes',index:'notes', width:400, sortable:"false"},
+                        {name:'id',index:'id', width:55,searchtype:"number"},          
+                        {name:'cell.vendorName',index:'vendor.name', width:200, align:"center"},                        
+                        {name:'cell.notes',index:'notes', width:400, sortable:"false"},
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
                     pager: '#pager',
-                    sortname: 'vendorName',
+                    sortname: 'id',
                     viewrecords: true,
-                    caption: "Vendors"
+                    sortorder: "asc",
+                    caption: "Vendors",
+                    jsonReader : { 
+                        root: "rows", 
+                        page: "page", 
+                        total: "total", 
+                        records: "records", 
+                        repeatitems: false, 
+                        cell: "cell", 
+                        id: "id"
+                    }
                 });
-                for(var i=0;i<=mydata.length;i++)
-                {
-                    jQuery("#vendorList").jqGrid('addRowData',i+1,mydata[i]);
-                }
-                //                
                 jQuery("#vendorList").jqGrid('navGrid','#pager',{edit:false,add:false,del:false});
+                
+                
+                //                var mydata = ${vendorJson};                
+                //                jQuery("#vendorList").jqGrid({
+                //                    //                   url:'getInventoryList',
+                //                    datatype: "localdata",
+                //                    height: 250,
+                //                    colNames:['Name','Notes'],
+                //                    colModel:[
+                //                        {name:'vendorName',index:'vendorName', width:200, align:"center"},                        
+                //                        {name:'notes',index:'notes', width:400, sortable:"false"},
+                //                    ],
+                //                    rowNum:10,
+                //                    rowList:[10,20,30],
+                //                    pager: '#pager',
+                //                    sortname: 'vendorName',
+                //                    viewrecords: true,
+                //                    caption: "Vendors"
+                //                });
+                //                for(var i=0;i<=mydata.length;i++)
+                //                {
+                //                    jQuery("#vendorList").jqGrid('addRowData',i+1,mydata[i]);
+                //                }
+                //                //                
+                //                jQuery("#vendorList").jqGrid('navGrid','#pager',{edit:false,add:false,del:false});
  
             });
             

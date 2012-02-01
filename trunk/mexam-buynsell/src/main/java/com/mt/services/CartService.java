@@ -1,6 +1,7 @@
 package com.mt.services;
 
 import com.mt.hibernate.entities.Cart;
+import com.mt.hibernate.entities.CartItem;
 import com.mt.idao.ICartDao;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class CartService {
     }
 
     public List<Cart> findByUser(int userId) {
-        return cartDao.findByUser(""+userId);
+        return cartDao.findByUser("" + userId);
     }
 
     public Integer addNew(Cart newInstance) {
@@ -22,6 +23,14 @@ public class CartService {
 
     public Cart getById(Integer id) {
         return cartDao.getById(id);
+    }
+
+    public List<Cart> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return cartDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return cartDao.getRecordsCount(searchField, searchString, searchOperator);
     }
 
     public void update(Cart transientObject) {

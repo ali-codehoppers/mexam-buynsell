@@ -18,4 +18,8 @@ public interface IDaoGeneric<T, PK extends Serializable> {
     void deleteById(PK id);
 
     List<T> getAll();
+
+    List<T> getBy(String[] searchFields, String[] searchStrings, String[] searchOperators, String sortField, String sortOrder, int rows, int page);
+
+    long getRecordsCount(String[] searchFields, String[] searchStrings, String[] searchOperators);
 }

@@ -16,10 +16,14 @@ public class CompanyService {
         return iCompanyDao.findByName(name);
     }
 
-    public List<Company> getBy(String searchField, String searchString, String searchOperator, String sortField, String sortOrder) {
-        return  iCompanyDao.getBy(searchField,searchString,searchOperator,sortField,sortOrder);        
+    public List<Company> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return iCompanyDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
     }
-    
+
+    public  long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator){
+        return iCompanyDao.getRecordsCount(searchField, searchString, searchOperator);
+    }
+
     public List<Company> findBySearchString(String searchString) {
         return iCompanyDao.findBySearchString("%" + searchString + "%", "%" + searchString + "%", "%" + searchString + "%");
     }

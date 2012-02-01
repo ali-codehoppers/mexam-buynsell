@@ -7,7 +7,6 @@ package com.mt.actions.ajaxActions;
 import com.google.gson.GsonBuilder;
 import com.mt.actions.AuthenticatedAction;
 import com.mt.hibernate.entities.Company;
-import com.mt.hibernate.entities.State;
 import com.mt.services.CompanyService;
 import com.mt.util.RecordsJson;
 import java.util.ArrayList;
@@ -23,9 +22,12 @@ public class GetVendors extends AuthenticatedAction {
     private int page = 0;
     private String sidx;
     private String sord;
-    private String searchField;    
-    private String searchString;        
-    private String searchOper;            
+    private String searchField;
+    private String searchString;
+    private String searchOper;
+    private List<String> searchFields;
+    private List<String> searchStrings;
+    private List<String> searchOpers;
 
     public void setRows(int rows) {
         this.rows = rows;
@@ -43,6 +45,18 @@ public class GetVendors extends AuthenticatedAction {
         this.sord = sord;
     }
 
+    public void setSearchField(String searchField) {
+        this.searchField = searchField;
+    }
+
+    public void setSearchOper(String searchOper) {
+        this.searchOper = searchOper;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+    }
+
     public void setCompanyService(CompanyService companyService) {
         this.companyService = companyService;
     }
@@ -51,32 +65,43 @@ public class GetVendors extends AuthenticatedAction {
     public String execute() throws Exception {
         Company myCompany = companyService.getById(getUser().getCompanyId());
 
-//        String str = "0 order by "+sidx+" "+sord+" limit "+page*rows+","+page;
+        searchFields = new ArrayList<String>();
+        searchOpers = new ArrayList<String>();
+        searchStrings = new ArrayList<String>();
 
-        //companyService.findByQuery("1 order by " + sidx + " " + sord + " limit " + page * rows + "," + page);
-        //allVendors = companyService.getAll();
-        if(searchField==null)
-        {
-            searchField="name";
-            searchOper="=";
-            searchString="name";            
+        searchFields.add(searchField);
+        searchOpers.add(searchOper);
+        if (searchOper!=null &&  searchOper.equals("cn")) {
+            searchStrings.add("'%" + searchString + "%'");
+        } else {
+            searchStrings.add("'" + searchString + "'");
         }
-        
-        //allVendors = companyService.getBy(searchField, searchString, searchOper, sidx, sord);
-        allVendors = companyService.getAll();
-        vendors = new ArrayList<Company>();
-        for (Company company : allVendors) {
-            State state = company.getState();
-            if (company.getId() != myCompany.getId()) {
-                vendors.add(company);
-            }
-        }
-        RecordsJson<Company> recordsJson = new RecordsJson<Company>(page, rows, vendors);
+
+        searchFields.add("id");
+        searchOpers.add("ne");
+        searchStrings.add("" + myCompany.getId());
+
+
+        allVendors = companyService.getBy(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers), sidx, sord, rows, page);
+        long total = companyService.getRecordsCount(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers));
+
+//        vendors = new ArrayList<Company>();
+//        for (Company company : allVendors) {
+//            State state = company.getState();
+//            if (company.getId() != myCompany.getId()) {
+//                vendors.add(company);
+//            }
+//        }
+        RecordsJson<Company> recordsJson = new RecordsJson<Company>(page, rows, total, allVendors);
         jsonString = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(recordsJson);
         return SUCCESS;
     }
 
     public String getJsonString() {
         return jsonString;
+    }
+
+    private String[] getStringArray(List<String> list) {
+        return list.toArray(new String[list.size()]);
     }
 }
