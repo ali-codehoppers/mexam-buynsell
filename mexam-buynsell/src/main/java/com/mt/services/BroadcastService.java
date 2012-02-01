@@ -20,6 +20,14 @@ public class BroadcastService {
         return broadcastDao.getById(id);
     }
 
+    public List<Broadcast> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return broadcastDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return broadcastDao.getRecordsCount(searchField, searchString, searchOperator);
+    }
+
     public void update(Broadcast transientObject) {
         broadcastDao.update(transientObject);
     }

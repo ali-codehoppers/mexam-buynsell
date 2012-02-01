@@ -1,5 +1,6 @@
 package com.mt.services;
 
+import com.mt.hibernate.entities.RFQ;
 import com.mt.hibernate.entities.State;
 import com.mt.idao.IStateDao;
 import java.util.List;
@@ -22,6 +23,14 @@ public class StateService {
 
     public State getById(Integer id) {
         return stateDao.getById(id);
+    }
+
+    public List<State> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return stateDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return stateDao.getRecordsCount(searchField, searchString, searchOperator);
     }
 
     public void update(State transientObject) {

@@ -19,13 +19,21 @@ public class UserService {
     public List<User> findByUsername(String userName) {
         return userDao.findByUsername(userName);
     }
-    
+
     public Integer addNew(User newInstance) {
         return userDao.addNew(newInstance);
     }
 
     public User getById(Integer id) {
         return userDao.getById(id);
+    }
+
+    public List<User> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return userDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return userDao.getRecordsCount(searchField, searchString, searchOperator);
     }
 
     public void update(User transientObject) {

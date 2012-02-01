@@ -16,13 +16,20 @@ public class VendorService {
         return vendorDao.findByCompany("" + companyId);
     }
 
-
     public Integer addNew(Vendor newInstance) {
         return vendorDao.addNew(newInstance);
     }
 
     public Vendor getById(Integer id) {
         return vendorDao.getById(id);
+    }
+
+    public List<Vendor> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return vendorDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return vendorDao.getRecordsCount(searchField, searchString, searchOperator);
     }
 
     public void update(Vendor transientObject) {

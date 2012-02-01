@@ -20,11 +20,18 @@ public class InventoryService {
         return inventoryDao.getById(id);
     }
 
-    public List<Inventory> findBySearchString(String searchString)
-    {
-        return inventoryDao.findBySearchString("%"+searchString+"%", "%"+searchString+"%");
+    public List<Inventory> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return inventoryDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
     }
-    
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return inventoryDao.getRecordsCount(searchField, searchString, searchOperator);
+    }
+
+    public List<Inventory> findBySearchString(String searchString) {
+        return inventoryDao.findBySearchString("%" + searchString + "%", "%" + searchString + "%");
+    }
+
     public void update(Inventory transientObject) {
         inventoryDao.update(transientObject);
     }

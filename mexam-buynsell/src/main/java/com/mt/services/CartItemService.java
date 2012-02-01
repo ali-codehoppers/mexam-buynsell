@@ -1,5 +1,6 @@
 package com.mt.services;
 
+import com.mt.hibernate.entities.Broadcast;
 import com.mt.hibernate.entities.CartItem;
 import com.mt.idao.ICartItemDao;
 import java.util.List;
@@ -17,11 +18,19 @@ public class CartItemService {
     }
 
     public List<CartItem> findByVendor(int carId, int companyId) {
-        return cartItemDao.findByVendor("" + carId, ""+companyId);
+        return cartItemDao.findByVendor("" + carId, "" + companyId);
     }
 
     public CartItem getById(Integer id) {
         return cartItemDao.getById(id);
+    }
+
+    public List<CartItem> getBy(String[] searchField, String[] searchString, String[] searchOperator, String sortField, String sortOrder, int rows, int page) {
+        return cartItemDao.getBy(searchField, searchString, searchOperator, sortField, sortOrder, rows, page);
+    }
+
+    public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
+        return cartItemDao.getRecordsCount(searchField, searchString, searchOperator);
     }
 
     public void update(CartItem transientObject) {

@@ -18,31 +18,65 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                var mydata = ${inventoryJson};                
+                
+                
+                              //var mydata = ${inventoryJson};                
                 jQuery("#inventoryList").jqGrid({
-                    //                   url:'getInventoryList',
-                    datatype: "localdata",
+                    url:'getInventoryList',
+                    datatype: "json",
                     height: 250,
-                    colNames:['Part No','Manufacturer', 'Condition', 'Quantity','Price','Description'],
+                    colNames:['ID','Part No','Manufacturer', 'Condition', 'Quantity','Price','Description'],
                     colModel:[
-                        {name:'partNo',index:'partNo', width:100, align:"center"},                        
-                        {name:'manufacturer',index:'manufacturer', width:200},
-                        {name:'cond',index:'cond', width:100},                        
-                        {name:'quantity',index:'quantity', width:80, align:"right",sorttype:"int", searchtype:"integer"},                        
-                        {name:'price',index:'price', width:80, align:"right",sorttype:"float", searchtype:"number"},                                                
-                        {name:'description',index:'description', width:200, sortable:"false"},
+                        {name:'id',index:'id', width:55,searchtype:"number"},                                                
+                        {name:'cell.partNo',index:'partNo', width:100, align:"center"},                        
+                        {name:'cell.manufacturer',index:'manufacturer', width:200},
+                        {name:'cell.cond',index:'cond', width:100},                        
+                        {name:'cell.quantity',index:'quantity', width:80, align:"right",sorttype:"int", searchtype:"integer"},                        
+                        {name:'cell.price',index:'price', width:80, align:"right",sorttype:"float", searchtype:"number"},                                                
+                        {name:'cell.description',index:'description', width:200, sortable:"false"},
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
                     pager: '#pager',
                     sortname: 'partNo',
                     viewrecords: true,
-                    caption: "Inventory"
+                    caption: "Inventory",
+                    jsonReader : { 
+                        root: "rows", 
+                        page: "page", 
+                        total: "total", 
+                        records: "records", 
+                        repeatitems: false, 
+                        cell: "cell", 
+                        id: "id"
+                    }
                 });
-                for(var i=0;i<=mydata.length;i++)
-                {
-                    jQuery("#inventoryList").jqGrid('addRowData',i+1,mydata[i]);
-                }
+                
+//                var mydata = ${inventoryJson};                
+//                jQuery("#inventoryList").jqGrid({
+//                    //                   url:'getInventoryList',
+//                    datatype: "localdata",
+//                    height: 250,
+//                    colNames:['Part No','Manufacturer', 'Condition', 'Quantity','Price','Description'],
+//                    colModel:[
+//                        {name:'partNo',index:'partNo', width:100, align:"center"},                        
+//                        {name:'manufacturer',index:'manufacturer', width:200},
+//                        {name:'cond',index:'cond', width:100},                        
+//                        {name:'quantity',index:'quantity', width:80, align:"right",sorttype:"int", searchtype:"integer"},                        
+//                        {name:'price',index:'price', width:80, align:"right",sorttype:"float", searchtype:"number"},                                                
+//                        {name:'description',index:'description', width:200, sortable:"false"},
+//                    ],
+//                    rowNum:10,
+//                    rowList:[10,20,30],
+//                    pager: '#pager',
+//                    sortname: 'partNo',
+//                    viewrecords: true,
+//                    caption: "Inventory"
+//                });
+//                for(var i=0;i<=mydata.length;i++)
+//                {
+//                    jQuery("#inventoryList").jqGrid('addRowData',i+1,mydata[i]);
+//                }
                 jQuery("#inventoryList").jqGrid('navGrid','#pager',{edit:false,add:false,del:false});
                 $( ".ui-jqgrid-titlebar-close").hide();
             });
