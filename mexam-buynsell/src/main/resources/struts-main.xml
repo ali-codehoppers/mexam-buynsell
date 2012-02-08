@@ -441,6 +441,12 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/paypal/payPalListener.jsp</result>
         </action>
+        
+       <action name="payAmount" class="com.mt.actions.paypal.PayAmount">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/paypal/payPalpayComplete.jsp</result>
+        </action>
+        
 
         
     </package>

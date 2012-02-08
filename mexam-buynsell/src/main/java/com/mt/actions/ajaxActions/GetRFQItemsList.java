@@ -11,6 +11,7 @@ import com.mt.hibernate.entities.Company;
 import com.mt.hibernate.entities.RFQ;
 import com.mt.hibernate.entities.RFQItem;
 import com.mt.services.CompanyService;
+import com.mt.services.RFQItemService;
 import com.mt.services.RFQService;
 import com.mt.util.RecordsJson;
 import java.util.ArrayList;
@@ -31,6 +32,11 @@ public class GetRFQItemsList extends AuthenticatedAction {
     private String searchField;
     private String searchString;
     private String searchOper;
+    private List<String> searchFields;
+    private List<String> searchStrings;
+    private List<String> searchOpers;
+    private RFQItemService rFQItemService;
+    private List<RFQItem> rFQItems;
 
     public void setRows(int rows) {
         this.rows = rows;
@@ -48,12 +54,28 @@ public class GetRFQItemsList extends AuthenticatedAction {
         this.sord = sord;
     }
 
+    public void setSearchField(String searchField) {
+        this.searchField = searchField;
+    }
+
+    public void setSearchOper(String searchOper) {
+        this.searchOper = searchOper;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+    }
+
     public void setCompanyService(CompanyService companyService) {
         this.companyService = companyService;
     }
 
     public void setrFQService(RFQService rFQService) {
         this.rFQService = rFQService;
+    }
+
+    public void setrFQItemService(RFQItemService rFQItemService) {
+        this.rFQItemService = rFQItemService;
     }
 
     public void setRfqId(int rfqId) {
@@ -63,18 +85,40 @@ public class GetRFQItemsList extends AuthenticatedAction {
     @Override
     public String execute() throws Exception {
 
+        searchFields = new ArrayList<String>();
+        searchOpers = new ArrayList<String>();
+        searchStrings = new ArrayList<String>();
+
         Company company = companyService.getById(getUser().getCompanyId());
         rFQItemExtendeds = new ArrayList<RFQItemExtended>();
 
+        searchFields.add(searchField);
+        searchOpers.add(searchOper);
+        if (searchOper != null && searchOper.equals("cn")) {
+            searchStrings.add("'%" + searchString + "%'");
+        } else {
+            searchStrings.add("'" + searchString + "'");
+        }
+
+        searchFields.add("rfqId");
+        searchOpers.add("eq");
+        searchStrings.add("" + rfqId);
+
         rfq = rFQService.getById(rfqId);
+
+        rFQItems = rFQItemService.getBy(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers), sidx, sord, rows, page);
+        long total = rFQItemService.getRecordsCount(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers));
+
+
+        //rfq = rFQService.getById(rfqId);
         if (rfq != null) {
-            for (RFQItem item : rfq.getItems()) {
+            for (RFQItem item : rFQItems) {
                 RFQItemExtended itemEx = new RFQItemExtended(item);
                 rFQItemExtendeds.add(itemEx);
             }
-        } 
+        }
 
-        RecordsJson<RFQItemExtended> recordsJson = new RecordsJson<RFQItemExtended>(page, rows, rFQItemExtendeds);
+        RecordsJson<RFQItemExtended> recordsJson = new RecordsJson<RFQItemExtended>(page, rows, total,  rFQItemExtendeds);
         jsonString = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(recordsJson);
         return SUCCESS;
     }
@@ -130,5 +174,9 @@ public class GetRFQItemsList extends AuthenticatedAction {
             this.partNo = this.getInventory().getPartNo();
             this.manufacturer = this.getInventory().getManufacturer();
         }
+    }
+
+    protected String[] getStringArray(List<String> list) {
+        return list.toArray(new String[list.size()]);
     }
 }

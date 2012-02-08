@@ -193,11 +193,11 @@
                     html+="<div style='clear: both'>";
                     html+="</div>";
                     html+="</div>";
-                    html+="<div style='border: 1px solid #999999;'>";
-                    html+="<div style='padding: 8px; padding-left: 10px'>";
-                    html+=item.companyName;
-                    html+="</div>";
-                    html+="</div>";
+//                    html+="<div style='border: 1px solid #999999;'>";
+//                    html+="<div style='padding: 8px; padding-left: 10px'>";
+//                    html+=item.companyName;
+//                    html+="</div>";
+//                    html+="</div>";
                     html+="</div>";
                     return html;
                 }

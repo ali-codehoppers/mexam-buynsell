@@ -9,6 +9,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript">
+            function payAmount()
+            {
+                $.ajax({
+                    type:       "get",
+                    url:        "payAmount",
+                    data:       {amount: 50},
+                    success:    function(msg) 
+                    {
+                        alert(msg);
+                    }
+                });
+            }
+            
+        </script>
+
         <title>JSP Page</title>
     </head>
     <body>
@@ -52,7 +69,7 @@
             <input type="hidden" name="user_id" value="${user.id}">
             <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_paynow_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!">
             <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+            <a href="javascript:payAmount()" class="btn" style="margin-top: 25px; margin-bottom: 15px;">Pay Amount</a>
         </form>
-
     </body>
 </html>

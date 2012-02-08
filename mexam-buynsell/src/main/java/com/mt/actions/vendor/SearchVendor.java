@@ -72,10 +72,15 @@ public class SearchVendor extends ActionSupport {
             this.setPhoneNo(company.getPhoneNo());
             this.setFaxNo(company.getFaxNo());
             this.setWebAddress(company.getWebAddress());
+            this.setCreationDate(company.getCreationDate());
+            this.setUpdateDate(company.getUpdateDate());
+            
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            if (this.getCreationDate() != null && this.getCreationDate().toString().length() > 0) {
+            if (this.getCreationDate() != null && this.getCreationDate().toString().length() > 0) 
+            {
                 this.date = df.format(this.getCreationDate());
             }
+            
             this.stateString = company.getState().getName();
             this.countryString = company.getState().getCountry().getName();
 

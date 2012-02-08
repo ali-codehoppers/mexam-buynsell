@@ -26,12 +26,13 @@ public class ImageUtil {
     private static final int SIZE_MEDIUM = 180;
 
     public ImageUtil() throws Exception {
-        InputStream is = ImageUtil.class.getResourceAsStream("image.properties");
+        InputStream is = ImageUtil.class.getResourceAsStream("/image.properties");
         prop.load(is);
     }
 
     public boolean SaveImage(File image, String fileName, String extension) throws Exception {
-        String path = "D:\\Projects\\Java\\Mexam-BuynSell\\UploadedImages";
+//        String path = "D:\\Projects\\Java\\Mexam-BuynSell\\UploadedImages";
+        String path = prop.getProperty("imagePath");
         File fileToCreate = new File(path, fileName + "." + extension);
         FileUtils.copyFile(image, fileToCreate);
 
@@ -57,8 +58,8 @@ public class ImageUtil {
     }
 
     public byte[] GetImageBytes(Image image, EnumImageType imageType) throws Exception {
-//        String path = prop.getProperty("imagePath");
-        String path = "D:\\Projects\\Java\\Mexam-BuynSell\\UploadedImages";
+        String path = prop.getProperty("imagePath");
+        //String path = "D:\\Projects\\Java\\Mexam-BuynSell\\UploadedImages";
         switch (imageType) {
             case Thumbnail:
                 path += "\\" + "t_" + image.getFileName()+ "." + image.getExtension();
@@ -77,7 +78,8 @@ public class ImageUtil {
     }
 
     public byte[] GetImageBytes(Image image) throws Exception {
-        String path = "D:\\Projects\\Java\\Mexam-BuynSell\\UploadedImages";
+        //String path = "D:\\Projects\\Java\\Mexam-BuynSell\\UploadedImages";
+        String path = prop.getProperty("imagePath");
         path += "\\" + image.getFileName() + "." + image.getExtension();
         File file = new File(path);
         byte[] fileContent = new byte[(int) file.length()];
