@@ -29,6 +29,9 @@ public class GetRFQsSent extends AuthenticatedAction {
     private String searchField;
     private String searchString;
     private String searchOper;
+    private List<String> searchFields;
+    private List<String> searchStrings;
+    private List<String> searchOpers;
 
     public void setRows(int rows) {
         this.rows = rows;
@@ -57,20 +60,41 @@ public class GetRFQsSent extends AuthenticatedAction {
     @Override
     public String execute() throws Exception {
 
+        searchFields = new ArrayList<String>();
+        searchOpers = new ArrayList<String>();
+        searchStrings = new ArrayList<String>();
+
         Company company = companyService.getById(getUser().getCompanyId());
-        rFQExtendeds = new ArrayList<RFQExtended>();
-        if (searchField == null) {
-            searchField = "name";
-            searchOper = "=";
-            searchString = "name";
+
+        searchFields.add(searchField);
+        searchOpers.add(searchOper);
+        if (searchOper != null && searchOper.equals("cn")) {
+            searchStrings.add("'%" + searchString + "%'");
+        } else {
+            searchStrings.add("'" + searchString + "'");
         }
 
-        rfqs = rFQService.findBySender(getUser().getId());
-        for (RFQ rfq : rfqs) {
+        searchFields.add("senderId");
+        searchOpers.add("eq");
+        searchStrings.add("" + company.getId());
+
+        rFQExtendeds = new ArrayList<RFQExtended>();
+//        if (searchField == null) {
+//            searchField = "name";
+//            searchOper = "=";
+//            searchString = "name";
+//        }
+
+        //rfqs = rFQService.findBySender(getUser().getId());
+        rfqs = rFQService.getBy(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers), sidx, sord, rows, page);
+        long total = rFQService.getRecordsCount(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers));
+
+        for (RFQ rfq : rfqs) 
+        {
             rFQExtendeds.add(new RFQExtended(rfq));
         }
 
-        RecordsJson<RFQExtended> recordsJson = new RecordsJson<RFQExtended>(page, rows, rFQExtendeds);
+        RecordsJson<RFQExtended> recordsJson = new RecordsJson<RFQExtended>(page, rows, total, rFQExtendeds);
         jsonString = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(recordsJson);
         return SUCCESS;
     }
@@ -79,8 +103,8 @@ public class GetRFQsSent extends AuthenticatedAction {
         return jsonString;
     }
 
-    private class RFQExtended extends RFQ 
-    {
+    private class RFQExtended extends RFQ {
+
         @Expose
         private String receiverCompanyName;
         @Expose
@@ -99,11 +123,16 @@ public class GetRFQsSent extends AuthenticatedAction {
             this.setCreatedBy(rfq.getCreatedBy());
             this.setUpdatedBy(rfq.getUpdatedBy());
             this.setCreationDate(rfq.getCreationDate());
-            if(this.getUpdateDate()!=null && this.getUpdateDate().toString().length()>0)
-                this.date = this.getCreationDate().toString();  
-            else
-                this.date = this.getCreationDate().toString();  
+            if (this.getUpdateDate() != null && this.getUpdateDate().toString().length() > 0) {
+                this.date = this.getCreationDate().toString();
+            } else {
+                this.date = this.getCreationDate().toString();
+            }
             this.receiverCompanyName = rfq.getReceiver().getName();
         }
+    }
+
+    protected String[] getStringArray(List<String> list) {
+        return list.toArray(new String[list.size()]);
     }
 }

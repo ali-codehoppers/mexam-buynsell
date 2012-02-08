@@ -28,15 +28,15 @@
                     //colNames:['PartNo','Name','Quantity','Price'],
                     colNames:['Received Date','Subject','Sent By','Company'],
                     colModel:[
-                        {name:'cell.date',index:'date', width:200, align:"center",sortable:true, formatter:isNewFormatter},                                                
+                        {name:'cell.date',index:'creationDate', width:200, align:"center",sortable:true, formatter:isNewFormatter},                                                
                         {name:'cell.title',index:'title', width:200, sortable:true,formatter:isNewFormatter},
-                        {name:'cell.senderName',index:'senderName', width:200, sortable:true,formatter:isNewFormatter},                        
-                        {name:'cell.senderCompanyName',index:'senderCompanyName', width:200, sortable:true,formatter:isNewFormatter}                        
+                        {name:'cell.senderName',index:'sender.firstName', width:200, sortable:true,formatter:isNewFormatter},                        
+                        {name:'cell.senderCompanyName',index:'sender.company.name', width:200, sortable:true,formatter:isNewFormatter}                        
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
                     pager: '#pager_r',
-                    sortname: 'name',
+                    sortname: 'id',
                     viewrecords: true,
                     sortorder: "desc",
                     caption: "RFQs Received",
@@ -70,14 +70,14 @@
                     //colNames:['PartNo','Name','Quantity','Price'],
                     colNames:['Date','Subject','Sent To'],
                     colModel:[
-                        {name:'cell.date',index:'date', width:200, align:"center",sortable:true},                                                
+                        {name:'cell.date',index:'creationDate', width:200, align:"center",sortable:true},                                                
                         {name:'cell.title',index:'title', width:200, sortable:true},
-                        {name:'cell.receiverCompanyName',index:'receiverCompanyName', width:200, sortable:true}
+                        {name:'cell.receiverCompanyName',index:'receiver.name', width:200, sortable:true}
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
                     pager: '#pager_s',
-                    sortname: 'name',
+                    sortname: 'id',
                     viewrecords: true,
                     sortorder: "desc",
                     caption: "RFQs Sent",
@@ -128,7 +128,7 @@
                     rowNum:10,
                     rowList:[10,20,30],
                     pager: '#pager',
-                    sortname: 'name',
+                    sortname: 'id',
                     viewrecords: true,
                     sortorder: "desc",
                     caption: "RFQ Items",
