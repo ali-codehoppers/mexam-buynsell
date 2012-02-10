@@ -19,6 +19,7 @@ public class Login extends ActionSupport {
 
     private String message;
     private String error = "";
+    private String hasError="";
     private String info;
     private String userName;
     private String password;
