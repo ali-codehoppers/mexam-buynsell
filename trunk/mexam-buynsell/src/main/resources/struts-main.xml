@@ -293,7 +293,16 @@
             <interceptor-ref name="basic"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
-
+        <action name="updateInventoryItem" class="com.mt.actions.ajaxActions.UpdateInventoryItem">
+            <interceptor-ref name="authenticated"/>
+            <result name="success" type="redirect">showInventory</result>
+            <result name="input" type="chain">showInventory</result>
+        </action>
+        
+        <action name="getInventoryItem" class="com.mt.actions.ajaxActions.GetInventoryItem">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
         <action name="getSubCategories" class="com.mt.actions.ajaxActions.GetSubCategories">
             <interceptor-ref name="basic"/>
             <result >jsp/common/ajax.jsp</result>

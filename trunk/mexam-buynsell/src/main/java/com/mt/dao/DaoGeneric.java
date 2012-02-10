@@ -81,6 +81,19 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
         return (Long) query.uniqueResult();
     }
 
+    public boolean updateRecord(int id, String[] fieldName, String[] fieldValue) {
+        String updateQuery = "";
+        String baseQuery = "UPDATE " + type.getSimpleName();
+        for (int i = 0; i < fieldName.length; i++) {
+            updateQuery += fieldName[i] + "=" + fieldValue[i];
+        }
+        if (!updateQuery.equals("")) {
+            baseQuery += "SET " + updateQuery + " WHERE id='" + id + "'";
+           // Query query = getSession().createQuery(qry).setFirstResult((page - 1) * rows).setMaxResults(rows);
+        }
+        return true;
+    }
+
     public List<T> getBy(String[] searchFields, String[] searchStrings, String[] searchOperators, String sortField, String sortOrder, int rows, int page) {
         //String qry = "select obj from " + type.getSimpleName() +" obj";
 
@@ -104,7 +117,7 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
 
         //String qry=baseQuery+comaparisonString+sortString+pageString;
         String qry = baseQuery + comaparisonString + sortString;
-        Query query = getSession().createQuery(qry).setFirstResult((page - 1)*rows).setMaxResults(rows);
+        Query query = getSession().createQuery(qry).setFirstResult((page - 1) * rows).setMaxResults(rows);
         return query.list();
     }
 
