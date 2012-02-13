@@ -9,6 +9,7 @@ import com.paypal.sdk.core.nvp.NVPEncoder;
 import com.paypal.sdk.profiles.APIProfile;
 import com.paypal.sdk.profiles.ProfileFactory;
 import com.paypal.sdk.services.NVPCallerServices;
+import java.io.File;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -19,9 +20,8 @@ import java.util.logging.Logger;
  */
 public class PaypalIntegration {
 
-    public final static String COUNTRY_CODE="US";
-    public final static String CURRENCY_CODE="USD";
-    
+    public final static String COUNTRY_CODE = "US";
+    public final static String CURRENCY_CODE = "USD";
     private final static String CLASS_NAME = PaypalIntegration.class.getName();
     private final static Logger LOGGER = Logger.getLogger(CLASS_NAME);
     public static String paypalEnvironment;
@@ -34,10 +34,6 @@ public class PaypalIntegration {
     public final static String cancelURL = "/paypalCancel";
     Properties prop = new Properties();
 
- 
-    
-
-    
 //
 //    
 //
@@ -57,13 +53,13 @@ public class PaypalIntegration {
 //        }
 //        return null;
 //    }
-
     public PaypalIntegration() throws Exception {
         InputStream is = PaypalIntegration.class.getResourceAsStream("/payPal.properties");
         prop.load(is);
 
         paypalAPIUsername = prop.getProperty("paypalAPIUsername");
         paypalAPIPassword = prop.getProperty("paypalAPIPassword");
+        paypalAPIPvtKeyPassword = prop.getProperty("paypalAPIPvtKeyPassword");
         paypalAPICertFile = prop.getProperty("paypalAPICertFile");
         paypalEnvironment = prop.getProperty("paypalEnvironment");
 
@@ -78,39 +74,44 @@ public class PaypalIntegration {
 
         try {
             caller = new NVPCallerServices();
-            APIProfile profile = ProfileFactory.createSignatureAPIProfile();
+            APIProfile profile = ProfileFactory.createSSLAPIProfile();
 
             profile.setAPIUsername(paypalAPIUsername);
             profile.setAPIPassword(paypalAPIPassword);
-            //profile.setPrivateKeyPassword(paypalAPIPvtKeyPassword);
+            profile.setPrivateKeyPassword(paypalAPIPvtKeyPassword);
             //profile.setSignature("AVGidzoSQiGWu.lGj3z15HLczXaaAcK6imHawrjefqgclVwBe8imgCHZ");
+            File file = new File(paypalAPICertFile);
+            boolean res = file.exists();
             profile.setCertificateFile(paypalAPICertFile);
             profile.setEnvironment(paypalEnvironment);
             caller.setAPIProfile(profile);
 
-            encoder.add("VERSION", "51.0");
+            encoder.add("VERSION", "86.0");
             encoder.add("METHOD", "DoDirectPayment");
             // Add request-specific fields to the request string.
 
 
 
             encoder.add("PAYMENTACTION", paymentAction);
-            encoder.add("AMT", amount);
+            //encoder.add("AMT", amount);
+            encoder.add("AMT", "100");
             encoder.add("CURRENCYCODE", CURRENCY_CODE);
-            encoder.add("CREDITCARDTYPE", "Visa");
-            //encoder.add("ACCT", acct);
-            encoder.add("EXPDATE", paymentInfo.getExpMonth()+"/"+paymentInfo.getExpYear());
+            encoder.add("CREDITCARDTYPE", paymentInfo.getPaymentType());
+            encoder.add("ACCT", paymentInfo.getCcNum());
+            //encoder.add("EXPDATE", "01/2017");
+            encoder.add("EXPDATE", paymentInfo.getExpMonth() + "/" + paymentInfo.getExpYear());
             encoder.add("CVV2", paymentInfo.getCvv2());
             encoder.add("FIRSTNAME", paymentInfo.getFirstName());
             encoder.add("LASTNAME", paymentInfo.getLastName());
-            encoder.add("STREET", paymentInfo.getAddress().getAddress1());
-            encoder.add("CITY", paymentInfo.getAddress().getCity());
-            encoder.add("STATE", paymentInfo.getAddress().getState());
+            encoder.add("STREET", paymentInfo.getBillingList1());
+            encoder.add("CITY", paymentInfo.getCity());
+            encoder.add("STATE", paymentInfo.getState());
             encoder.add("ZIP", paymentInfo.getZip());
-            encoder.add("COUNTRYCODE", COUNTRY_CODE);
+            encoder.add("COUNTRYCODE", paymentInfo.getCountryCode());
+            encoder.add("EMAIL", paymentInfo.getEmailAddress());
             ////
-            encoder.add("RETURNURL", returnURL);
-            encoder.add("CANCELURL", cancelURL);
+            //encoder.add("RETURNURL", returnURL);
+            //encoder.add("CANCELURL", cancelURL);
 
             //paypalAPIPvtKeyPassword // Execute the API operation and obtain the response.
             String NVPRequest = encoder.encode();
