@@ -436,7 +436,7 @@
             <interceptor-ref name="basic"/>
         </action>
         
-        <action name="payPalpay" class="com.mt.actions.DoNothing">
+        <action name="payPalpay" class="com.mt.actions.paypal.ShowPayPalPay">
             <interceptor-ref name="authenticated"/>
             <result >jsp/paypal/payPalpay.jsp</result>
         </action>

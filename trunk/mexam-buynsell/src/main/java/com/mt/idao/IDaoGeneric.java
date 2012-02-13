@@ -22,4 +22,5 @@ public interface IDaoGeneric<T, PK extends Serializable> {
     List<T> getBy(String[] searchFields, String[] searchStrings, String[] searchOperators, String sortField, String sortOrder, int rows, int page);
 
     long getRecordsCount(String[] searchFields, String[] searchStrings, String[] searchOperators);
+    
 }

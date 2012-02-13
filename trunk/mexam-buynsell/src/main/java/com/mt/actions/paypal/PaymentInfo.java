@@ -8,7 +8,12 @@ public class PaymentInfo {
     private Timestamp paymentTimestamp;
     private String firstName;
     private String lastName;
-    private Address address;
+    private String billingList1;
+    private String billingList2;
+    private String city;
+    private String state;
+    private String countryCode;
+    //private Address address;
     private String zip;
     private String ccNum;
     private String cvv2;
@@ -19,6 +24,8 @@ public class PaymentInfo {
     private Integer orderId;
     private String transactionId;
     private double finalTotal;
+    private String paymentType;
+    private String telephone;
 
     public int getId() {
         return id;
@@ -52,13 +59,50 @@ public class PaymentInfo {
         this.lastName = lastName;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getBillingList1() {
+        return billingList1;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setBillingList1(String billingList1) {
+        this.billingList1 = billingList1;
     }
+
+    public String getBillingList2() {
+        return billingList2;
+    }
+
+    public void setBillingList2(String billingList2) {
+        this.billingList2 = billingList2;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    
+//    public Address getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(Address address) {
+//        this.address = address;
+//    }
 
     public String getCcNum() {
         return ccNum;
@@ -140,4 +184,26 @@ public class PaymentInfo {
         this.zip = zip;
     }
 
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    
+    
 }
