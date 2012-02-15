@@ -84,6 +84,7 @@
         </style>
 
         <script type="text/javascript">
+            var selectedVendorId=0;
             $(document).ready(function () {
                                     
                 var mydata = eval(${searchResultJson}); 
@@ -92,6 +93,25 @@
                     $("#vendorList").append(getItemHtml(mydata[i]));
                 }
                 $("#messageInfo").hide();
+                
+                $( "#dialog" ).dialog({
+                    autoResize:true,
+                    autoOpen: false,
+                    modal: true,
+                    width:'auto'
+                });
+                
+                $( "#removeDialog" ).dialog({
+                    autoResize:true,
+                    autoOpen: false,
+                    modal: true,
+                    width:'auto'
+                });
+                
+                $( ".ui-jqgrid-titlebar-close").hide();
+                
+                
+                
             });
             
             function hideSuccess()
@@ -104,11 +124,38 @@
             }
             
             
-            function AddVendor(id)
+            function addVendor()
             {
+                var id = selectedVendorId;
+                var notes = $("#notes").val();
                 $.ajax({
                     type:       "get",
                     url:        "addVendorAjax",
+                    data:       {vendorId:id, notes:notes},
+                    success:    function(msg) {
+                        if(msg.length>0)
+                        {
+                            $("#successMsg"+id).html(msg);
+                            $("#messageInfo"+id).show();
+                            setTimeout("hideSuccess("+id+")", 3000);
+                            $( "#dialog" ).dialog('close');
+                            var buttonHtml="<a href='javascript:showRemoveDialog("+id+")' class='btn' style='text-align: center;min-width:180px;'>Remove from My Vendors</a>";
+                            $("#buttonCont_"+id).html(buttonHtml);
+                        }
+                        else
+                            $("#messageInfo"+id).hide();
+                    }
+                });
+                $("#notes").val("");
+            }
+            
+            
+            function removeVendor()
+            {
+                var id = selectedVendorId;
+                $.ajax({
+                    type:       "get",
+                    url:        "removeVendorAjax",
                     data:       {vendorId:id},
                     success:    function(msg) {
                         if(msg.length>0)
@@ -116,17 +163,70 @@
                             $("#successMsg"+id).html(msg);
                             $("#messageInfo"+id).show();
                             setTimeout("hideSuccess("+id+")", 3000);
+                            $( "#removeDialog" ).dialog('close');
+                            var buttonHtml="<a href='javascript:showAddDialog("+id+")' class='btn' style='text-align: center; min-width:180px;'>Add to My Vendors</a>";
+                            $("#buttonCont_"+id).html(buttonHtml);
                         }
                         else
                             $("#messageInfo"+id).hide();
                     }
                 });
+               
+                //                $.ajax({
+                //                    type:       "get",
+                //                    url:        "addVendorAjax",
+                //                    data:       {vendorId:selectedVendorId},
+                //                    success:    function(msg) {
+                //                        if(msg.length>0)
+                //                        {
+                //                            $("#successMsg"+id).html(msg);
+                //                            $("#messageInfo"+id).show();
+                //                            setTimeout("hideSuccess("+id+")", 3000);
+                //                            $( "#dialog" ).dialog('close');
+                //                        }
+                //                        else
+                //                            $("#messageInfo"+id).hide();
+                //                    }
+                //                });
+
+//                var buttonHtml="<a href='javascript:showAddDialog("+selectedVendorId+")' class='btn' style='text-align: center; min-width:180px;'>Add to My Vendors</a>";
+//                $("#buttonCont_"+selectedVendorId).html(buttonHtml);
+//                $( "#dialog" ).dialog( "close" );
+                //alert("buttonCont_"+selectedVendorId);
             }
             
             function submitForm()
             {
                 $("#searchVendor").submit();
             }
+            
+            function showAddDialog(id)
+            {
+                if(id>0)
+                {
+                    selectedVendorId=id;
+                    //if(selectedVendorId.length>0)
+                    $( "#dialog" ).dialog( "open" );
+                }
+            }
+             
+             
+            function showRemoveDialog(id)
+            {
+                if(id>0)
+                {
+                    selectedVendorId = id;
+                    //if(selectedVendorId.length>0)
+                    $( "#removeDialog" ).dialog( "open" );
+                }
+            }
+             
+                          
+            function cancelRemoveVendor()
+            {
+                $( "#removeDialog" ).dialog( "close" );
+            }
+             
             
             function getItemHtml(item)
             {
@@ -182,9 +282,19 @@
                 html+="<div style='float: left; width: 30%'>";
                 html+="<div style='float:left; margin-top: 10%; float: right; margin:auto'>";
             <% if (session.getAttribute("user") != null) {%> 
-                    html+="<div style='text-align: center; height: auto;'>";
-                    html+="<a href='javascript:AddVendor("+item.id+")' class='btn' style='text-align: center;'>Add Vendor</a>";
+                    html+="<div style='text-align: center; height: auto;' id='buttonCont_"+item.id+"'>";
+                    if(!item.alreadyAdded)
+                    {
+                        //html+="<a href='javascript:AddVendor("+item.id+")' class='btn' style='text-align: center;'>Add Vendor</a>";
+                        html+="<a href='javascript:showAddDialog("+item.id+")' class='btn' style='text-align: center; min-width:180px;'>Add to My Vendors</a>";
+                    }
+                    else
+                    {
+                        //html+="<a href='javascript:AddVendor("+item.id+")' class='btn' style='text-align: center;'>Add Vendor</a>";
+                        html+="<a href='javascript:showRemoveDialog("+item.id+")' class='btn' style='text-align: center;min-width:180px;'>Remove from My Vendors</a>";
+                    }
                     html+="</div>";
+                    
             <% }%>        
                     html+="</div>";
                     html+="</div>";
@@ -193,11 +303,11 @@
                     html+="<div style='clear: both'>";
                     html+="</div>";
                     html+="</div>";
-//                    html+="<div style='border: 1px solid #999999;'>";
-//                    html+="<div style='padding: 8px; padding-left: 10px'>";
-//                    html+=item.companyName;
-//                    html+="</div>";
-//                    html+="</div>";
+                    //                    html+="<div style='border: 1px solid #999999;'>";
+                    //                    html+="<div style='padding: 8px; padding-left: 10px'>";
+                    //                    html+=item.companyName;
+                    //                    html+="</div>";
+                    //                    html+="</div>";
                     html+="</div>";
                     return html;
                 }
@@ -245,6 +355,68 @@
                 <div id="searchResult">
                     <div id="vendorList">
                     </div>
+                </div>
+
+
+                <div id="dialog" title="Vendor">
+
+                    <div style="margin:auto">
+                        <h1 style="width: 100%; text-align: center" id="titleDialog">Add Vendor</h1>
+                        <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
+                    </div>
+
+                    <div style="margin-top: 20px; min-width: 500px;">
+                        <div style="float: left; width: 20%;">
+                            <h3 style="font: normal 18px 'Trebuchet MS'; color: #444;margin: auto">Notes : </h3>
+                        </div>
+                        <div style=" text-align: left">
+                            <textarea id="notes" name="notes" class="field_big" rows="5" style="min-width: 350px; min-height: 100px;"></textarea>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div style="clear: both">
+                    </div>
+                    <div style="width: 150px; margin: auto; ">
+                        <a href="javascript:addVendor()" class="btn" style="margin-top: 25px; margin-bottom: 15px;min-width: 150px;text-align: center;">Add as My Vendor</a>
+                        <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
+                    </div>
+
+                    <div style="clear: both">
+                    </div>
+                    <!--                                                <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>-->
+                </div>
+
+
+                <div id="removeDialog" title="Remove Vendor">
+
+                    <div style="width: auto; margin: auto;">
+                        <div style="margin-top: 20px; float: left; ">
+                            <h3 style="font: normal 18px 'Trebuchet MS'; color: #444;margin: auto">Are you sure to remove this vendor from you vendors list?</h3>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div style="clear: both">
+                    </div>
+
+
+                    <div style="margin-top: 20px; width: 60%; margin: auto;">
+                        <div style="width:48%;float: left; ">
+                            <div style="margin: auto; width: 50px;">
+                                <a href="javascript:removeVendor()" class="btn" style="margin-top: 25px; margin-bottom: 15px; min-width: 50px;text-align: center;">Yes</a>
+                                <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
+                            </div>
+                        </div>
+                        <div style="width:48%;float: left;">
+                            <div style="margin: auto; width: 50px;">
+                                <a href="javascript:cancelRemoveVendor()" class="btn" style="margin-top: 25px; margin-bottom: 15px;min-width: 50px; text-align: center;">No</a>
+                                <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div style="clear: both">
+                    </div>
+                    <!--                                                <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>-->
                 </div>
 
             </div>

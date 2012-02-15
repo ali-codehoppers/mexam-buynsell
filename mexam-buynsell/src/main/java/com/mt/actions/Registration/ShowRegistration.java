@@ -32,6 +32,8 @@ public class ShowRegistration extends ActionSupport {
     @Override
     public String execute() throws Exception {
 
+        //request.getHeader("referer"); 
+        
         countries = countryService.getAll();
         companyCategories = lookUpService.findByName("COMPANY_CATEGORY");
         countriesJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(countries);
