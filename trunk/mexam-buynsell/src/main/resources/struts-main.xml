@@ -223,10 +223,15 @@
   
        
             <!--      Registration    -->
-        
+
         <action name="showRegistration" class="com.mt.actions.Registration.ShowRegistration">
             <interceptor-ref name="basic"/>
             <result name="success">jsp/registration/newRegistration.jsp</result>
+        </action>
+        
+        <action name="showRegistrationInfo" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/registration/newRegistrationInfo.jsp</result>
         </action>
 
         <action name="showRegistration_1" class="com.mt.actions.Registration.ShowRegistration">
@@ -237,7 +242,7 @@
         <action name="register" class="com.mt.actions.Registration.Register">
             <interceptor-ref name="basic"/>
 <!--            <result name="success" type="redirect">viewRegistration?messeage=${message}&amp;companyId=${company.id}&amp;userId=${user.id} </result>-->
-            <result name="input" type="redirect">showRegistration</result>
+            <result name="input" type="redirect">payPalpay</result>
             <result name="success" type="redirect">home</result>
         </action>
 
@@ -349,7 +354,10 @@
             <result >jsp/common/ajax.jsp</result>
         </action>
         
-        
+        <action name="removeVendorAjax" class="com.mt.actions.ajaxActions.RemoveVendorAjax">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
         
         <action name="getCartItems" class="com.mt.actions.ajaxActions.GetCartItemsList">
             <interceptor-ref name="authenticated"/>
@@ -451,7 +459,7 @@
             <result >jsp/paypal/payPalListener.jsp</result>
         </action>
         
-       <action name="payAmount" class="com.mt.actions.paypal.PayAmount">
+        <action name="payAmount" class="com.mt.actions.paypal.PayAmount">
             <interceptor-ref name="authenticated"/>
             <result >jsp/paypal/payPalpayComplete.jsp</result>
         </action>

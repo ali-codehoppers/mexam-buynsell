@@ -19,6 +19,8 @@ public class AddVendorAjax extends AuthenticatedAction {
     private int vendorId;
     private CompanyService companyService;
     private VendorService vendorService;
+    private String notes;
+    
 
     public void setCompanyService(CompanyService companyService) {
         this.companyService = companyService;
@@ -30,6 +32,10 @@ public class AddVendorAjax extends AuthenticatedAction {
 
     public void setVendorService(VendorService vendorService) {
         this.vendorService = vendorService;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     @Override
@@ -52,7 +58,7 @@ public class AddVendorAjax extends AuthenticatedAction {
             vendor.setCompany(company);
             vendor.setVendor(vendorCompany);
             vendor.setVendorId(vendorId);
-            vendor.setNotes("");
+            vendor.setNotes(notes);
             vendor.setCreatedBy(getUser().getId());
             vendor.setUpdatedBy(getUser().getId());
             vendor.setCreationDate(new Timestamp(System.currentTimeMillis()));

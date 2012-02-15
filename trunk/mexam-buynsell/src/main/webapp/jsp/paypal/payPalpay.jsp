@@ -167,23 +167,23 @@
                                     <div style="float:left">
                                         <div style="float: left;">   
                                             <div style="float: left;">    
-                                                <input id="expirationMonth" name="expirationMonth" class="field_big" maxlength="2" style="width:25px; text-align: center"/>
+                                                <input id="expirationMonth" name="expirationMonth" class="field_big" maxlength="2" style="width:20px; text-align: center"/>
                                             </div>
-                                            <div style="float: left;" class="fieldError">                        
+                                            <div style="float: left; display: none" class="fieldError">                        
                                                 <ch:errortag name="paypal_expirationMonth"></ch:errortag>
                                             </div>
                                             <div style="clear: both"></div> 
                                         </div>
                                     </div>
-                                    <div style="float: left;margin-left: 10px">
+                                    <div style="float: left; margin-left: 10px">
                                         <div style="float: left; margin-top: 3px; width: 10px; vertical-align: middle; text-align: center">                        
                                             /
                                         </div>                        
                                         <div style="float: left;">   
                                             <div style="float: left;margin-left: 10px">    
-                                                <input id="expirationYear" name="expirationYear" class="field_big" maxlength="2" style="width:25px;text-align: center"/>
+                                                <input id="expirationYear" name="expirationYear" class="field_big" maxlength="2" style="width:20px;text-align: center"/>
                                             </div>
-                                            <div style="float: left;" class="fieldError">                        
+                                            <div style="float: left; display: none" class="fieldError">                        
                                                 <ch:errortag name="paypal_expirationYear"></ch:errortag>
                                             </div>
                                             <div style="clear: both"></div> 

@@ -214,7 +214,7 @@ public class Register extends ActionSupport implements SessionAware {
         user.setCreationDate(new Timestamp(System.currentTimeMillis()));
         Integer addNewUser = userService.addNew(user);
 
-
+        session.put("register_success", "Company registered sucessfully.");
         message = "Company registered sucessfully";
         return SUCCESS;
     }

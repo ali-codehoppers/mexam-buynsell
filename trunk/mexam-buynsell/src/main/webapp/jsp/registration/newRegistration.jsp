@@ -159,7 +159,7 @@
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
                                     <div style="float: left;">    
-                                        <textarea id="address" name="address" class="field_big" style="min-height: 75px; min-width: 250px; "></textarea>
+                                        <textarea id="address" name="address" class="field_big" style="min-height: 50px; min-width: 250px;"></textarea>
                                     </div>
                                     <div style="float: left;" class="fieldError">                        
                                         <ch:errortag name="register_address"></ch:errortag>
@@ -383,7 +383,7 @@
                         <div style="clear: both">
                         </div>
                         <div style="width: 100px; margin: auto">
-                            <a href="javascript:submitForm()" class="btn" style="margin-top: 25px;">Submit</a>
+                            <a href="javascript:submitForm()" class="btn" style="margin-top: 25px; min-width: 100px; text-align: center">Submit</a>
                             <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
                         </div>
                     </form>
