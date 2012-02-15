@@ -252,8 +252,36 @@
                                     </div>
                                 </div>     
                             </div>
-                            <div style="width: 100px; margin: auto">
+                            <div style="width: 200px; margin: auto">
                                 <a href="javascript:submitForm()" class="btn">Submit</a>
+                                <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
+                            </div>
+                        </div> 
+                    </form>
+                </div>
+                <div style="clear: both"></div>  
+                <div>
+                    <form id ="uploadForm" method="POST" action="uploadInventory" enctype="multipart/form-data">
+                        <div>
+
+                            <div>
+                                <div>
+                                    <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                        Upload CSV File
+                                    </div>                        
+                                    <div style="float: left; width: 48%; margin: 5px;">
+                                        <div style="float: left;">    
+                                            <input type="file" name="csvUpload" />
+                                        </div>
+                                        <div style="float: left;" class="fieldError">                        
+                                            <ch:errortag name="addInventory_description"></ch:errortag>
+                                        </div>
+                                        <div style="clear: both"></div> 
+                                    </div>
+                                </div>     
+                            </div>
+                            <div style="width: 200px; margin: auto">
+                                <a href="javascript:$('#uploadForm').submit();" class="btn" style="width: auto">Upload CSV</a>
                                 <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
                             </div>
                         </div> 

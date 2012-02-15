@@ -105,6 +105,10 @@
             <interceptor-ref name="basic"/>
             <result name="success">jsp/inventory/searchItems.jsp</result>
         </action>
+        <action name="uploadInventory" class="com.mt.actions.Inventory.UploadInventory">
+            <interceptor-ref name="authenticated"/>
+            <result>jsp/inventory/uploadInventory.jsp</result>
+        </action>
                 
             <!-- //     Inventory    -->
 
