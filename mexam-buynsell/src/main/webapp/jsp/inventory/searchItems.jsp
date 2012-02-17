@@ -251,7 +251,7 @@
     </head>
     <body>
 
-        <jsp:include page="../common/header.jspf" >
+        <jsp:include page="../common/header.jsp" >
             <jsp:param name="currentTab" value="buy"/>
         </jsp:include>
 
@@ -296,7 +296,7 @@
             </div>
         </div>
 
-        <jsp:include page="../common/footer.jspf" />
+        <jsp:include page="../common/footer.jsp" />
     </body>
 </html>
 

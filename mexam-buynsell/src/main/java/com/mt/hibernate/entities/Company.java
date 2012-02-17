@@ -5,17 +5,9 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
+import java.sql.Timestamp;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -48,6 +40,11 @@ public class Company extends BaseEntity {
     private String webAddress;
     @Expose
     private String companyCategory;
+    @Expose
+    private boolean isExpired;
+    @Expose
+    private Timestamp expiryDate;
+    
     private List<User> users;
     private List<Inventory> inventorys;
     private List<Broadcast> broadcasts;
@@ -109,6 +106,15 @@ public class Company extends BaseEntity {
         this.vendors = vendors;
     }
 
+    public void setExpiryDate(Timestamp expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public void setIsExpired(boolean isExpired) {
+        this.isExpired = isExpired;
+    }
+
+    
     @NotEmpty
     @Length(min = 4, max = 150)
     public String getName() {
@@ -180,5 +186,13 @@ public class Company extends BaseEntity {
     @OneToMany(targetEntity = Vendor.class, fetch = FetchType.LAZY, mappedBy = "companyId")
     public List<Vendor> getVendors() {
         return vendors;
+    }
+
+    public Timestamp getExpiryDate() {
+        return expiryDate;
+    }
+
+    public boolean isIsExpired() {
+        return isExpired;
     }
 }

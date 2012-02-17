@@ -4,130 +4,167 @@
  */
 package com.mt.actions.paypal;
 
-import com.opensymphony.xwork2.ActionSupport;
+import com.mt.actions.AuthenticatedAction;
+import com.mt.hibernate.entities.Company;
+import com.mt.hibernate.entities.Transaction;
+import com.mt.services.CompanyService;
+import com.mt.services.TransactionService;
+import com.paypal.sdk.core.nvp.NVPDecoder;
+import java.sql.Timestamp;
 
-/**
- *
- * @author AmierHaider
- */
-public class PayAmount extends ActionSupport {
-    
-    private String amount;
-    private String country;
-    private String ccNumber;
-    private String csc;
+public class PayAmount extends AuthenticatedAction {
+
     private String firstName;
     private String lastName;
-    private String billingLine1;
-    private String billingLine2;
-    private String zipCode;
+    private String address1;
+    private String address2;
+    private String zip;
     private String city;
     private String state;
-    private int expirationMonth;
-    private int expirationYear;
-    private String paymentType;
-    private String telephone;
-    private String email;
-    
-    
-    public void setBillingLine1(String billingLine1) {
-        this.billingLine1 = billingLine1;
+    private double amount;
+    private String creditCardNumber;
+    private String cvv2Number;
+    private String creditCardType;
+    private int expdate_month;
+    private int expdate_year;
+    private String membershipType;
+    private int duration;
+    ////////////////////////////
+    private CompanyService companyService;
+    private TransactionService transactionService;
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
     }
-    
-    public void setBillingLine2(String billingLine2) {
-        this.billingLine2 = billingLine2;
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
     }
-    
-    public void setCcNumber(String ccNumber) {
-        this.ccNumber = ccNumber;
+
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
-    
+
     public void setCity(String city) {
         this.city = city;
     }
-    
-    public void setCountry(String country) {
-        this.country = country;
+
+    public void setCreditCardNumber(String creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
     }
-    
-    public void setCsc(String csc) {
-        this.csc = csc;
+
+    public void setCreditCardType(String creditCardType) {
+        this.creditCardType = creditCardType;
     }
-    
-    public void setExpirationMonth(int expirationMonth) {
-        this.expirationMonth = expirationMonth;
+
+    public void setCvv2Number(String cvv2Number) {
+        this.cvv2Number = cvv2Number;
     }
-    
-    public void setExpirationYear(int expirationYear) {
-        this.expirationYear = expirationYear;
+
+    public void setExpdate_month(int expdate_month) {
+        this.expdate_month = expdate_month;
     }
-    
+
+    public void setExpdate_year(int expdate_year) {
+        this.expdate_year = expdate_year;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
+
     public void setState(String state) {
         this.state = state;
     }
-    
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-    
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-    
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
+
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCompanyService(CompanyService companyService) {
+        this.companyService = companyService;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setTransactionService(TransactionService transactionService) {
+        this.transactionService = transactionService;
     }
-    
-    
+
+    public void setMembershipType(String membershipType) {
+        this.membershipType = membershipType;
+        duration = Integer.parseInt(membershipType);
+    }
+
     @Override
     public String execute() throws Exception {
-        
+
         PaymentInfo paymentInfo = new PaymentInfo();
-        paymentInfo.setCcNum(ccNumber);
-        paymentInfo.setCcNum(csc);
+        paymentInfo.setCcNum(creditCardNumber);
+        paymentInfo.setCcNum(cvv2Number);
         paymentInfo.setFirstName(firstName);
         paymentInfo.setLastName(lastName);
-        paymentInfo.setExpMonth(expirationMonth);
-        paymentInfo.setExpYear(expirationYear);
-        paymentInfo.setZip(zipCode);
-        paymentInfo.setBillingList1(billingLine1);
-        paymentInfo.setBillingList2(billingLine2);
+        paymentInfo.setExpMonth(expdate_month);
+        paymentInfo.setExpYear(expdate_year);
+        paymentInfo.setZip(zip);
+        paymentInfo.setBillingList1(address1);
+        paymentInfo.setBillingList2(address2);
         paymentInfo.setCity(city);
-        paymentInfo.setState("CA");
-        paymentInfo.setCountryCode(country);
-        paymentInfo.setPaymentType(paymentType);
-        paymentInfo.setEmailAddress(email);
-        paymentInfo.setTelephone(telephone);
-        //paymentInfo.setCcType("Visa");
-        //paymentInfo.setCcNum("4555754405343123");
-        //paymentInfo.setCcNum("4826761716556965");
+        paymentInfo.setState(state);
+        paymentInfo.setCountryCode("US");
+        paymentInfo.setPaymentType(creditCardType);
+//        paymentInfo.setEmailAddress(email);
+//        paymentInfo.setTelephone(telephone);
+
+        if (membershipType.equals("1")) {
+            amount = 5.0;
+        } else if (membershipType.equals("3")) {
+            amount = 10.0;
+        } else if (membershipType.equals("12")) {
+            amount = 25.0;
+        }
+
+
         paymentInfo.setCcNum("4025851196140692");
-        //paymentInfo.setCvv2("3123");
-        paymentInfo.setCvv2("696");
-        //paymentInfo.setExpMonth(1);
-        paymentInfo.setExpMonth(2);
-        paymentInfo.setExpYear(17);
-        
         PaypalIntegration paypalIntegration = new PaypalIntegration();
-        String res = paypalIntegration.DoDirectPaymentCode("Authorization", paymentInfo, amount);
-        
-        return "";
-        
+        NVPDecoder response = paypalIntegration.DoDirectPaymentCode("Authorization", paymentInfo, "" + amount);
+
+        if (response.get("ACK").compareTo("Failure") == 0) {
+            return "fail";
+        } else {
+            Company company = companyService.getById(getUser().getCompanyId());
+
+            Transaction transaction = new Transaction();
+
+            Timestamp transactionTime = new Timestamp(System.currentTimeMillis());
+
+            transaction.setCompany(company);
+            transaction.setAmount(amount);
+            transaction.setTransactionDate(transactionTime);
+            transaction.setCreatedBy(getUser().getId());
+            transaction.setCreationDate(transactionTime);
+            transaction.setTransactionId(response.get("TRANSACTIONID"));
+            transaction.setSubscriptionDuration(duration);
+
+            if (company.getExpiryDate() != null && company.getExpiryDate().compareTo(transactionTime) <= 0) {
+                Timestamp expiryDate = transactionTime;
+                expiryDate.setMonth(transactionTime.getMonth() + duration);
+                company.setExpiryDate(transactionTime);
+            }
+            else 
+            {
+                Timestamp expiryDate = company.getExpiryDate();
+                expiryDate.setMonth(transactionTime.getMonth() + duration);
+                company.setExpiryDate(expiryDate);
+            }
+            company.setIsExpired(false);
+            companyService.update(company);
+            transactionService.addNew(transaction);
+            return SUCCESS;
+
+        }
+
     }
 }

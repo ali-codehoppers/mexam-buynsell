@@ -89,7 +89,7 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
         }
         if (!updateQuery.equals("")) {
             baseQuery += "SET " + updateQuery + " WHERE id='" + id + "'";
-           // Query query = getSession().createQuery(qry).setFirstResult((page - 1) * rows).setMaxResults(rows);
+            // Query query = getSession().createQuery(qry).setFirstResult((page - 1) * rows).setMaxResults(rows);
         }
         return true;
     }
@@ -117,7 +117,14 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
 
         //String qry=baseQuery+comaparisonString+sortString+pageString;
         String qry = baseQuery + comaparisonString + sortString;
-        Query query = getSession().createQuery(qry).setFirstResult((page - 1) * rows).setMaxResults(rows);
+        Query query;
+        if (rows == 0) {
+            query = getSession().createQuery(qry);
+        } else {
+            query = getSession().createQuery(qry).setFirstResult((page - 1) * rows).setMaxResults(rows);
+        }
+
+
         return query.list();
     }
 

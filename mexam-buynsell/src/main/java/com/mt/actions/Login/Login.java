@@ -8,6 +8,7 @@ import com.mt.hibernate.entities.User;
 import com.mt.services.UserService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class Login extends ActionSupport {
 
     private String message;
     private String error = "";
-    private String hasError="";
+    private String hasError = "";
     private String info;
     private String userName;
     private String password;
@@ -41,13 +42,12 @@ public class Login extends ActionSupport {
     }
 
     @Override
-    public void validate() 
-    {
-        if (userName==null|| userName.length() == 0) {
+    public void validate() {
+        if (userName == null || userName.length() == 0) {
             addFieldError("userName", "User Name is required");
         }
-        
-        if (password==null|| password.length() == 0) {
+
+        if (password == null || password.length() == 0) {
             addFieldError("password", getText("Password is required"));
         }
     }
@@ -63,8 +63,18 @@ public class Login extends ActionSupport {
         } else {
             for (int i = 0; i < userList.size(); i++) {
                 if (userList.get(i).getPassword().compareTo(password) == 0) {
+                    User user = userList.get(i);
+                    if (user.getCompany().getExpiryDate().compareTo(new Timestamp(System.currentTimeMillis())) < 0) 
+                    {
+                        user.getCompany().setIsExpired(true);
+                        userService.update(user);
+                    }
+
                     Map session = ActionContext.getContext().getSession();
                     session.put("user", userList.get(i));
+
+
+
                     return SUCCESS;
                 }
             }

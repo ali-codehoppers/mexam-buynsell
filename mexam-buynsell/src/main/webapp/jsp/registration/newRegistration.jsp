@@ -110,12 +110,12 @@
         <title>Buy & Sell</title>
     </head>
     <body>
-        <jsp:include page="../common/header.jspf" />
+        <jsp:include page="../common/header.jsp" />
         <div id="container" class="container" style="min-height: 335px;">
             <div id="content">
 
                 <div>
-                    <jsp:include page="../common/messages.jspf" />
+                    <jsp:include page="../common/messages.jsp" />
                 </div>
 
                 <div id="title"> 
@@ -392,7 +392,7 @@
             </div>
         </div>
 
-        <jsp:include page="../common/footer.jspf" />
+        <jsp:include page="../common/footer.jsp" />
     </body>
 </html>
 

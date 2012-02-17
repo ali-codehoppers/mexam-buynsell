@@ -38,6 +38,10 @@ public class Part extends BaseEntity {
     private String model;
     @Expose
     private String description;
+    @Expose
+    private String bsin;
+    @Expose
+    private String upc_ean;
 
     public void setPartNo(String partNo) {
         this.partNo = partNo;
@@ -83,6 +87,14 @@ public class Part extends BaseEntity {
         this.name = name;
     }
 
+    public void setBsin(String bsin) {
+        this.bsin = bsin;
+    }
+
+    public void setUpc_ean(String upc_ean) {
+        this.upc_ean = upc_ean;
+    }
+    
     public Part() {
     }
 
@@ -135,4 +147,17 @@ public class Part extends BaseEntity {
     public String getName() {
         return name;
     }
+
+    public String getBsin() {
+        return bsin;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getUpc_ean() {
+        return upc_ean;
+    }
+    
 }

@@ -448,9 +448,9 @@
             <interceptor-ref name="basic"/>
         </action>
         
-        <action name="payPalpay" class="com.mt.actions.paypal.ShowPayPalPay">
+        <action name="payPayment" class="com.mt.actions.paypal.ShowPayPayment">
             <interceptor-ref name="authenticated"/>
-            <result >jsp/paypal/payPalpay.jsp</result>
+            <result >jsp/paypal/payPayment.jsp</result>
         </action>
         
         <action name="payPalComplete" class="com.mt.actions.paypal.PayPalTransactionComplete">
@@ -465,10 +465,8 @@
         
         <action name="payAmount" class="com.mt.actions.paypal.PayAmount">
             <interceptor-ref name="authenticated"/>
-            <result >jsp/paypal/payPalpayComplete.jsp</result>
+            <result name="success" type="redirect">payPalComplete</result>
         </action>
-        
-
         
     </package>
 </struts>

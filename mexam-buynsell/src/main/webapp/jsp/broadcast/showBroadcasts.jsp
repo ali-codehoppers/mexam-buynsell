@@ -23,13 +23,13 @@
                     url:'getBroadcastsList',
                     datatype: "json",
                     height: 250,
-                    colNames:['Posted','Company','Country','Part #','Manufacturer', 'Condition', 'Qty','Price','Notes/Description'],                    
+                    colNames:['Posted','Company','Part #','Manufacturer', 'Condition', 'Qty','Price','Notes/Description'],                    
                     colModel:[
-                        {name:'cell.creationDate',index:'creationDate', width:200, align:"center"},                                                
-                        {name:'cell.companyString',index:'companyString', width:200, align:"center"},                                                                        
-                        {name:'cell.countryString',index:'countryString', width:200, align:"center"},                                                                                                
-                        {name:'cell.partNo',index:'partNo', width:100, align:"center"},                        
-                        {name:'cell.manufacturer',index:'manufacturer', width:200},
+                        {name:'cell.creationDate',index:'creationDate', width:180, align:"center"},                                                
+                        {name:'cell.companyString',index:'companyString', width:150, align:"center"},                                                                        
+//                        {name:'cell.countryString',index:'countryString', width:120, align:"center"},                                                                                                
+                        {name:'cell.partNo',index:'partNo', width:150, align:"center"},                        
+                        {name:'cell.manufacturer',index:'manufacturer', width:150},
                         {name:'cell.cond',index:'cond', width:100},                        
                         {name:'cell.quantity',index:'quantity', width:80, align:"right",sorttype:"int", searchtype:"integer"},                        
                         {name:'cell.price',index:'price', width:80, align:"right",sorttype:"float", searchtype:"number"},                                                
@@ -74,7 +74,7 @@
     </head>
     <body>
 
-        <jsp:include page="../common/header.jspf" >
+        <jsp:include page="../common/header.jsp" >
             <jsp:param name="currentTab" value="broadcast"/>
         </jsp:include>
         <div id="container" class="container" style="min-height: 335px; width: 100%">
@@ -86,12 +86,12 @@
                     </div>
                 </div>
 
-                <div id="listContainer" style="margin: auto; width: 80%">
+                <div id="listContainer" style="margin: auto; width: 1090px;">
                     <table id="broadcastList"></table>
                     <div id="pager"></div>
                 </div>
             </div>
         </div>
-        <jsp:include page="../common/footer.jspf" />
+        <jsp:include page="../common/footer.jsp" />
     </body>
 </html>
