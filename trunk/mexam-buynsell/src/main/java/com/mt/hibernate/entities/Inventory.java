@@ -28,11 +28,15 @@ public class Inventory extends BaseEntity {
     @Expose
     private String cond;
     @Expose
-    private double price=0;
+    private double price = 0;
     @Expose
-    private int quantity=0;
+    private int quantity = 0;
     @Expose
     private String description;
+    @Expose
+    private String bsin;
+    @Expose
+    private String upc_ean;
     @Expose
     private int companyId;
     private Company company;
@@ -67,6 +71,14 @@ public class Inventory extends BaseEntity {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public void setBsin(String bsin) {
+        this.bsin = bsin;
+    }
+
+    public void setUpc_ean(String upc_ean) {
+        this.upc_ean = upc_ean;
     }
 
     public Inventory() {
@@ -111,5 +123,13 @@ public class Inventory extends BaseEntity {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public String getBsin() {
+        return bsin;
+    }
+
+    public String getUpc_ean() {
+        return upc_ean;
     }
 }

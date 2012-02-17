@@ -31,6 +31,7 @@
         <mapping class="com.mt.hibernate.entities.CartItem"/>                                                                                                              
         <mapping class="com.mt.hibernate.entities.RFQ"/>                                                                                                      
         <mapping class="com.mt.hibernate.entities.RFQItem"/>                                                                                                              
+        <mapping class="com.mt.hibernate.entities.Transaction"/>                                                                                                              
         
     </session-factory>
 </hibernate-configuration>

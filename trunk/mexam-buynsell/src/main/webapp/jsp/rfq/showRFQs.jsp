@@ -13,7 +13,9 @@
         <script type="text/javascript" src="js/grid/jquery.jqGrid.min.js"></script>                
 
         <style>
-
+            .ui-widget .ui-widget {
+                font-size: 11px;
+            }
         </style>
 
         <script type="text/javascript">
@@ -193,7 +195,7 @@
     </head>
     <body>
 
-        <jsp:include page="../common/header.jspf" >
+        <jsp:include page="../common/header.jsp" >
             <jsp:param name="currentTab" value="rfq"/>
         </jsp:include>
         <div id="container" class="container" style="min-height: 335px;">
@@ -293,6 +295,6 @@
 
         </div>
 
-        <jsp:include page="../common/footer.jspf" />
+        <jsp:include page="../common/footer.jsp" />
     </body>
 </html>

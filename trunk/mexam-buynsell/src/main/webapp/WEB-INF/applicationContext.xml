@@ -272,6 +272,17 @@
         </property>
     </bean>
 
+    <bean id="transactionDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.ITransactionDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.Transaction" />
+            </bean>
+        </property>
+    </bean>
+
 
     <bean id="categoryService" class="com.mt.services.CategoryService">
         <constructor-arg ref="categoryDao" />
@@ -336,5 +347,10 @@
     <bean id="rFQItemService" class="com.mt.services.RFQItemService">
         <constructor-arg ref="rfqItemDao" />
     </bean> 
+    
+        <bean id="transactionService" class="com.mt.services.TransactionService">
+        <constructor-arg ref="transactionDao" />
+    </bean>
+
 
 </beans>

@@ -44,15 +44,18 @@
                         url:'getInventoryList',
                         datatype: "json",
                         height: 250,
-                        colNames:['ID','Part No','Manufacturer', 'Condition', 'Quantity','Price','Description'],
+                        colNames:['Part No','Manufacturer','BSIN','UPC/EAN', 'Condition', 'Quantity','Price','Description'],
                         colModel:[
-                            {name:'id',index:'id', width:55,searchtype:"number"},                                                
+//                            {name:'id',index:'id', width:55,searchtype:"number", align:"center"},                                                
                             {name:'cell.partNo',index:'partNo',editable:true, width:100, align:"center"},                        
-                            {name:'cell.manufacturer',editable:true,index:'manufacturer', width:200},
+                            {name:'cell.manufacturer',editable:true,index:'manufacturer', width:150},
+                            {name:'cell.bsin',index:'bsin', width:100,searchtype:"number"},                                                
+                            {name:'cell.upc_ean',index:'upc_ean', width:100,searchtype:"number"},                                                
                             {name:'cell.cond',index:'cond',editable:true, width:100},                        
-                            {name:'cell.quantity',index:'quantity',editable:true, width:80, align:"right",sorttype:"int", searchtype:"integer"},                        
-                            {name:'cell.price',index:'price', width:80,editable:true, align:"right",sorttype:"float", searchtype:"number"},                                                
-                            {name:'cell.description',index:'description',editable:true,edittype:"text", width:200, sortable:"false"},                    ],
+                            {name:'cell.quantity',index:'quantity',editable:true, width:75, align:"right",sorttype:"int", searchtype:"integer"},                        
+                            {name:'cell.price',index:'price', width:75,editable:true, align:"right",sorttype:"float", searchtype:"number"},                                                
+                            {name:'cell.description',index:'description',editable:true,edittype:"text", width:200, sortable:"false"},                    
+                        ],
                         rowNum:10,
                         rowList:[10,20,30],
                         pager: '#pager',
@@ -227,7 +230,7 @@
     </head>
     <body>
 
-        <jsp:include page="../common/header.jspf" >
+        <jsp:include page="../common/header.jsp" >
             <jsp:param name="currentTab" value="sell"/>
         </jsp:include>
 
@@ -240,11 +243,10 @@
                     </div>
                 </div>
 
-                <div id="listContainer" style="margin: auto; width: 750px;">
+                <div id="listContainer" style="margin: auto; width: 900px;">
                     <table id="inventoryList"></table>
                     <div id="pager"></div>
                 </div>
-
             </div>
         </div>
         <div id="dialog" title="Edit" style="display: none">
@@ -354,6 +356,6 @@
                 </form>
             </div>
         </div>
-        <jsp:include page="../common/footer.jspf" />
+        <jsp:include page="../common/footer.jsp" />
     </body>
 </html>

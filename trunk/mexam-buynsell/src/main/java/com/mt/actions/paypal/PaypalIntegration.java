@@ -9,15 +9,10 @@ import com.paypal.sdk.core.nvp.NVPEncoder;
 import com.paypal.sdk.profiles.APIProfile;
 import com.paypal.sdk.profiles.ProfileFactory;
 import com.paypal.sdk.services.NVPCallerServices;
-import java.io.File;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-/**
- *
- * @author AmierHaider
- */
 public class PaypalIntegration {
 
     public final static String COUNTRY_CODE = "US";
@@ -28,31 +23,11 @@ public class PaypalIntegration {
     public static String paypalAPIUsername;
     public static String paypalAPIPassword;
     public static String paypalAPIPvtKeyPassword;
-    public static String paypalAPICertFile;
+    //public static String paypalAPICertFile;
+    public static String paypalAPISignature;
     private NVPCallerServices caller = null;
-    public final static String returnURL = "/payPalComplete";
-    public final static String cancelURL = "/paypalCancel";
     Properties prop = new Properties();
 
-//
-//    
-//
-//    private static CreditCardTypeType convertToPaypalCcType(PaymentInfo paymentInfo) {
-//        String ccType = paymentInfo.getCcType();
-//        if (ccType.equals(PaymentInfo.paymentOption_VISA)) {
-//            return CreditCardTypeType.Visa;
-//        }
-//        if (ccType.equals(PaymentInfo.paymentOption_MASTERCARD)) {
-//            return CreditCardTypeType.MasterCard;
-//        }
-//        if (ccType.equals(PaymentInfo.paymentOption_AMEX)) {
-//            return CreditCardTypeType.Amex;
-//        }
-//        if (ccType.equals(PaymentInfo.paymentOption_DISCOVER)) {
-//            return CreditCardTypeType.Discover;
-//        }
-//        return null;
-//    }
     public PaypalIntegration() throws Exception {
         InputStream is = PaypalIntegration.class.getResourceAsStream("/payPal.properties");
         prop.load(is);
@@ -60,68 +35,57 @@ public class PaypalIntegration {
         paypalAPIUsername = prop.getProperty("paypalAPIUsername");
         paypalAPIPassword = prop.getProperty("paypalAPIPassword");
         paypalAPIPvtKeyPassword = prop.getProperty("paypalAPIPvtKeyPassword");
-        paypalAPICertFile = prop.getProperty("paypalAPICertFile");
+        //paypalAPICertFile = prop.getProperty("paypalAPICertFile");
+        paypalAPISignature = prop.getProperty("paypalAPISignature");
         paypalEnvironment = prop.getProperty("paypalEnvironment");
 
     }
 
-    public String DoDirectPaymentCode(String paymentAction, PaymentInfo paymentInfo, String amount) {
-
-//        CallerServices caller = new CallerServices();
+    public NVPDecoder DoDirectPaymentCode(String paymentAction, PaymentInfo paymentInfo, String amount) {
 
         NVPEncoder encoder = new NVPEncoder();
         NVPDecoder decoder = new NVPDecoder();
 
         try {
             caller = new NVPCallerServices();
-            APIProfile profile = ProfileFactory.createSSLAPIProfile();
+            //APIProfile profile = ProfileFactory.createSSLAPIProfile();
+            APIProfile profile = ProfileFactory.createSignatureAPIProfile();
 
-            profile.setAPIUsername(paypalAPIUsername);
-            profile.setAPIPassword(paypalAPIPassword);
-            profile.setPrivateKeyPassword(paypalAPIPvtKeyPassword);
-            //profile.setSignature("AVGidzoSQiGWu.lGj3z15HLczXaaAcK6imHawrjefqgclVwBe8imgCHZ");
-            File file = new File(paypalAPICertFile);
-            boolean res = file.exists();
-            profile.setCertificateFile(paypalAPICertFile);
+            profile.setAPIUsername("amier_1329386747_biz_api1.codehoppers.com");
+            profile.setAPIPassword("1329386786");
+            profile.setSignature("AAxCuw9WcIUYIRQOfiOnaQYbx9CRA26UF9COlebLY0jneUeQqSkJq24I");
+            //profile.setPrivateKeyPassword(paypalAPIPvtKeyPassword);
+            //profile.setCertificateFile(paypalAPICertFile);
             profile.setEnvironment(paypalEnvironment);
             caller.setAPIProfile(profile);
 
-            encoder.add("VERSION", "86.0");
             encoder.add("METHOD", "DoDirectPayment");
-            // Add request-specific fields to the request string.
-
-
-
             encoder.add("PAYMENTACTION", paymentAction);
-            //encoder.add("AMT", amount);
-            encoder.add("AMT", "100");
-            encoder.add("CURRENCYCODE", CURRENCY_CODE);
+            //encoder.add("PAYMENTACTION",(String)request.getParameter("paymentType"));
+            encoder.add("AMT", amount);
             encoder.add("CREDITCARDTYPE", paymentInfo.getPaymentType());
             encoder.add("ACCT", paymentInfo.getCcNum());
-            //encoder.add("EXPDATE", "01/2017");
-            encoder.add("EXPDATE", paymentInfo.getExpMonth() + "/" + paymentInfo.getExpYear());
+            encoder.add("EXPDATE", paymentInfo.getExpMonth() + "" + paymentInfo.getExpYear());
             encoder.add("CVV2", paymentInfo.getCvv2());
+
             encoder.add("FIRSTNAME", paymentInfo.getFirstName());
             encoder.add("LASTNAME", paymentInfo.getLastName());
             encoder.add("STREET", paymentInfo.getBillingList1());
             encoder.add("CITY", paymentInfo.getCity());
             encoder.add("STATE", paymentInfo.getState());
             encoder.add("ZIP", paymentInfo.getZip());
-            encoder.add("COUNTRYCODE", paymentInfo.getCountryCode());
             encoder.add("EMAIL", paymentInfo.getEmailAddress());
-            ////
-            //encoder.add("RETURNURL", returnURL);
-            //encoder.add("CANCELURL", cancelURL);
-
-            //paypalAPIPvtKeyPassword // Execute the API operation and obtain the response.
-            String NVPRequest = encoder.encode();
-            String NVPResponse = (String) caller.call(NVPRequest);
-            decoder.decode(NVPResponse);
+            encoder.add("COUNTRYCODE", "US");
+            encoder.add("CURRENCYCODE", "USD");
+            String NVPString = encoder.encode();
+            String ppresponse = (String) caller.call(NVPString);
+            decoder.decode(ppresponse);
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return decoder.get("ACK");
+        return decoder;
+        //return decoder.get("ACK");
 
 
     }

@@ -188,7 +188,7 @@
         <title>Buy & Sell</title>
     </head>
     <body>
-        <jsp:include page="../common/header.jspf" >
+        <jsp:include page="../common/header.jsp" >
             <jsp:param name="currentTab" value="broadcast"/>
         </jsp:include>
 
@@ -196,7 +196,7 @@
             <div id="content">
 
                 <div>
-                    <jsp:include page="../common/messages.jspf" />
+                    <jsp:include page="../common/messages.jsp" />
                 </div>
 
                 <div id="title"> 
@@ -206,9 +206,7 @@
                     </div>
                 </div>
 
-                <div id="formContainder" style="margin-left: 50px;">
-
-
+                <div id="formContainder">
                     <form id ="addBroadcast" method="POST" action="addBroadcast">
                         <div>
                             <div>
@@ -370,6 +368,6 @@
                 </div>
             </div>
         </div>
-        <jsp:include page="../common/footer.jspf" />
+        <jsp:include page="../common/footer.jsp" />
     </body>
 </html>

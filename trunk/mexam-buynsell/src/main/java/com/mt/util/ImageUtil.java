@@ -62,13 +62,13 @@ public class ImageUtil {
         //String path = "D:\\Projects\\Java\\Mexam-BuynSell\\UploadedImages";
         switch (imageType) {
             case Thumbnail:
-                path += "\\" + "t_" + image.getFileName()+ "." + image.getExtension();
+                path += "/" + "t_" + image.getFileName()+ "." + image.getExtension();
                 break;
             case Medium:case Small:
-                path += "\\" + "m_" + image.getFileName()+ "." + image.getExtension();
+                path += "/" + "m_" + image.getFileName()+ "." + image.getExtension();
                 break;
             case Large:case Original:
-                path += "\\" + image.getFileName()+ "." + image.getExtension();
+                path += "/" + image.getFileName()+ "." + image.getExtension();
         }
         File file = new File(path);
         byte[] fileContent = new byte[(int) file.length()];
@@ -80,7 +80,7 @@ public class ImageUtil {
     public byte[] GetImageBytes(Image image) throws Exception {
         //String path = "D:\\Projects\\Java\\Mexam-BuynSell\\UploadedImages";
         String path = prop.getProperty("imagePath");
-        path += "\\" + image.getFileName() + "." + image.getExtension();
+        path += "/" + image.getFileName() + "." + image.getExtension();
         File file = new File(path);
         byte[] fileContent = new byte[(int) file.length()];
         FileInputStream fin = new FileInputStream(file);

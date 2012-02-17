@@ -303,6 +303,12 @@
             <version>${paypalVersion}</version>
         </dependency>
 
+        <dependency>
+            <groupId>paypal</groupId>
+            <artifactId>paypalsoap</artifactId>
+            <version>4.31</version>
+        </dependency>
+
 <!--        <dependency>
             <groupId>com.paypal.sdk</groupId>
             <artifactId>paypal_stubs</artifactId>

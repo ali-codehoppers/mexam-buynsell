@@ -337,7 +337,7 @@
         <title>Buy & Sell</title>
     </head>
     <body>
-        <jsp:include page="common/header.jspf" />
+        <jsp:include page="common/header.jsp" />
 
         <div id="container" class="container" style="min-height: 335px;">
             <div id="content">
@@ -418,7 +418,7 @@
 
                 </table>
                 
-                 <jsp:include page="common/adFooter.jspf" />
+                 <jsp:include page="common/adFooter.jsp" />
 <!--                <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <td align="center" valign="top" bgcolor="#ececec"><table width="990" border="0" cellspacing="0" cellpadding="0">
@@ -447,6 +447,6 @@
 
             </div>
         </div>
-        <jsp:include page="common/footer.jspf" />
+        <jsp:include page="common/footer.jsp" />
     </body>
 </html>
