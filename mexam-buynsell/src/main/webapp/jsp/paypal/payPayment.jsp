@@ -17,7 +17,9 @@
                 var start = 0;
                 var rand_number = Math.random();
 		
-                switch(document.frmDCC.creditCardType.value)
+                //switch(document.payAmount.creditCardType.value)
+                var selectedVal = $("#creditCardType").val();
+                switch(selectedVal)
                 {
                     case "Visa":
                         cc_number[start++] = 4;
@@ -38,11 +40,11 @@
                         cc_len = 15;
                         break;
                 }
-        
+                        
                 for (var i = start; i < (cc_len - 1); i++) {
                     cc_number[i] = Math.floor(Math.random() * 10);
                 }
-		
+                		
                 var sum = 0;
                 for (var j = 0; j < (cc_len - 1); j++) {
                     var digit = cc_number[j];
@@ -50,16 +52,15 @@
                     if (digit > 9) digit -= 9;
                     sum += digit;
                 }
-		
+                		
                 var check_digit = new Array(0, 9, 8, 7, 6, 5, 4, 3, 2, 1);
                 cc_number[cc_len - 1] = check_digit[sum % 10];
-		
-                document.frmDCC.creditCardNumber.value = "";
+                		
+                $("#creditCardNumber").val("");
                 for (var k = 0; k < cc_len; k++) {
-                    document.frmDCC.creditCardNumber.value += cc_number[k];
+                    $("#creditCardNumber").val($("#creditCardNumber").val() + cc_number[k]);
                 }
-            }
-	
+            }	
 	
         </script>
 
@@ -67,43 +68,28 @@
         <script type="text/javascript">
         
             $(document).ready(function () {
-                populateStates(1);
+                $('input:radio[name=membershipType]').click(function() {
+                    var val = $('input:radio[name=membershipType]:checked').val();
+                    //                    $("#amount").val(val+".00");
+                    switch(val)
+                    {
+                        case "1":
+                            $("#amount").val("5.00");
+                            break;
+                        case "3":
+                            $("#amount").val("10.00");
+                            break;
+                        case "12":
+                            $("#amount").val("25.00");
+                            break;
+                    }
+                });
             });
-        
-            function populateStates(id){
-                if(id && id > 0)
-                {
-                    $.ajax({
-                        type:       "get",
-                        url:        "getStates",
-                        data:       {countryId: id},
-                        success:    function(msg) {
-                            var data = eval('('+msg+')');
-                            var html = "";
-                            var len = data.length;
-                            for (var i = 0; i< len; i++) {
-                                html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
-                            }
-                            $('#state').html(html);
-                        }
-                    });
-                }
-                return false;
-            }
+
         
             function submitForm()
             {
                 $("#payAmount").submit();
-            
-                //            $.ajax({
-                //                type:       "get",
-                //                url:        "payAmount",
-                //                data:       {amount: 50},
-                //                success:    function(msg) 
-                //                {
-                //                    alert(msg);
-                //                }
-                //            });
             }
             
         </script>
@@ -134,7 +120,7 @@
                             <div style="float: left; width: 48%; margin: 5px;">      
                                 <div style="float: left;">    
                                     <input type="radio" name="membershipType" value="1" /> 1 Month ($5.0)
-                                    <input type="radio" name="membershipType" value="3"/> 3 Months ($10.0)
+                                    <input type="radio" name="membershipType" value="3" checked/> 3 Months ($10.0)
                                     <input type="radio" name="membershipType" value="12"/> 1 Year ($25.0)
                                 </div>
                                 <div style="float: left;" class="fieldError">  
@@ -181,11 +167,11 @@
                             </div>                        
                             <div style="float: left; width: 48%; margin: 5px;">   
                                 <div style="float: left;">    
-                                    <select name=creditCardType onChange="javascript:generateCC(); return false;" class="field_big">
-                                        <option value=Visa >Visa</option>
-                                        <option value=MasterCard>MasterCard</option>
-                                        <option value=Discover>Discover</option>
-                                        <option value=Amex>American Express</option>
+                                    <select id="creditCardType" name="creditCardType" onChange="javascript:generateCC(); return false;" class="field_big">
+                                        <option value="Visa">Visa</option>
+                                        <option value="MasterCard">MasterCard</option>
+                                        <option value="Discover">Discover</option>
+                                        <option value="Amex">American Express</option>
                                     </select>
                                 </div>
                                 <div style="float: left;" class="fieldError">                        
@@ -200,7 +186,7 @@
                             </div>                        
                             <div style="float: left; width: 48%; margin: 5px;"> 
                                 <div style="float: left;">    
-                                    <input type="text" size="19" maxlength="19" name="creditCardNumber" class="field_big"/>
+                                    <input type="text" size="19" maxlength="19" id="creditCardNumber" name="creditCardNumber" class="field_big"/>
                                 </div>
                                 <div style="float: left;" class="fieldError">                        
                                     <ch:errortag name="paypal_creditCardNumber"></ch:errortag>
@@ -425,7 +411,7 @@
                             </div>                        
                             <div style="float: left; width: 48%; margin: 5px;"> 
                                 <div style="float: left;">    
-                                    <input type="text" size="4" maxlength="7" name="amount" value="1.00" class="field_big"  style="width: 80px;"/>
+                                    <input type="text" size="4" maxlength="7" id="amount" name="amount" value="10.00" class="field_big"  style="width: 80px;"  readonly="readonly"/>USD
                                 </div>
                                 <div style="float: left;" class="fieldError">                        
                                     <ch:errortag name="paypal_amount"></ch:errortag>

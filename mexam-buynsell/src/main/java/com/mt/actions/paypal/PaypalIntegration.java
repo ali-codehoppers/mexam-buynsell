@@ -65,7 +65,7 @@ public class PaypalIntegration {
             encoder.add("AMT", amount);
             encoder.add("CREDITCARDTYPE", paymentInfo.getPaymentType());
             encoder.add("ACCT", paymentInfo.getCcNum());
-            encoder.add("EXPDATE", paymentInfo.getExpMonth() + "" + paymentInfo.getExpYear());
+            encoder.add("EXPDATE", ""+paymentInfo.getExpMonth() + paymentInfo.getExpYear());
             encoder.add("CVV2", paymentInfo.getCvv2());
 
             encoder.add("FIRSTNAME", paymentInfo.getFirstName());

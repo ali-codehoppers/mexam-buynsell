@@ -6,6 +6,7 @@
     <package name="common" extends="struts-default">
         <interceptors>
             <interceptor name="verifyAuthentication" class="com.mt.interceptor.Autherntication"/>
+            <interceptor name="membershipAuthentication" class="com.mt.interceptor.MembershipAuthentication"/>
             <interceptor name="hibernateManagedSession" class="com.mt.interceptor.HibernateManagedSessionContext"/>
 
             <interceptor-stack name="basic">                
@@ -17,6 +18,13 @@
                 <interceptor-ref name="verifyAuthentication"/>
                 <interceptor-ref name="basic"/>
             </interceptor-stack>
+            
+            <interceptor-stack name="membershipAuthenticated">
+                <interceptor-ref name="verifyAuthentication"/>
+                <interceptor-ref name="membershipAuthentication"/>
+                <interceptor-ref name="basic"/>
+            </interceptor-stack>
+            
             
             <interceptor-stack name="fileUpload">
                 <interceptor-ref name="fileUpload">
@@ -31,6 +39,7 @@
 
         <global-results>
             <result name="mustAuthenticate" type="redirect">/showLogin?expired=true</result>
+            <result name="membershipExpired" type="redirect">/accountExpired</result>
             <result name="generalException">/jsp/common/exception.jsp</result>
         </global-results>
 

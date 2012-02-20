@@ -202,6 +202,8 @@ public class Register extends ActionSupport implements SessionAware {
         company.setCompanyCategory(companyCategory);
         company.setZip(zip);
         company.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        company.setExpiryDate(new Timestamp(System.currentTimeMillis()));
+        company.setIsExpired(true);
         Integer addNewCompany = companyService.addNew(company);
 
         user = new User();

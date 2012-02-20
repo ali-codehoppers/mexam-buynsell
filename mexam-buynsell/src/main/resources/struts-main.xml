@@ -45,11 +45,11 @@
                 
             <!--      Part    -->
         <action name="showSearchPart" class="com.mt.actions.DoNothing">
-            <interceptor-ref name="basic"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/part/showSearchPart.jsp</result>
         </action>
         <action name="searchPart" class="com.mt.actions.part.SearchPart">
-            <interceptor-ref name="basic"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/part/searchParts.jsp</result>
         </action>
         <action name="viewPart" class="com.mt.actions.part.ViewPart">
@@ -57,15 +57,15 @@
             <result name="success">jsp/part/viewPart.jsp</result>
         </action>
         <action name="showAddPart" class="com.mt.actions.part.ShowAddPart">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/part/addPart.jsp</result>
         </action>        
         <action name="showAddPartInfo" class="com.mt.actions.part.ShowAddPartInfo">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/part/addPartInfo.jsp</result>
         </action>     
         <action name="addPart" class="com.mt.actions.part.AddPart">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="input" type="chain">showAddPartInfo</result>
             <result name="success" type="redirect">
                 <param name="location">showAddPart</param>
@@ -83,17 +83,17 @@
             <!--      Inventory    -->
           
         <action name="showAddInventory" class="com.mt.actions.Inventory.ShowAddInventory">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/inventory/addInventory.jsp</result>
             <!--<result name="success">jsp/inventory/addInventory.jsp</result>-->
         </action>
         <action name="addInventory" class="com.mt.actions.Inventory.AddInventory">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="input" type="chain">showAddInventory</result>
             <result name="success" type="redirect">showAddInventory?message=${message}&amp;error=${error}&amp;info=${info}</result>
         </action>
         <action name="showInventory" class="com.mt.actions.Inventory.ShowInventory">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/inventory/showInventory.jsp</result>
         </action>
                 
@@ -106,7 +106,7 @@
             <result name="success">jsp/inventory/searchItems.jsp</result>
         </action>
         <action name="uploadInventory" class="com.mt.actions.Inventory.UploadInventory">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result>jsp/inventory/uploadInventory.jsp</result>
         </action>
                 
@@ -116,13 +116,13 @@
             <!--      Broadcast    -->
           
         <action name="showAddBroadcast" class="com.mt.actions.broadcast.ShowAddBroadcast">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             
             <result name="success">jsp/broadcast/showAddBroadcast.jsp</result>
         </action>
         
         <action name="addBroadcast" class="com.mt.actions.broadcast.AddBroadcast">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
 <!--            <result name="success" type="redirect">home</result>-->
             <result name="success" type="redirect">
                 <param name="location">showAddBroadcast</param>
@@ -135,12 +135,12 @@
         </action>
 
         <action name="showBroadcasts" class="com.mt.actions.broadcast.ShowBroadcasts">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/broadcast/showBroadcasts.jsp</result>
         </action>                
         
         <action name="showMyBroadcasts" class="com.mt.actions.broadcast.ShowMyBroadcasts">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success" >jsp/broadcast/showMyBroadcasts.jsp</result>
         </action>                
 
@@ -150,36 +150,36 @@
        
             <!--      Vendor    -->
         <action name="showMyVendors" class="com.mt.actions.vendor.ShowMyVendor">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/vendor/showMyVendors.jsp</result>
         </action>
         <action name="showVendors" class="com.mt.actions.vendor.ShowVendor">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/vendor/showVendors.jsp</result>
         </action>
 
         <action name="showVendors" class="com.mt.actions.vendor.ShowVendor">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/vendor/showVendors.jsp</result>
         </action>
 
         <action name="searchVendor" class="com.mt.actions.vendor.SearchVendor">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/vendor/searchedVendors.jsp</result>
         </action>
 
         <action name="searchVendor" class="com.mt.actions.vendor.SearchVendor">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/vendor/searchVendor.jsp</result>
         </action>
 
         <action name="showSearchVendor" class="com.mt.actions.DoNothing">
-            <interceptor-ref name="basic"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/vendor/showSearchVendor.jsp</result>
         </action>
 
         <action name="addVendor" class="com.mt.actions.vendor.AddVendor">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
 
 <!--            <result name="success" type="redirect">jsp/vendor/showSearchVendor.jsp</result>-->
         </action>
@@ -189,11 +189,11 @@
   
               <!--      Cart    -->
         <action name="showCart" class="com.mt.actions.Cart.ShowCart">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/cart/showCart.jsp</result>
         </action>
         <action name="addToCart" class="com.mt.actions.Cart.AddToCart">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success" type="redirect">home</result>
         </action>
 
@@ -203,23 +203,23 @@
   
                 <!--      RFQ    -->
         <action name="showRFQsSent" class="com.mt.actions.DoNothing">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/rfq/showRFQsSent.jsp</result>
         </action>
 
         <action name="showRFQs" class="com.mt.actions.DoNothing">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/rfq/showRFQs.jsp</result>
         </action>
 
         <action name="showRFQ" class="com.mt.actions.rfq.ShowRFQ">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/rfq/showRFQ.jsp</result>
         </action>
 
 
         <action name="showRFQsReceived" class="com.mt.actions.DoNothing">
-            <interceptor-ref name="authenticated"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/rfq/showRFQsReceived.jsp</result>
         </action>
 
@@ -247,13 +247,20 @@
             <interceptor-ref name="basic"/>
 <!--            <result name="success" type="redirect">viewRegistration?messeage=${message}&amp;companyId=${company.id}&amp;userId=${user.id} </result>-->
             <result name="input" type="redirect">payPalpay</result>
-            <result name="success" type="redirect">home</result>
+            <result name="success" type="redirect">registrationComplete</result>
         </action>
 
         <action name="viewRegistration" class="com.mt.actions.Registration.ViewRegistration">
             <interceptor-ref name="basic"/>
             <result name="success">jsp/registration/viewRegistration.jsp</result>
         </action>
+        
+        <action name="registrationComplete" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="basic"/>
+<!--            <result name="success" type="redirect">viewRegistration?messeage=${message}&amp;companyId=${company.id}&amp;userId=${user.id} </result>-->
+            <result>jsp/registration/registrationComplete.jsp</result>
+        </action>
+
         
             <!-- //     Registeration    -->
 
@@ -453,9 +460,9 @@
             <result >jsp/paypal/payPayment.jsp</result>
         </action>
         
-        <action name="payPalComplete" class="com.mt.actions.paypal.PayPalTransactionComplete">
+        <action name="paymentComplete" class="com.mt.actions.paypal.PaymentComplete">
             <interceptor-ref name="authenticated"/>
-            <result >jsp/paypal/payPalpayComplete.jsp</result>
+            <result >jsp/paypal/paymentComplete.jsp</result>
         </action>
 
         <action name="payPalListener" class="com.mt.actions.paypal.PayPalListener">
@@ -465,7 +472,13 @@
         
         <action name="payAmount" class="com.mt.actions.paypal.PayAmount">
             <interceptor-ref name="authenticated"/>
-            <result name="success" type="redirect">payPalComplete</result>
+<!--            <result name="success" >jsp/paypal/paymentComplete.jsp</result>-->
+            <result name="success" type="redirect">paymentComplete</result>
+        </action>
+        
+        <action name="accountExpired" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="basic"/>
+            <result>jsp/common/accountExpired.jsp</result>
         </action>
         
     </package>

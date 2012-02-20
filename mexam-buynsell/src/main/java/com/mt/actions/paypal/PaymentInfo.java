@@ -18,8 +18,8 @@ public class PaymentInfo {
     private String ccNum;
     private String cvv2;
     private PaymentInfoType ccType;
-    private Integer expYear;
-    private Integer expMonth;
+    private String expYear;
+    private String expMonth;
     private String emailAddress;
     private Integer orderId;
     private String transactionId;
@@ -120,11 +120,11 @@ public class PaymentInfo {
         this.cvv2 = cvv2;
     }
 
-    public void setExpMonth(Integer expMonth) {
+    public void setExpMonth(String expMonth) {
         this.expMonth = expMonth;
     }
 
-    public void setExpYear(Integer expYear) {
+    public void setExpYear(String expYear) {
         this.expYear = expYear;
     }
 
@@ -136,11 +136,11 @@ public class PaymentInfo {
         return cvv2;
     }
 
-    public Integer getExpMonth() {
+    public String getExpMonth() {
         return expMonth;
     }
 
-    public Integer getExpYear() {
+    public String getExpYear() {
         return expYear;
     }
 

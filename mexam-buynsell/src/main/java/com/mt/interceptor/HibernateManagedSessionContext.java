@@ -7,9 +7,9 @@ package com.mt.interceptor;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import org.apache.log4j.Logger;
-import org.hibernate.classic.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.classic.Session;
 import org.hibernate.context.ManagedSessionContext;
 
 /**
