@@ -4,6 +4,7 @@
     Author     : CodeHopper
 --%>
 
+<%@page import="com.mt.hibernate.entities.User"%>
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html>
@@ -155,6 +156,7 @@
             
             
             $(document).ready(function () {
+                
                 str = eval('('+${treeJsonString}+')');
                 LoadList();
                 
@@ -190,148 +192,166 @@
 
                 populateCategoryProduct(1);
                 //                $("#tree").jstree("set_theme","apple");
-            });
+                
+            <% if ((session.getAttribute("user") != null) && ((User) session.getAttribute("user")).getCompany().isIsExpired()) {%> 
+                    var infoMessage = "<nobr>You account is expired. Please <a href='payPayment'> pay your membership fee </a> to access full functionality.<nobr>";
+                    showInfo(infoMessage);
+            <%}%>
+                
+                });
 
   
-            function populateCategoryProduct(id)
-            {
-                $.ajax({
-                    type:       "get",
-                    url:        "getCategoryParts",
-                    data:       {categoryId: id},
-                    success:    function(msg) {
+                function populateCategoryProduct(id)
+                {
+                    $.ajax({
+                        type:       "get",
+                        url:        "getCategoryParts",
+                        data:       {categoryId: id},
+                        success:    function(msg) {
                        
-                        var data = eval('('+msg+')');
-                        var html = '';
-                        var nhtml = '';
-                        var len = data.length;
-                        for (var i = 0; i< len; i++) {
-                            html += getProductHtml(data[i]);
-                            nhtml +=getPartHtml(data[i]);
+                            var data = eval('('+msg+')');
+                            var html = '';
+                            var nhtml = '';
+                            var len = data.length;
+                            for (var i = 0; i< len; i++) {
+                                html += getProductHtml(data[i]);
+                                nhtml +=getPartHtml(data[i]);
+                            }
+                            $("#products").html(html);
+                            $("#parts").html(nhtml);
                         }
-                        $("#products").html(html);
-                        $("#parts").html(nhtml);
-                    }
-                });
-                return false;
-            }
+                    });
+                    return false;
+                }
 
-            function populateSubCategoryProduct(id)
-            {
-                $.ajax({
-                    type:       "get",
-                    url:        "getSubCategoryParts",
-                    data:       {subcategoryId: id},
-                    success:    function(msg) {
+                function populateSubCategoryProduct(id)
+                {
+                    $.ajax({
+                        type:       "get",
+                        url:        "getSubCategoryParts",
+                        data:       {subcategoryId: id},
+                        success:    function(msg) {
                        
-                        var data = eval('('+msg+')');
-                        var html = '';
-                        var nhtml = '';
-                        var len = data.length;
-                        for (var i = 0; i< len; i++) {
-                            html += getProductHtml(data[i]);
-                            nhtml +=getPartHtml(data[i]);
+                            var data = eval('('+msg+')');
+                            var html = '';
+                            var nhtml = '';
+                            var len = data.length;
+                            for (var i = 0; i< len; i++) {
+                                html += getProductHtml(data[i]);
+                                nhtml +=getPartHtml(data[i]);
+                            }
+                            $("#products").html(html);
+                            $("#parts").html(nhtml);
                         }
-                        $("#products").html(html);
-                        $("#parts").html(nhtml);
-                    }
-                });
-                return false;
+                    });
+                    return false;
                 
-            }
+                }
 
-            function getProductHtml(product)
-            {
-                var html="<div class='product'>";
-                html+="<div class='productLogo'></div>";
-                html+="<div class='productImage'>";
-                if(product.images.length>0)
+                function getProductHtml(product)
                 {
-                    html+="<img src='getImage?imageId="+product.images[0].id+"'/>";
+                    var html="<div class='product'>";
+                    html+="<div class='productLogo'></div>";
+                    html+="<div class='productImage'>";
+                    if(product.images.length>0)
+                    {
+                        html+="<img src='getImage?imageId="+product.images[0].id+"'/>";
+                    }
+                    else
+                        html+="<img src='images/default.png'/>";
+                    html+="</div>";
+                    html+="<div class='productDetail'>";
+                    html+="<a href='viewProduct?productId="+product.id+"'>"+product.partNo+" </a>";
+                    html+="    <br>";
+                    html+="<div class='productDesc'>"+ product.description+" </div>";
+                    html+="</div>";
+                    html+="</div>"
+                    return html;
                 }
-                else
-                    html+="<img src='images/default.png'/>";
-                html+="</div>";
-                html+="<div class='productDetail'>";
-                html+="<a href='viewProduct?productId="+product.id+"'>"+product.partNo+" </a>";
-                html+="    <br>";
-                html+="<div class='productDesc'>"+ product.description+" </div>";
-                html+="</div>";
-                html+="</div>"
-                return html;
-            }
             
             
-            function getPartHtml(part)
-            {
-                var html="<div class='part' style='background-color: #333; padding:10px; background: #00ff'>";
-                html+="<div class='partImage'>";
-                html+="<a href='viewPart?partId="+part.id+"'>";
-                if(part.images.length>0)
+                function getPartHtml(part)
                 {
-                    html+="<img src='getImage?imageId="+part.images[0].id+"&imageType=2'/>";
-                }
-                else
-                    html+="<img src='images/no-product-image.jpg'/>";
+                    var html="<div class='part' style='background-color: #333; padding:10px; background: #00ff'>";
+                    html+="<div class='partImage'>";
+                    html+="<a href='viewPart?partId="+part.id+"'>";
+                    if(part.images.length>0)
+                    {
+                        html+="<img src='getImage?imageId="+part.images[0].id+"&imageType=2'/>";
+                    }
+                    else
+                        html+="<img src='images/no-product-image.jpg'/>";
                     
-                html+="</a>";
-                html+="</div>";
-                html+="<div class='partDetail'>";
-                html+="<h2><a href='viewPart?partId="+part.id+"'>"+part.partNo+" </a></h2>";
-                html+="<div class='partDesc'>"+part.description+"</div>";
-                html+="</div>";
-                html+="</div>";
-                return html;
+                    html+="</a>";
+                    html+="</div>";
+                    html+="<div class='partDetail'>";
+                    html+="<h2><a href='viewPart?partId="+part.id+"'>"+part.partNo+" </a></h2>";
+                    html+="<div class='partDesc'>"+part.description+"</div>";
+                    html+="</div>";
+                    html+="</div>";
+                    return html;
 
-            }
+                }
             
-            function getCategoryHighlitedHtml(category)
-            {
-                var html="<tr onclick='return setCategory("+category.attr.id+")'>";
-                html+="<td colspan='2' class='nav_highlighted_blue'>";
-                html+="<table width='261' border='0' cellspacing='0' cellpadding='3'>";
-                html+="<tr>";
-                html+="<td width='20' height='34' align='center'><img src='images/white_arrow.png' width='4' height='5' alt='' /></td>";
-                html+="<td width='192'><a style='cursor:pointer'>"+category.data.title+"</a></td>";
-                html+="<td width='31' align='center'><img src='images/down_arrow.png' width='9' height='5' alt='' /></td>";
-                html+="</tr>";
-                html+="</table>";
-                html+="</td>";
-                html+="</tr>";
-                return html;
-            }
-            function getCategoryHtml(category)
-            {
-                var html="<tr onclick='return setCategory("+category.attr.id+")'>";
-                html+="<td colspan='2' class='nav_highlighted_dark'>";
-                html+="<table width='261' border='0' cellspacing='0' cellpadding='3'>";
-                html+="<tr>";
-                html+="<td width='20' height='34' align='center'><img src='images/white_arrow.png' width='4' height='5' alt='' /></td>";
-                html+="<td width='192'><a style='cursor:pointer' >"+category.data.title+"</a></td>";
-                html+="<td width='31' align='center'><img src='images/right_arrow.png' width='5' height='9' alt='' /></td>";
-                html+="</tr>";
-                html+="</table>";
-                html+="</td>";
-                html+="</tr>";
-                return html;
-            }
+                function getCategoryHighlitedHtml(category)
+                {
+                    var html="<tr onclick='return setCategory("+category.attr.id+")'>";
+                    html+="<td colspan='2' class='nav_highlighted_blue'>";
+                    html+="<table width='261' border='0' cellspacing='0' cellpadding='3'>";
+                    html+="<tr>";
+                    html+="<td width='20' height='34' align='center'><img src='images/white_arrow.png' width='4' height='5' alt='' /></td>";
+                    html+="<td width='192'><a style='cursor:pointer'>"+category.data.title+"</a></td>";
+                    html+="<td width='31' align='center'><img src='images/down_arrow.png' width='9' height='5' alt='' /></td>";
+                    html+="</tr>";
+                    html+="</table>";
+                    html+="</td>";
+                    html+="</tr>";
+                    return html;
+                }
+                function getCategoryHtml(category)
+                {
+                    var html="<tr onclick='return setCategory("+category.attr.id+")'>";
+                    html+="<td colspan='2' class='nav_highlighted_dark'>";
+                    html+="<table width='261' border='0' cellspacing='0' cellpadding='3'>";
+                    html+="<tr>";
+                    html+="<td width='20' height='34' align='center'><img src='images/white_arrow.png' width='4' height='5' alt='' /></td>";
+                    html+="<td width='192'><a style='cursor:pointer' >"+category.data.title+"</a></td>";
+                    html+="<td width='31' align='center'><img src='images/right_arrow.png' width='5' height='9' alt='' /></td>";
+                    html+="</tr>";
+                    html+="</table>";
+                    html+="</td>";
+                    html+="</tr>";
+                    return html;
+                }
 
-            function getCategoryChildHtml(catChild)
-            {
-                var html="<tr onclick='return setSubCategory("+catChild.attr.id+")'>";
-                html+="<td width='28' class='nav_normal'>&nbsp;</td>";
-                html+="<td width='233' align='left' valign='middle' class='nav_normal'>";
-                html+="<table width='237' border='0' cellspacing='0' cellpadding='0'>";
-                html+="<tr>";
-                html+="<td width='17' height='36' align='left'><img src='images/white_arrow.png' width='4' height='5' alt='' /></td>";
-                html+="<td width='220'><a style='cursor:pointer'>"+catChild.data.title+"</a></td>";
-                html+="</tr>";
-                html+="</table>";
-                html+="</td>";
-                html+="</tr>";
-                return html;
-            }
+                function getCategoryChildHtml(catChild)
+                {
+                    var html="<tr onclick='return setSubCategory("+catChild.attr.id+")'>";
+                    html+="<td width='28' class='nav_normal'>&nbsp;</td>";
+                    html+="<td width='233' align='left' valign='middle' class='nav_normal'>";
+                    html+="<table width='237' border='0' cellspacing='0' cellpadding='0'>";
+                    html+="<tr>";
+                    html+="<td width='17' height='36' align='left'><img src='images/white_arrow.png' width='4' height='5' alt='' /></td>";
+                    html+="<td width='220'><a style='cursor:pointer'>"+catChild.data.title+"</a></td>";
+                    html+="</tr>";
+                    html+="</table>";
+                    html+="</td>";
+                    html+="</tr>";
+                    return html;
+                }
+                function hideInfo()
+                {
+                    $("#messageInfo").hide();
+                }
             
+                function showInfo(infoMessage)
+                {
+                    if(infoMessage && infoMessage.length>0)
+                    {
+                        $("#messageInfo").show();
+                        $("#infoMsg").html(infoMessage);
+                    }
+                }
 
         </script>
         <title>Buy & Sell</title>
@@ -341,6 +361,23 @@
 
         <div id="container" class="container" style="min-height: 335px;">
             <div id="content">
+                <div style="margin: auto; width: 800px;">
+                    <table style="width: 100%; margin: 5px;">
+                        <tr id="messageInfo" style="display: none;width: 100%">
+                            <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td width="6%" align="right"><img src="images/info_left.jpg" alt="" width="38" height="34" /></td>
+                                        <td id="infoMsg" width="88%" align="left" class="info_msg"></td>
+                                        <td width="5%" align="right" class="info_msg"><a href="#"><img src="images/info_cross.jpg" alt="" width="18" height="18" border="0" onclick="hideInfo()"/></a></td>
+                                        <td width="1%" align="left"><img src="images/info_right.jpg" alt="" width="6" height="34" /></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
                 <table width="990" border="0" align="center" cellpadding="0" cellspacing="0">
                     <tr>
                         <td>
@@ -392,6 +429,7 @@
                                             <tr>
                                                 <td colspan="2" bgcolor="#333333">
                                                     <div id='parts' style="background-color: #333; height: auto;">
+
                                                         <div class='product' style="background-color: #333; padding:10px; background: #00ff">
                                                             <div class='productImage'>
                                                                 <a href="images/tavolini-1-b.jpg">
@@ -417,33 +455,33 @@
                     </tr>
 
                 </table>
-                
-                 <jsp:include page="common/adFooter.jsp" />
-<!--                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td align="center" valign="top" bgcolor="#ececec"><table width="990" border="0" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td colspan="6" align="center" valign="top"><img src="images/top_cat.jpg" width="990" height="23" alt="" /></td>
-                                </tr>
-                                <tr>
-                                    <td width="39" align="left"><img src="images/cat_left.jpg" width="30" height="40" alt="" /></td>
-                                    <td width="455" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
-                                    <td width="123" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
-                                    <td width="123" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
-                                    <td width="211" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
-                                    <td width="39" align="right"><img src="images/cat_right.jpg" width="30" height="40" alt="" /></td>
-                                </tr>
-                                <tr>
-                                    <td height="31" align="left">&nbsp;</td>
-                                    <td align="center" valign="middle"><strong>Video Recorders</strong></td>
-                                    <td align="center" valign="middle"><strong>Video Recorders</strong></td>
-                                    <td align="center"><strong>Video Recorders</strong></td>
-                                    <td align="center"><strong>Video Recorders</strong></td>
-                                    <td align="right">&nbsp;</td>
-                                </tr>
-                            </table></td>
-                    </tr>
-                </table>-->
+
+                <jsp:include page="common/adFooter.jsp" />
+                <!--                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td align="center" valign="top" bgcolor="#ececec"><table width="990" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td colspan="6" align="center" valign="top"><img src="images/top_cat.jpg" width="990" height="23" alt="" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="39" align="left"><img src="images/cat_left.jpg" width="30" height="40" alt="" /></td>
+                                                    <td width="455" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
+                                                    <td width="123" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
+                                                    <td width="123" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
+                                                    <td width="211" align="center" valign="middle" class="cat_banner"><img src="images/v_recorder.jpg" width="114" height="120" alt="" /></td>
+                                                    <td width="39" align="right"><img src="images/cat_right.jpg" width="30" height="40" alt="" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="31" align="left">&nbsp;</td>
+                                                    <td align="center" valign="middle"><strong>Video Recorders</strong></td>
+                                                    <td align="center" valign="middle"><strong>Video Recorders</strong></td>
+                                                    <td align="center"><strong>Video Recorders</strong></td>
+                                                    <td align="center"><strong>Video Recorders</strong></td>
+                                                    <td align="right">&nbsp;</td>
+                                                </tr>
+                                            </table></td>
+                                    </tr>
+                                </table>-->
 
             </div>
         </div>

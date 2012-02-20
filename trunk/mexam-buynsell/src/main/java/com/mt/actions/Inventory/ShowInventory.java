@@ -28,8 +28,12 @@ public class ShowInventory extends AuthenticatedAction {
 
     @Override
     public String execute() throws Exception {
-        //Company company = companyService.getById(getUser().getCompanyId());
-       // inventorys = company.getInventorys();
+        Company company = companyService.getById(getUser().getCompanyId());
+        if (company.isIsExpired()) {
+            return "blocked";
+        }
+
+        // inventorys = company.getInventorys();
         //inventoryJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(inventorys);
         inventoryCondition = lookUpService.findByName("INVENTORY_CONDITION");
         conditionJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(inventoryCondition);
