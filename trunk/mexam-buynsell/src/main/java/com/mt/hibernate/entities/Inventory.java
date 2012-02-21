@@ -1,15 +1,7 @@
 package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -17,7 +9,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "inventories")
 @NamedQueries({
-    @NamedQuery(name = "Inventory.findBySearchString", query = "select p from Inventory p where  p.partNo like ? or p.manufacturer like ?")
+    @NamedQuery(name = "Inventory.findBySearchString", query = "select p from Inventory p where  p.partNo like ? or p.manufacturer like ?"),
+    @NamedQuery(name = "Inventory.findByBSIN", query = "select c from Inventory c where c.bsin like ?"),
+    @NamedQuery(name = "Inventory.findByUPC", query = "select c from Inventory c where c.upc_ean like ?")
 })
 public class Inventory extends BaseEntity {
 

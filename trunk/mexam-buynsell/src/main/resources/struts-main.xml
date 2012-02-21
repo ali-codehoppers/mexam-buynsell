@@ -449,6 +449,17 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
+        
+        <action name="getPartInfoByBSIN" class="com.mt.actions.ajaxActions.GetPartInfoByBSIN">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+
+        <action name="getPartInfoByUPC" class="com.mt.actions.ajaxActions.GetPartInfoByUPC">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        
         <!-- //     Ajax Actions    -->
 
         <action name="getImage" class="com.mt.actions.GetImage">
@@ -474,6 +485,7 @@
             <interceptor-ref name="authenticated"/>
 <!--            <result name="success" >jsp/paypal/paymentComplete.jsp</result>-->
             <result name="success" type="redirect">paymentComplete</result>
+            <result name="input" type="chain">payPayment</result>
         </action>
         
         <action name="accountExpired" class="com.mt.actions.DoNothing">

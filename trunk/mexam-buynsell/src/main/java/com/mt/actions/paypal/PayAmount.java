@@ -10,7 +10,6 @@ import com.mt.hibernate.entities.Transaction;
 import com.mt.hibernate.entities.User;
 import com.mt.services.CompanyService;
 import com.mt.services.TransactionService;
-import com.opensymphony.xwork2.ActionContext;
 import com.paypal.sdk.core.nvp.NVPDecoder;
 import java.sql.Timestamp;
 import java.util.Map;
@@ -110,39 +109,107 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
     @Override
     public String execute() throws Exception {
 
-//        creditCardNumber = "4025851196140692";
+        boolean valid = true;
+        if (firstName == null || firstName.length() < 1) {
+            session.put("paypal_firstName", "First name is missing.");
+            valid = false;
+        }
 
-        
-        
+        if (lastName == null || lastName.length() < 1) {
+            session.put("paypal_lastName", "Last name is missing.");
+            valid = false;
+        }
+
+        if (address1 == null || address1.length() < 1) {
+            session.put("paypal_address1", "Address is missing.");
+            valid = false;
+        }
+
+        if (city == null || city.length() < 1) {
+            session.put("paypal_city", "City is missing.");
+            valid = false;
+        }
+
+        if (zip == null || zip.length() < 1) {
+            session.put("paypal_zip", "Zip code is missing.");
+            valid = false;
+        } else if (zip.length() < 5) {
+            session.put("paypal_zip", "Zip code is invalid.");
+            valid = false;
+        }
+
+        if (state == null || state.length() < 1) {
+            session.put("paypal_state", "State is missing.");
+            valid = false;
+        }
+
+        if (creditCardNumber == null || creditCardNumber.length() < 1) {
+            session.put("paypal_creditCardNumber", "Creditcard number is missing.");
+            valid = false;
+        } else if (creditCardNumber.length() < 14) {
+            session.put("paypal_creditCardNumber", "Invalid creditcard number.");
+            valid = false;
+        }
+
+
+        if (cvv2Number == null || cvv2Number.length()<1) {
+            session.put("paypal_cvv2Number", "Verification number is missing.");
+            valid = false;
+
+        } else if (cvv2Number.length() < 3) {
+            session.put("paypal_cvv2Number", "Invalid verification number.");
+            valid = false;
+        }
+
+
+        if (!valid) {
+            return INPUT;
+        }
         PaymentInfo paymentInfo = new PaymentInfo();
+
         paymentInfo.setCcNum(creditCardNumber);
+
         paymentInfo.setCvv2(cvv2Number);
+
         paymentInfo.setFirstName(firstName);
+
         paymentInfo.setLastName(lastName);
+
         paymentInfo.setExpMonth(expdate_month);
+
         paymentInfo.setExpYear(expdate_year);
+
         paymentInfo.setZip(zip);
+
         paymentInfo.setBillingList1(address1);
+
         paymentInfo.setBillingList2(address2);
+
         paymentInfo.setCity(city);
+
         paymentInfo.setState(state);
-        paymentInfo.setCountryCode("US");
+
+        paymentInfo.setCountryCode(
+                "US");
         paymentInfo.setPaymentType(creditCardType);
 //        paymentInfo.setEmailAddress(email);
 //        paymentInfo.setTelephone(telephone);
 
-        if (membershipType.equals("1")) {
+        if (membershipType.equals(
+                "1")) {
             amount = 5.0;
-        } else if (membershipType.equals("3")) {
+        } else if (membershipType.equals(
+                "3")) {
             amount = 10.0;
-        } else if (membershipType.equals("12")) {
+        } else if (membershipType.equals(
+                "12")) {
             amount = 25.0;
         }
-
         PaypalIntegration paypalIntegration = new PaypalIntegration();
         NVPDecoder response = paypalIntegration.DoDirectPaymentCode("Authorization", paymentInfo, "" + amount);
 
-        if (response.get("ACK").compareTo("Failure") == 0) {
+        if (response.get(
+                "ACK").compareTo("Failure") == 0) {
             return "fail";
         } else {
             User user = getUser();
@@ -171,7 +238,7 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
             }
             user.getCompany().setIsExpired(false);
             company.setIsExpired(false);
-            
+
             session.put("user", user);
 
             companyService.update(company);
@@ -191,7 +258,6 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
             return SUCCESS;
 
         }
-
     }
 
     public String getAddress1() {

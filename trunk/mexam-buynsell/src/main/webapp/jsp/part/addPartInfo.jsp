@@ -208,6 +208,21 @@
 
                                     <div>
                                         <div style="float: left; width: 38%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                            UPC / EAN:
+                                        </div>                        
+                                        <div style="float: left; width: 58%; margin: 5px; text-align: left;">      
+                                            <div style="float: left;">   
+                                                <input name="upc_ean" class="field_big" value="${upc_ean}"/>
+                                            </div>
+                                            <div style="float: left;" class="fieldError">                        
+                                                <ch:errortag name="addPart_upc_ean"></ch:errortag>
+                                            </div>
+                                            <div style="clear: both"></div> 
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div style="float: left; width: 38%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                             Brief Description:
                                         </div>                        
                                         <div style="float: left; width: 58%; margin: 5px; text-align: left;">                        
@@ -354,7 +369,7 @@
                                         <div style="clear: both">
                                         </div>
                                     </div>
-                                        <div style="clear: both"></div>
+                                    <div style="clear: both"></div>
                                 </div>   
                                 <div style="clear: both"></div>
                             </div>
