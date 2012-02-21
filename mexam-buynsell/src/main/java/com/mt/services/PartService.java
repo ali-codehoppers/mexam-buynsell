@@ -1,6 +1,5 @@
 package com.mt.services;
 
-import com.mt.hibernate.entities.LookUp;
 import com.mt.hibernate.entities.Part;
 import com.mt.idao.IPartDao;
 import java.util.List;
@@ -21,12 +20,20 @@ public class PartService {
         return partDao.findByCategory("" + id);
     }
 
+    public List<Part> findByUPC(String UPC) {
+        return partDao.findByUPC(UPC) ;
+    }
+
+    public List<Part> findByBSIN(String BSIN) {
+        return partDao.findByBSIN(BSIN);
+    }
+
     public List<Part> findByManufacturer(String manufacturer) {
         return partDao.findByManufacturer(manufacturer);
     }
 
     public List<Part> findBySearchString(String searchString) {
-        return partDao.findBySearchString("%"+searchString+"%", "%"+searchString+"%", "%"+searchString+"%");
+        return partDao.findBySearchString("%" + searchString + "%", "%" + searchString + "%", "%" + searchString + "%");
     }
 
     public Integer addNew(Part newInstance) {

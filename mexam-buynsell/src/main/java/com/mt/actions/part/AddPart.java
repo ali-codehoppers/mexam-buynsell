@@ -3,6 +3,7 @@ package com.mt.actions.part;
 import com.mt.actions.AuthenticatedAction;
 import com.mt.hibernate.entities.*;
 import com.mt.services.*;
+import com.mt.util.BSINGenerator;
 import com.mt.util.ImageUtil;
 import java.io.File;
 import java.sql.Timestamp;
@@ -34,6 +35,7 @@ public class AddPart extends AuthenticatedAction implements SessionAware {
     private String partNo;
     private String manufacturer;
     private String condition;
+    private String upc_ean;
     private double price;
     private Integer quantity;
     private File image;
@@ -163,6 +165,14 @@ public class AddPart extends AuthenticatedAction implements SessionAware {
 
 
         Company company = companyService.getById(getUser().getCompanyId());
+        String bsin = "";
+        while (true) {
+            bsin = BSINGenerator.getNext();
+            if (partService.findByBSIN(bsin).isEmpty()) {
+                break;
+            }
+        }
+
 
         part = new Part();
         part.setName(name);
@@ -174,6 +184,9 @@ public class AddPart extends AuthenticatedAction implements SessionAware {
         part.setPartNo(partNo);
         SubCategory subCategory = subCategoryService.getById(subCategoryId);
         part.setSubcategory(subCategory);
+        part.setBsin(bsin);
+        part.setUpc_ean(upc_ean);
+
         part.setCreationDate(new Timestamp(System.currentTimeMillis()));
         part.setCreatedBy(getUser().getId());
         part.setUpdatedBy(getUser().getId());
@@ -195,7 +208,7 @@ public class AddPart extends AuthenticatedAction implements SessionAware {
 
         String fileName = UUID.randomUUID().toString();
         if (image != null) {
-             new ImageUtil().SaveImage(image, fileName, getExtension(imageFilename));
+            new ImageUtil().SaveImage(image, fileName, getExtension(imageFilename));
             Image tmpImage = new Image();
             tmpImage.setContentType(imageContentType);
             tmpImage.setFileName(fileName);
@@ -296,5 +309,8 @@ public class AddPart extends AuthenticatedAction implements SessionAware {
     public int getSubCategoryId() {
         return subCategoryId;
     }
-    
+
+    public void setUpc_ean(String upc_ean) {
+        this.upc_ean = upc_ean;
+    }
 }

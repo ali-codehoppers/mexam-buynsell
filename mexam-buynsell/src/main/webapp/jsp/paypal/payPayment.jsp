@@ -142,7 +142,6 @@
                                     <ch:errortag name="paypal_firstName"></ch:errortag>
                                 </div>
                                 <div style="clear: both"></div> 
-
                             </div>
                         </div>
                         <div>
