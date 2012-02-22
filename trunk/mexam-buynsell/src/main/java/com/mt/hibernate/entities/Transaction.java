@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "transactions")
 @NamedQueries({
-    @NamedQuery(name = "Transaction.findByTransactionId", query = "select u from Transaction u where u.transactionId like ?"),})
+    @NamedQuery(name = "Transaction.findByTransactionId", query = "select u from Transaction u where u.transactionId like ?")})
 public class Transaction extends BaseEntity {
 
     @Expose
