@@ -169,8 +169,20 @@
                         jQuery("#div_senderCompany").html(data.senderCompanyName);                                        
                         jQuery("#div_message").html(data.message);                         
                         jQuery("#div_date").html(data.date);
+                        jQuery("#div_sentTo").html(data.sentTo);
                         if(caller==1)
+                        {
                             setIsRead(id,true);
+                            jQuery("#sentToCont").hide();
+                            jQuery("#senderCont").show();
+                            jQuery("#senderCompanyCont").show();
+                        }
+                        else
+                        {
+                            jQuery("#sentToCont").show();
+                            jQuery("#senderCont").hide();
+                            jQuery("#senderCompanyCont").hide();
+                        }
                     }
                 });
             }
@@ -243,7 +255,18 @@
                         <div style="clear: both"></div>
                     </div>
 
-                    <div style="margin-top: 10px; width: 50%; float: left">
+                    <div style="margin-top: 10px; width: 50%; float: left" id="sentToCont">
+                        <div style="float: left; width: 20%">
+                            <h3 style="font: normal 18px 'Trebuchet MS'; color: #444;margin: auto">Sent To : </h3>
+                        </div>
+                        <div style="width: 80%; text-align: left">
+                            <h3 id="div_sentTo" style="font: normal 16px 'Trebuchet MS'; color: #444;margin: auto"></h3>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+
+
+                    <div style="margin-top: 10px; width: 50%; float: left" id="senderCont">
                         <div style="float: left; width: 20%">
                             <h3 style="font: normal 18px 'Trebuchet MS'; color: #444;margin: auto">Sender : </h3>
                         </div>
@@ -253,7 +276,7 @@
                         <div style="clear: both"></div>
                     </div>
 
-                    <div style="margin-top: 10px; width: 50%; float: left">
+                    <div style="margin-top: 10px; width: 50%; float: left" id="senderCompanyCont">
                         <div style="float: left; width: 22%">
                             <h3 style="font: normal 18px 'Trebuchet MS'; color: #444;margin: auto">Company : </h3>
                         </div>

@@ -285,7 +285,8 @@
                     html+="</a>";
                     html+="</div>";
                     html+="<div class='partDetail'>";
-                    html+="<h2><a href='viewPart?partId="+part.id+"'>"+part.partNo+" </a></h2>";
+                    //html+="<h2><a href='viewPart?partId="+part.id+"'>"+part.partNo+" </a></h2>";
+                    html+="<h2><a href='viewPart?bsin="+part.bsin+"'>"+part.partNo+" </a></h2>";
                     html+="<div class='partDesc'>"+part.description+"</div>";
                     html+="</div>";
                     html+="</div>";

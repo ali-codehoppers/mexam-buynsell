@@ -5,11 +5,15 @@
 package com.mt.actions.ajaxActions;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 import com.mt.actions.AuthenticatedAction;
 import com.mt.hibernate.entities.Company;
 import com.mt.hibernate.entities.Inventory;
+import com.mt.hibernate.entities.Part;
 import com.mt.services.CompanyService;
 import com.mt.services.InventoryService;
+import com.mt.services.PartService;
+import com.mt.util.BSINGenerator;
 import com.mt.util.RecordsJson;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +32,7 @@ public class GetInventoryList extends AuthenticatedAction {
     private List<String> searchOpers;
     private String jsonString = "";
     private List<Inventory> inventorys;
+    private List<InventoryExtended> inventorysExtended;
     private CompanyService companyService;
     private InventoryService inventoryService;
 
@@ -74,6 +79,8 @@ public class GetInventoryList extends AuthenticatedAction {
         searchOpers = new ArrayList<String>();
         searchStrings = new ArrayList<String>();
 
+        inventorysExtended = new ArrayList<InventoryExtended>();
+
         Company myCompany = companyService.getById(getUser().getCompanyId());
 
         searchFields.add(searchField);
@@ -91,8 +98,13 @@ public class GetInventoryList extends AuthenticatedAction {
         inventorys = inventoryService.getBy(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers), sidx, sord, rows, page);
         long total = inventoryService.getRecordsCount(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers));
 
+        for (Inventory inventory : inventorys) {
+            InventoryExtended inventoryExtended = new InventoryExtended(inventory);
+            inventorysExtended.add(inventoryExtended);
+        }
 
-        RecordsJson<Inventory> recordsJson = new RecordsJson<Inventory>(page, rows, total, inventorys);
+
+        RecordsJson<InventoryExtended> recordsJson = new RecordsJson<InventoryExtended>(page, rows, total, inventorysExtended);
         jsonString = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(recordsJson);
 
         return SUCCESS;
@@ -104,5 +116,29 @@ public class GetInventoryList extends AuthenticatedAction {
 
     protected String[] getStringArray(List<String> list) {
         return list.toArray(new String[list.size()]);
+    }
+
+    private class InventoryExtended extends Inventory {
+
+        @Expose
+        private String bsin;
+        @Expose
+        private String upc_ean;
+
+        public InventoryExtended(Inventory inventory) {
+            this.setQuantity(inventory.getQuantity());
+            this.setCond(inventory.getCond());
+            this.setCompany(inventory.getCompany());
+            this.setCompanyId(inventory.getCompanyId());
+            this.setCreationDate(inventory.getCreationDate());
+            this.setPartId(inventory.getPartId());
+            this.setPartNo(inventory.getPartNo());
+            this.setManufacturer(inventory.getManufacturer());
+            this.setDescription(inventory.getDescription());
+            if (inventory.getPartId() != null && inventory.getPartId() > 0) {
+                bsin = inventory.getPart().getBsin();
+                upc_ean = inventory.getPart().getUpc_ean();
+            }
+        }
     }
 }

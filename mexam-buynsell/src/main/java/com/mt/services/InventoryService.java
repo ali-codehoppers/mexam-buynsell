@@ -16,14 +16,6 @@ public class InventoryService {
         return inventoryDao.addNew(newInstance);
     }
 
-    public List<Inventory> findByUPC(String UPC) {
-        return inventoryDao.findByUPC("" + UPC);
-    }
-
-    public List<Inventory> findByBSIN(String BSIN) {
-        return inventoryDao.findByBSIN("" + BSIN);
-    }
-
     public Inventory getById(Integer id) {
         return inventoryDao.getById(id);
     }

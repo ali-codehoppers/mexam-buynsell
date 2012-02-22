@@ -107,12 +107,12 @@
             function getInfoByBsin()
             {
                 var bsin = $("#bsin").val();
+                $("#manufacturer").val("");
+                $("#partNo").val("");
+                $("#upc_ean").val("");
+                $("#partId").val("0");
                 if(bsin.length>12)
                 {
-                    $("#manufacturer").val("");
-                    $("#partNo").val("");
-                    $("#upc_ean").val("");
-                    
                     $("#manufacturer").attr('readonly', true);
                     $("#partNo").attr('readonly', true);
                     $("#upc_ean").attr('readonly', true);
@@ -135,6 +135,7 @@
                                     $("#manufacturer").val(data["manufacturer"]);
                                     $("#partNo").val(data["partNo"]);
                                     $("#upc_ean").val(data["upc_ean"]);
+                                    $("#partId").val(data["id"]);
                                 }
                             }
                             if(!isFilled)
@@ -165,11 +166,12 @@
             function getInfoByUPC()
             {
                 var upc_ean = $("#upc_ean").val();
+                $("#manufacturer").val("");
+                $("#partNo").val("");
+                $("#bsin").val("");
+                $("#partId").val("0");
                 if(upc_ean.length>12)
                 {
-                    $("#manufacturer").val("");
-                    $("#partNo").val("");
-                    $("#bsin").val("");
                     $("#manufacturer").attr('readonly', true);
                     $("#partNo").attr('readonly', true);
                     $("#bsin").attr('readonly', true);
@@ -191,6 +193,7 @@
                                     isFilled=true;
                                     $("#manufacturer").val(data["manufacturer"]);
                                     $("#partNo").val(data["partNo"]);
+                                    $("#partId").val(data["id"]);
                                     $("#bsin").val(data["bsin"]);
                                 }
                             }
@@ -280,7 +283,7 @@
                 <div id="formContainder">
                     <form id ="formInventory" method="POST" action="addInventory">
                         <div>
-
+                            <input id="partId" name="partId" value="${partId}" type="hidden"/>
                             <div>
                                 <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
                                     UPC / EAN:
