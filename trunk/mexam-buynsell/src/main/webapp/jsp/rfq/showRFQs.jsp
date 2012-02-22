@@ -119,13 +119,15 @@
                     url:'getRFQItemsList?rfqId='+rfqId,
                     datatype: "json",
                     height: 200,
-                    colNames:['ID','Part No','Manufacturer','Price','Quantity'],
+                    colNames:['Part No','Manufacturer','BSIN','UPC/EAN','Condition','Price','Quantity'],
                     colModel:[
-                        {name:'id',index:'id', width:55,align:"center"},                                                
-                        {name:'cell.partNo',index:'partNo', width:200, align:"center",sortable:true},
-                        {name:'cell.manufacturer',index:'manufacturer', width:200, align:"center",sortable:true},                        
-                        {name:'cell.price',index:'price', width:200, align:"center",sortable:true, editable: true, edittype: 'text', editoptions: { size: 20, maxlength: 30}},                        
-                        {name:'cell.quantity',index:'quantity', width:200, align:"center",sortable:true}                        
+                        {name:'cell.partNo',index:'inventory.partNo', width:125, align:"center",sortable:true},
+                        {name:'cell.manufacturer',index:'inventory.manufacturer', width:180, align:"center",sortable:true}, 
+                        {name:'cell.bsin',index:'bsin', width:125, align:"center"},                                                
+                        {name:'cell.upc_ean',index:'upc_ean', width:125, align:"center"},                                                
+                        {name:'cell.cond',index:'cond', width:100, align:"center",sortable:true},                        
+                        {name:'cell.price',index:'price', width:120, align:"center",sortable:true, editable: true, edittype: 'text', editoptions: { size: 20, maxlength: 30}},                        
+                        {name:'cell.quantity',index:'quantity', width:120, align:"center",sortable:true}                        
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
