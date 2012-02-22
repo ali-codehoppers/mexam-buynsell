@@ -47,6 +47,8 @@ public class GetRFQ extends AuthenticatedAction {
         private String senderCompanyName;
         @Expose
         private String date;
+        @Expose
+        private String sentTo;
 
         public RFQExtended(RFQ rfq) {
             this.setId(rfq.getId());
@@ -64,6 +66,7 @@ public class GetRFQ extends AuthenticatedAction {
             this.date = this.getCreationDate().toString();
             this.senderName = rfq.getSender().getFirstName();
             this.senderCompanyName = rfq.getSender().getCompany().getName();
+            this.sentTo = rfq.getReceiver().getName();
         }
     }
 }

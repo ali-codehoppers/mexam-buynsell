@@ -25,6 +25,7 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
     private double price;
     private String description;
     private Integer quantity = 0;
+    private Long partId;
     private InventoryService inventoryService;
     private CompanyService companyService;
     private Map session;
@@ -65,9 +66,14 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
         this.price = price;
     }
 
+    public void setPartId(Long partId) {
+        this.partId = partId;
+    }
+
     public void setSession(Map map) {
         this.session = map;
     }
+    
 
     @Override
     public void validate() {
@@ -139,6 +145,7 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
         inventory.setCond(condition);
         inventory.setManufacturer(manufacturer);
         inventory.setCompany(company);
+        inventory.setPartId(partId);
         inventory.setCreationDate(new Timestamp(System.currentTimeMillis()));
         inventory.setCreatedBy(getUser().getId());
         inventory.setUpdatedBy(getUser().getId());
@@ -187,4 +194,9 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
     public Integer getQuantity() {
         return quantity;
     }
+
+    public Long getPartId() {
+        return partId;
+    }
+    
 }

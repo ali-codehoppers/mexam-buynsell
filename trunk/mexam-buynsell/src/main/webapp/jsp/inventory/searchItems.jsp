@@ -81,7 +81,7 @@
                 background:transparent url(css/images/header_bg.gif) repeat-x 0 0;  
             }
 
-          
+
 
         </style>
 
@@ -178,9 +178,9 @@
                 html+="<div style='float: left; width: 15%'>";
                 html+="<div class='searchBox_Image'>";
                 
-                if(item.images)
+                if(item.imageId>0)
                 {
-                    html+="<img src='getImage?imageId="+part.images[0].id+"&imageType=2'/>";
+                    html+="<img style='width: 90%' src='getImage?imageId="+item.imageId+"&imageType=1'/>";
                 }
                 else
                     html+="<img style='width: 90%' src='images/no-product-image.jpg'/>";
@@ -194,7 +194,14 @@
                 html+="<div style='float: left; margin-left: 20px; width: 80%'>";
                 html+="<div id='item_title' style='width: 100%; color: #083152;'>";
                 html+="<div class='item_Title' >";
-                html+=item.partNo;
+                if(item.bsin!=null)
+                {
+                    html+="<a href='viewPart?bsin="+item.bsin+"' style='font-size: 16px; color:#083152'>"+item.partNo+"</a>"; 
+                }
+                else
+                {
+                    html+=item.partNo;
+                }
                 html+="</div>";
                 html+="<div class='item_Price'>";
                 html+=item.cond+"&nbsp;&nbsp;&nbsp;  $"+item.price;

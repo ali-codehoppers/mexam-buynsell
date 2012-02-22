@@ -2,6 +2,8 @@ package com.mt.hibernate.entities;
 
 import com.google.gson.annotations.Expose;
 import javax.persistence.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -9,9 +11,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "inventories")
 @NamedQueries({
-    @NamedQuery(name = "Inventory.findBySearchString", query = "select p from Inventory p where  p.partNo like ? or p.manufacturer like ?"),
-    @NamedQuery(name = "Inventory.findByBSIN", query = "select c from Inventory c where c.bsin like ?"),
-    @NamedQuery(name = "Inventory.findByUPC", query = "select c from Inventory c where c.upc_ean like ?")
+    @NamedQuery(name = "Inventory.findBySearchString", query = "select p from Inventory p where  p.partNo like ? or p.manufacturer like ?")
 })
 public class Inventory extends BaseEntity {
 
@@ -28,18 +28,17 @@ public class Inventory extends BaseEntity {
     @Expose
     private String description;
     @Expose
-    private String bsin;
+    private Long partId;
+    private Part part;
     @Expose
-    private String upc_ean;
-    @Expose
-    private int companyId;
+    private long companyId;
     private Company company;
 
     public void setCompany(Company company) {
         this.company = company;
     }
 
-    public void setCompanyId(int companyId) {
+    public void setCompanyId(long companyId) {
         this.companyId = companyId;
     }
 
@@ -67,30 +66,42 @@ public class Inventory extends BaseEntity {
         this.quantity = quantity;
     }
 
-    public void setBsin(String bsin) {
-        this.bsin = bsin;
+    public void setPartId(Long partId) {
+        this.partId = partId;
     }
 
-    public void setUpc_ean(String upc_ean) {
-        this.upc_ean = upc_ean;
+    public void setPart(Part part) {
+        this.part = part;
     }
-
+    
     public Inventory() {
     }
 
     @Column(insertable = false, updatable = false, name = "companyId")
-    public int getCompanyId() {
+    public long getCompanyId() {
         return companyId;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     @ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "companyId")
     public Company getCompany() {
         return company;
+    }
+
+    @Column(insertable = false, updatable = false, name = "partId", nullable=true)
+    public Long getPartId() {
+        return partId;
+    }
+
+    @ManyToOne(targetEntity = Part.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "partId", nullable=true)
+    @NotFound( action = NotFoundAction.IGNORE )
+    public Part getPart() {
+        return part;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @NotEmpty
@@ -117,13 +128,5 @@ public class Inventory extends BaseEntity {
 
     public int getQuantity() {
         return quantity;
-    }
-
-    public String getBsin() {
-        return bsin;
-    }
-
-    public String getUpc_ean() {
-        return upc_ean;
     }
 }
