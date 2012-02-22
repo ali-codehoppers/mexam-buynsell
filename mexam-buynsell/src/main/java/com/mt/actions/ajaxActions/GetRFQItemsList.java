@@ -118,7 +118,7 @@ public class GetRFQItemsList extends AuthenticatedAction {
             }
         }
 
-        RecordsJson<RFQItemExtended> recordsJson = new RecordsJson<RFQItemExtended>(page, rows, total,  rFQItemExtendeds);
+        RecordsJson<RFQItemExtended> recordsJson = new RecordsJson<RFQItemExtended>(page, rows, total, rFQItemExtendeds);
         jsonString = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(recordsJson);
         return SUCCESS;
     }
@@ -162,6 +162,12 @@ public class GetRFQItemsList extends AuthenticatedAction {
         private String partNo;
         @Expose
         private String manufacturer;
+        @Expose
+        private String cond;
+        @Expose
+        private String bsin;
+        @Expose
+        private String upc_ean;
 
         public RFQItemExtended(RFQItem item) {
             this.setId(item.getId());
@@ -173,6 +179,12 @@ public class GetRFQItemsList extends AuthenticatedAction {
             this.setPrice(item.getPrice());
             this.partNo = this.getInventory().getPartNo();
             this.manufacturer = this.getInventory().getManufacturer();
+            this.cond = this.getInventory().getCond();
+            if(this.getInventory().getPartId()!=null&&this.getInventory().getPartId()>0)
+            {
+                this.bsin = this.getInventory().getPart().getBsin();
+                this.upc_ean = this.getInventory().getPart().getUpc_ean();
+            }
         }
     }
 
