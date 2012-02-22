@@ -11,12 +11,17 @@ import com.opensymphony.xwork2.ActionSupport;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.CookiesAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 
 /**
  *
  * @author CodeHopper
  */
-public class Login extends ActionSupport {
+public class Login extends ActionSupport implements CookiesAware, ServletResponseAware {
 
     private String message;
     private String error = "";
@@ -24,10 +29,14 @@ public class Login extends ActionSupport {
     private String info;
     private String userName;
     private String password;
+    private boolean rememberMe;
     private User user;
     private List<User> userList;
     private UserService userService;
     private String jsonString = "";
+    private String userCookie;
+    private Map cookiesMap;
+    private HttpServletResponse response;
 
     public void setPassword(String password) {
         this.password = password;
@@ -39,6 +48,22 @@ public class Login extends ActionSupport {
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    public void setCookiesMap(Map cookiesMap) {
+        this.cookiesMap = cookiesMap;
+    }
+
+    public void setUserCookie(String userCookie) {
+        this.userCookie = userCookie;
+    }
+
+    public void setServletResponse(HttpServletResponse response) {
+        this.response = response;
+    }
+
+    public void setRememberMe(boolean rememberMe) {
+        this.rememberMe = rememberMe;
     }
 
     @Override
@@ -64,10 +89,16 @@ public class Login extends ActionSupport {
             for (int i = 0; i < userList.size(); i++) {
                 if (userList.get(i).getPassword().compareTo(password) == 0) {
                     User user = userList.get(i);
-                    if (user.getCompany().getExpiryDate().compareTo(new Timestamp(System.currentTimeMillis())) < 0) 
-                    {
+                    if (user.getCompany().getExpiryDate().compareTo(new Timestamp(System.currentTimeMillis())) < 0) {
                         user.getCompany().setIsExpired(true);
                         userService.update(user);
+                    }
+                    if (rememberMe) {
+                      Cookie cookie = new Cookie("userCookie", userName);
+                        cookie.setMaxAge(14 * 24 * 60 * 60);
+                        ServletActionContext.getResponse().addCookie(cookie);
+
+                        //System.out.println("In Remember");
                     }
 
                     Map session = ActionContext.getContext().getSession();
@@ -87,6 +118,10 @@ public class Login extends ActionSupport {
         return message;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
     public String getError() {
         return error;
     }
@@ -97,5 +132,13 @@ public class Login extends ActionSupport {
 
     public String getJsonString() {
         return error;
+    }
+
+    public Map getCookiesMap() {
+        return cookiesMap;
+    }
+
+    public String getUserCookie() {
+        return userCookie;
     }
 }

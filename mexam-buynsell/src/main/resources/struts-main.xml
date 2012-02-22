@@ -14,11 +14,15 @@
         
         <action name="home" class="com.mt.actions.Home">
             <interceptor-ref name="basic"/>
+            <interceptor-ref name="cookie">
+                <param name="cookiesName">userCookie</param>
+            </interceptor-ref>
             <result name="success">jsp/home.jsp</result>
         </action>
 
         <action name="home_new" class="com.mt.actions.Home">
             <interceptor-ref name="basic"/>
+            
             <result name="success">jsp/home_new.jsp</result>
         </action>
 
@@ -32,11 +36,17 @@
             <interceptor-ref name="basic"/>
             <result name="success" type="redirect">home</result>
             <result name="input">jsp/login/login.jsp</result>
+            <interceptor-ref name="cookie">
+                <param name="cookiesName">userCookie</param>
+            </interceptor-ref>
             <result name="fail" type="chain">showLogin</result>            
         </action>
         
         <action name="logout" class="com.mt.actions.Login.Logout">
             <interceptor-ref name="basic"/>
+            <interceptor-ref name="cookie">
+                <param name="cookiesName">userCookie</param>
+            </interceptor-ref>
             <result name="success" type="redirect">home</result>
         </action>
 

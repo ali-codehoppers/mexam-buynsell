@@ -2,96 +2,113 @@ package com.mt.actions;
 
 import com.mt.hibernate.entities.Category;
 import com.mt.hibernate.entities.SubCategory;
+import com.mt.hibernate.entities.User;
 import com.mt.services.CategoryService;
+import com.mt.services.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
+import java.util.Map;
+import org.apache.struts2.interceptor.CookiesAware;
+import org.apache.struts2.interceptor.SessionAware;
 
-public class Home extends ActionSupport
-{
-    
+public class Home extends ActionSupport implements CookiesAware, SessionAware {
+
     private String treeJsonString;
     private CategoryService categoryService;
-    
-        
-    public void setCategoryService(CategoryService categoryService)
-    {
+    private Map cookiesMap;
+    private Map session;
+    private List<User> userList;
+    private UserService userService;
+
+    public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
- 
+
+    public void setCookiesMap(Map cookiesMap) {
+        this.cookiesMap = cookiesMap;
+    }
+
+    public void setSession(Map session) {
+        this.session = session;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
-    public String execute() throws Exception
-    {
+    public String execute() throws Exception {
+        if (cookiesMap.containsKey("userCookie")) {
+            String username = cookiesMap.get("userCookie").toString();
+            userList = userService.findByUsername(username);
+            session.put("user", userList.get(0));
+        }
         treeJsonString = getCategoryTreeData();
         return SUCCESS;
     }
-    
-    private String getCategoryTreeData()
-    {
+
+    private String getCategoryTreeData() {
         String treeJson = "\"[";
         //List<Category> categorys = categoryService.findEagerCategoryList();
         List<Category> categorys = categoryService.getAll();
-        for (int i = 0; i < categorys.size(); i++)
-          {
+        for (int i = 0; i < categorys.size(); i++) {
             treeJson += getCategoryJsonString(categorys.get(i), i == categorys.size() - 1);
-          }
+        }
         treeJson += "]\"";
         return treeJson;
     }
-    
-    private String getSubCategoryJsonString(SubCategory subCategory, boolean isLast)
-    {
+
+    private String getSubCategoryJsonString(SubCategory subCategory, boolean isLast) {
         String treeJson = "{'data' : {";
         treeJson += " 'title' : '" + subCategory.getName() + "'}";
         treeJson += " ,'attr' : {";
         treeJson += " 'id' : '" + subCategory.getId() + "'";
-        treeJson += " ,'type' : 'subCategory'}";        
+        treeJson += " ,'type' : 'subCategory'}";
 //        treeJson += "}";
-        if (isLast)          
-          {
+        if (isLast) {
             treeJson += "}";
-          }
-        else
-          {
+        } else {
             treeJson += "},";
-          }
+        }
         return treeJson;
     }
-    
-    private String getCategoryJsonString(Category category, boolean isLast)
-    {
+
+    private String getCategoryJsonString(Category category, boolean isLast) {
         List<SubCategory> subCategorys = category.getSubCategorys();
         String treeJson = "{'data' : {";
         treeJson += " 'title' : '" + category.getName() + "'}";
         treeJson += " ,'attr' : {";
         treeJson += " 'id' : '" + category.getId() + "'";
-        treeJson += " ,'type' : 'category'}";                
+        treeJson += " ,'type' : 'category'}";
         treeJson += ",'metadata':{";
         treeJson += " 'title' : '" + category.getName() + "',";
         treeJson += " 'attr' : {";
         treeJson += " 'id' : '" + category.getId() + "'}";
         treeJson += "},";
         treeJson += " 'children' : [";
-        for (int i = 0; i < subCategorys.size(); i++)
-          {
+        for (int i = 0; i < subCategorys.size(); i++) {
             treeJson += getSubCategoryJsonString(subCategorys.get(i), i == subCategorys.size() - 1);
-          }
+        }
         treeJson += "]";
-        
-        if (isLast)
-          {
+
+        if (isLast) {
             treeJson += "}";
-          }
-        else
-          {
+        } else {
             treeJson += "},";
-          }
+        }
         //treeJson=treeJson.replaceAll("'","\"");
         return treeJson;
     }
-    
-    public String getTreeJsonString()
-    {
+
+    public String getTreeJsonString() {
         return treeJsonString;
     }
-    
+
+    public Map getCookiesMap() {
+        return cookiesMap;
+    }
 }

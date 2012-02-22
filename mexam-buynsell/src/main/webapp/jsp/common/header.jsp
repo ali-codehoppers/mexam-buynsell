@@ -145,7 +145,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="109"><input type="checkbox" name="checkbox" id="checkbox" />
+                            <td width="109"><input type="checkbox" name="rememberMe" id="rememberMe" value="true" />
                                 <label for="checkbox">Remember Me</label></td>
                             <td width="79"><a href="javascript:onSignInClick()"><img src="images/signin.jpg" alt="" width="73" height="25" border="0" /></a></td>
                         </tr>
