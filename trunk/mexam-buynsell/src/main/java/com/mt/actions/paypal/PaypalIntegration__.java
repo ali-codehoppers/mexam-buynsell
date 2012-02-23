@@ -7,7 +7,7 @@ package com.mt.actions.paypal;
 import com.paypal.sdk.exceptions.PayPalException;
 import com.paypal.sdk.profiles.APIProfile;
 import com.paypal.sdk.profiles.ProfileFactory;
-import com.paypal.sdk.services.CallerServices;
+//import com.paypal.sdk.services.CallerServices;
 import com.paypal.sdk.services.NVPCallerServices;
 import java.io.InputStream;
 import java.util.Properties;
@@ -67,7 +67,7 @@ public class PaypalIntegration__ {
 
     public String DoDirectPaymentCode(String paymentAction, PaymentInfo paymentInfo, String amount) {
 
-        CallerServices caller = new CallerServices();
+      //  CallerServices caller = new CallerServices();
         try {
 
             APIProfile profile = ProfileFactory.createSSLAPIProfile();

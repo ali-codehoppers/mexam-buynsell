@@ -44,9 +44,9 @@
                     caption: "RFQs Received",
                     onSelectRow: function(ids) {
                         if(ids != null && ids>0) {
-                            rfqId=ids;
                             getRFQ(ids,1);
-                            jQuery("#rfqItemsList").jqGrid('setGridParam',{url:'getRFQItemsList?rfqId='+rfqId,page:1});
+                            createRFQItemsGrid(ids,1);
+                            // jQuery("#rfqItemsList").jqGrid('setGridParam',{url:'getRFQItemsList?rfqId='+rfqId,page:1});
                             jQuery("#rfqItemsList").trigger('reloadGrid');
                             $( "#dialog" ).dialog( "open" );
                         }
@@ -85,9 +85,9 @@
                     caption: "RFQs Sent",
                     onSelectRow: function(ids) {
                         if(ids != null && ids>0) {
-                            rfqId=ids;
                             getRFQ(ids,2);
-                            jQuery("#rfqItemsList").jqGrid('setGridParam',{url:'getRFQItemsList?rfqId='+rfqId,page:1});
+                            createRFQItemsGrid(ids,2);
+                            //jQuery("#rfqItemsList").jqGrid('setGridParam',{url:'getRFQItemsList?rfqId='+rfqId,page:1});
                             jQuery("#rfqItemsList").trigger('reloadGrid');
                             $( "#dialog" ).dialog( "open" );
                         }
@@ -114,41 +114,7 @@
 
              
                 jQuery("#rfqsListSent").jqGrid('navGrid','#pager_s',{edit:false,add:false,del:true});
-                
-                jQuery("#rfqItemsList").jqGrid({
-                    url:'getRFQItemsList?rfqId='+rfqId,
-                    datatype: "json",
-                    height: 200,
-                    colNames:['Part No','Manufacturer','BSIN','UPC/EAN','Condition','Price','Quantity'],
-                    colModel:[
-                        {name:'cell.partNo',index:'inventory.partNo', width:125, align:"center",sortable:true},
-                        {name:'cell.manufacturer',index:'inventory.manufacturer', width:180, align:"center",sortable:true}, 
-                        {name:'cell.bsin',index:'bsin', width:125, align:"center"},                                                
-                        {name:'cell.upc_ean',index:'upc_ean', width:125, align:"center"},                                                
-                        {name:'cell.cond',index:'cond', width:100, align:"center",sortable:true},                        
-                        {name:'cell.price',index:'price', width:120, align:"center",sortable:true, editable: true, edittype: 'text', editoptions: { size: 20, maxlength: 30}},                        
-                        {name:'cell.quantity',index:'quantity', width:120, align:"center",sortable:true}                        
-                    ],
-                    rowNum:10,
-                    rowList:[10,20,30],
-                    pager: '#pager',
-                    sortname: 'id',
-                    viewrecords: true,
-                    sortorder: "desc",
-                    caption: "RFQ Items",
-                    jsonReader : { 
-                        root: "rows", 
-                        page: "page", 
-                        total: "total", 
-                        records: "records", 
-                        repeatitems: false, 
-                        cell: "cell", 
-                        id: "id"
-                    }
-                });
-                jQuery("#rfqItemsList").jqGrid('navGrid','#pager',{edit:true,add:false,del:true});
-                
-                
+                                
                 $( "#dialog" ).dialog({
                     autoResize:true,
                     autoOpen: false,
@@ -188,7 +154,55 @@
                     }
                 });
             }
-            
+            function createRFQItemsGrid(rfqId,caller){
+                var editPrice = false;
+                var editQantity = false;
+                
+                if(caller==1){
+                    editPrice = true;
+                }else{
+                    editQantity = true;
+                }
+                    
+                jQuery("#rfqItemsList").jqGrid('GridUnload');   
+                jQuery("#rfqItemsList").jqGrid({
+                    url:'getRFQItemsList?rfqId='+rfqId,
+                    datatype: "json",
+                    cellEdit:true,
+                    cellsubmit:'clientArray',
+                    //cellurl:'updateRFQ',
+                    //mtype:'POST',
+                    height: 200,
+                    colNames:['Part No','Manufacturer','BSIN','UPC/EAN','Condition','Price','Quantity'],
+                    colModel:[
+                        //{name:'id',index:'id', width:125, align:"center"},
+                        {name:'cell.partNo',index:'inventory.partNo', width:125, align:"center",sortable:true},
+                        {name:'cell.manufacturer',index:'inventory.manufacturer', width:180, align:"center",sortable:true}, 
+                        {name:'cell.bsin',index:'bsin', width:125, align:"center"},                                                
+                        {name:'cell.upc_ean',index:'upc_ean', width:125, align:"center"},                                                
+                        {name:'cell.cond',index:'cond', width:100, align:"center",sortable:true},                        
+                        {name:'price',jsonmap:'cell.price',index:'price',label:'price', width:120, align:"center",sortable:true,editable:editPrice, edittype: 'text', editoptions: { size: 20, maxlength: 30}},                        
+                        {name:'quantity',jsonmap:'cell.quantity',index:'quantity', width:120, align:"center",sortable:true,editable:editQantity,edittype: 'text', editoptions: { size: 20, maxlength: 30}}                        
+                    ],
+                    rowNum:10,
+                    rowList:[10,20,30],
+                    pager: '#pager',
+                    sortname: 'id',
+                    viewrecords: true,
+                    sortorder: "desc",
+                    caption: "RFQ Items",
+                    jsonReader : { 
+                        root: "rows", 
+                        page: "page", 
+                        total: "total", 
+                        records: "records", 
+                        repeatitems: false, 
+                        cell: "cell", 
+                        id: "id"
+                    }
+                });
+                jQuery("#rfqItemsList").jqGrid('navGrid','#pager',{edit:true,add:false,del:true});
+            }
             function setIsRead(id,val)
             {
                 $.ajax({
@@ -201,7 +215,26 @@
                     }
                 });
             }
-            
+            function updateRFQ(elementId){
+
+                var changedCells = jQuery("#"+elementId).getChangedCells();
+                for(var index in changedCells)
+                {
+                    var price = changedCells[index].price;
+                    var id = changedCells[index].id
+                    var quantity = changedCells[index].quantity;
+                    $.ajax({
+                        type:       "get",
+                        url:        "updateRFQ",
+                        data:       {"id":id, "price":price,"quantity":quantity},
+                        success:    function(msg) {
+                            jQuery("#"+elementId).trigger('reloadGrid');
+                            //  jQuery("#rfqsListSent").trigger('reloadGrid');
+                        }
+                    });
+                }
+                
+            }
   
             
         </script>
@@ -312,6 +345,9 @@
 
                     <table id="rfqItemsList"></table>
                     <div id="pager"></div>
+                    <div style="margin:auto">
+                        <span style="width: 100%; text-align: center"><a href="javascript:updateRFQ('rfqItemsList')" style="margin-left:400px;" class="btn">Save</a>&nbsp;</span>                    
+                    </div>                    
                     <div style="clear: both">
                     </div>
                     <!--                                                <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>-->

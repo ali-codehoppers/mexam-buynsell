@@ -30,6 +30,9 @@
             <!--        Login            -->
         <action name="showLogin" class="com.mt.actions.Login.ShowLogin">
             <interceptor-ref name="basic"/>
+            <interceptor-ref name="cookie">
+                <param name="cookiesName">userCookie</param>
+            </interceptor-ref>
             <result name="success">jsp/login/login.jsp</result>
         </action>
         <action name="login" class="com.mt.actions.Login.Login">
@@ -469,7 +472,10 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
-        
+        <action name="updateRFQ" class="com.mt.actions.ajaxActions.UpdateRFQ">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>        
         <!-- //     Ajax Actions    -->
 
         <action name="getImage" class="com.mt.actions.GetImage">

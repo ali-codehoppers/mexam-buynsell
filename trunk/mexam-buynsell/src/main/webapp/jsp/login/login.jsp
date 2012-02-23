@@ -115,6 +115,20 @@
 
                                 </div>
                             </div>
+                            <div>
+                                <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                    <input type="checkbox" name="rememberMe" id="rememberMe" value="true" />
+                                </div>                        
+                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                    <div style="float: left;">  
+                                        <label for="checkbox">Remember Me</label>
+                                    </div>
+                                    <div style="clear: both"></div> 
+
+                                </div>
+
+
+                            </div>
                         </div>
 
                         <div>
