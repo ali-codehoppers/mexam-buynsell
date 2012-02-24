@@ -136,18 +136,21 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input type="text" id="userName" name="userName" class="input_" value="Username" onBlur="if (this.value == ''){this.value = 'Username'; }" onFocus="if (this.value== 'Username') {this.value = ''; }" />
+                                <input type="text" id="userName" name="userName" class="input_"  value="Username" onBlur="if (this.value == ''){this.value = 'Username'; }" onFocus="if (this.value== 'Username') {this.value = ''; }" />
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input type="password" id="password" name="password" class="input_" value="Password" onBlur="if (this.value == ''){this.value = 'Password'; }" onFocus="if (this.value== 'Password') {this.value = ''; }" />
+                                <input type="password" id="password" name="password" class="input_"  value="Password" onBlur="if (this.value == ''){this.value = 'Password'; }" onFocus="if (this.value== 'Password') {this.value = ''; }" />
                             </td>
                         </tr>
                         <tr>
-                            <td width="109"><input type="checkbox" name="rememberMe" id="rememberMe" value="true" />
-                                <label for="checkbox">Remember Me</label></td>
-                            <td width="79"><a href="javascript:onSignInClick()"><img src="images/signin.jpg" alt="" width="73" height="25" border="0" /></a></td>
+                            <td colspan="2">
+                                <input type="checkbox" name="rememberMe" id="rememberMe" value="true" />
+                                <label for="checkbox" style="font-size: 10pt">Remember Me</label>
+                                <a style="margin-right: 0px" href="javascript:onSignInClick()"><img src="images/signin.jpg" alt="" border="0" /></a>
+                                <div><a href="#"  style="font-size: 7pt">Forgot Password?</a> <a href="showRegistration"  style="font-size: 7pt">Sign Up</a></div>
+                            </td>  
                         </tr>
                     </table>
                 </form>

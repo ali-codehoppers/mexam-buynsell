@@ -13,7 +13,12 @@
 
         <link href="css/css_sheet.css" rel="stylesheet" type="text/css" />
         <style>
-
+            #vendorList a{
+                color: black;
+            }
+            #vendorList a:hover{
+                color: white;
+            }
         </style>
 
         <script type="text/javascript">
@@ -25,7 +30,7 @@
                     colNames:['ID','Name','Address','City','State','Phone','Fax'],
                     colModel:[
                         {name:'id',index:'id', width:55,searchtype:"number"},                                                
-                        {name:'cell.name',index:'name', width:150, align:"center",sortable:true},                        
+                        {name:'cell.name',index:'name',formatter:'showlink',formatoptions:{baseLinkUrl:'viewVendor', idName:'companyId'}, width:150, align:"center",sortable:true},                        
                         {name:'cell.address',index:'address', width:300, sortable:"false",editable:"false"},
                         {name:'cell.city',index:'city', width:100, sortable:"false",editable:false},                        
                         {name:'cell.state.name',index:'state.name', width:100, sortable:"false",editable:false},                                                

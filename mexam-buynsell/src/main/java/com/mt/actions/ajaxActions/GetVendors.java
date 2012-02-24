@@ -104,4 +104,5 @@ public class GetVendors extends AuthenticatedAction {
     private String[] getStringArray(List<String> list) {
         return list.toArray(new String[list.size()]);
     }
+    
 }

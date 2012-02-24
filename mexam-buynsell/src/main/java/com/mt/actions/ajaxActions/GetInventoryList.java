@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetInventoryList extends AuthenticatedAction {
-
+    
     private int rows = 0;
     private int page = 0;
+    private int companyId;
     private String sidx;
     private String sord;
     private String searchField;
@@ -36,6 +37,9 @@ public class GetInventoryList extends AuthenticatedAction {
     private CompanyService companyService;
     private InventoryService inventoryService;
 
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
     public void setRows(int rows) {
         this.rows = rows;
     }
@@ -90,10 +94,17 @@ public class GetInventoryList extends AuthenticatedAction {
         } else {
             searchStrings.add("'" + searchString + "'");
         }
-
         searchFields.add("companyId");
         searchOpers.add("eq");
-        searchStrings.add("" + myCompany.getId());
+        if(companyId>0){
+            searchStrings.add("" + companyId);
+        }else{
+            searchStrings.add("" + myCompany.getId());
+        }
+            
+       
+        
+        
 
         inventorys = inventoryService.getBy(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers), sidx, sord, rows, page);
         long total = inventoryService.getRecordsCount(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers));

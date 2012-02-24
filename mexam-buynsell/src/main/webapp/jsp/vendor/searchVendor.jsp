@@ -40,7 +40,10 @@
                 font-weight: bold;
                 padding-bottom: 5px;
             }
-
+            .item_Title:hover{
+                text-decoration: underline;
+                cursor: pointer;
+            }
             .item_Price
             {
                 float: left;
@@ -252,7 +255,7 @@
                 html+="</div>";
                 html+="<div style='float: left; margin-left: 20px; width: 80%'>";
                 html+="<div id='item_title' style='width: 100%; color: #083152;'>";
-                html+="<div class='item_Title' >";
+                html+="<div onclick=window.location='viewVendor?companyId="+item.id+"' class='item_Title' >";
                 html+=item.name;
                 html+="</div>";
                 html+="<div class='item_Price'>";

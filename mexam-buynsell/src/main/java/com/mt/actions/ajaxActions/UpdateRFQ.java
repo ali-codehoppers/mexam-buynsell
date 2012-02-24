@@ -38,8 +38,6 @@ public class UpdateRFQ extends AuthenticatedAction {
 
     @Override
     public String execute() throws Exception {
-        System.out.println(id);
-        System.out.println(price);
        RFQItem rfqItem = rFQItemService.getById(id);
        rfqItem.setPrice(price);
        rfqItem.setQuantity(quantity);
