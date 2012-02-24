@@ -22,11 +22,13 @@
                     url:'getMyVendorsList',
                     datatype: "json",
                     height: 250,
-                    colNames:['ID','Name','Notes'],
+                    editurl:'updateMyVendors',
+                    colNames:['ID','Name','Priority','Notes'],
                     colModel:[
                         {name:'id',index:'id', width:55,searchtype:"number"},          
                         {name:'cell.vendorName',index:'vendor.name', width:200, align:"center"},                        
-                        {name:'cell.notes',index:'notes', width:400, sortable:"false"},
+                        {name:'priority',jsonmap:'cell.priority',index:'vendor.priority', width:200, editable:true, edittype:"select",editoptions:{value:{1:'1',2:'2',3:'3',4:'4',5:'5'}},align:"center"},                        
+                        {name:'notes',jsonmap:'cell.notes',index:'notes', width:400,editable:true,edittype:"textarea", sortable:"false"},
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
@@ -45,7 +47,7 @@
                         id: "id"
                     }
                 });
-                jQuery("#vendorList").jqGrid('navGrid','#pager',{edit:false,add:false,del:false});
+                jQuery("#vendorList").jqGrid('navGrid','#pager',{edit:true,add:false,del:true});
                 
                 
                 //                var mydata = ${vendorJson};                

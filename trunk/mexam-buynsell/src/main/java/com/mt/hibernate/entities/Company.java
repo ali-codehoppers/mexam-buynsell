@@ -132,7 +132,7 @@ public class Company extends BaseEntity {
         return city;
     }
 
-    @ManyToOne(targetEntity = State.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = State.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "stateId")
     public State getState() {
         return state;

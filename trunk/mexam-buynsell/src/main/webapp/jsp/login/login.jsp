@@ -17,7 +17,12 @@
                 margin-right: 5px;
 
             }
-
+            .link a{
+                color:black;
+            }
+            .link a:hover{
+                text-decoration: underline;
+            }
 
         </style>
 
@@ -125,9 +130,20 @@
                                     </div>
                                     <div style="clear: both"></div> 
 
+                                    <!--  <div style="clear: both"></div> -->
+
                                 </div>
 
 
+                            </div>
+                            <div>
+                                <div class="link" style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">
+                                    <a href="#"  style="font-size:10pt">Forgot Password?</a>
+                                    </div>
+                                <div class="link" style="float: left; width: 48%; margin: 5px;">
+                                <a href="showRegistration"  style="font-size:10pt">Sign Up</a>
+                                </div>
+                                
                             </div>
                         </div>
 

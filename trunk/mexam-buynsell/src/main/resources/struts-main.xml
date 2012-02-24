@@ -162,6 +162,10 @@
        
        
             <!--      Vendor    -->
+        <action name="viewVendor" class="com.mt.actions.vendor.ViewVendor">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/vendor/viewVendor.jsp</result>
+        </action>
         <action name="showMyVendors" class="com.mt.actions.vendor.ShowMyVendor">
             <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/vendor/showMyVendors.jsp</result>
@@ -259,7 +263,7 @@
         <action name="register" class="com.mt.actions.Registration.Register">
             <interceptor-ref name="basic"/>
 <!--            <result name="success" type="redirect">viewRegistration?messeage=${message}&amp;companyId=${company.id}&amp;userId=${user.id} </result>-->
-            <result name="input" type="redirect">payPalpay</result>
+            <result name="input" type="chain">showRegistration</result>
             <result name="success" type="redirect">registrationComplete</result>
         </action>
 
@@ -476,6 +480,10 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>        
+        <action name="updateMyVendors" class="com.mt.actions.ajaxActions.UpdateMyVendors">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>     
         <!-- //     Ajax Actions    -->
 
         <action name="getImage" class="com.mt.actions.GetImage">
