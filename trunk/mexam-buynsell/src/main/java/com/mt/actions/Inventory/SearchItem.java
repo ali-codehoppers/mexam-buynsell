@@ -33,13 +33,16 @@ public class SearchItem extends ActionSupport {
     @Override
     public String execute() throws Exception {
         inventorysExtended = new ArrayList<InventoryExtended>();
-        inventorys = inventoryService.findBySearchString(searchString);
-        for (Inventory inventory : inventorys) {
-            InventoryExtended inventoryExtended = new InventoryExtended(inventory);
-            inventorysExtended.add(inventoryExtended);
-        }
+        if (searchString != null && searchString.length() > 0) {
+            inventorys = inventoryService.getFullTextSearch(searchString);
+            //inventorys = inventoryService.findBySearchString(searchString);
+            for (Inventory inventory : inventorys) {
+                InventoryExtended inventoryExtended = new InventoryExtended(inventory);
+                inventorysExtended.add(inventoryExtended);
+            }
 
-        searchResultJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(inventorysExtended);
+            searchResultJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(inventorysExtended);
+        }
         return SUCCESS;
     }
 
@@ -60,7 +63,7 @@ public class SearchItem extends ActionSupport {
         @Expose
         private String bsin;
         @Expose
-        private int imageId=0;
+        private int imageId = 0;
 
         public InventoryExtended(Inventory inventory) {
             this.setId(inventory.getId());
@@ -78,8 +81,9 @@ public class SearchItem extends ActionSupport {
             if (this.getPartId() != null && this.getPartId() > 0) {
                 Part part = inventory.getPart();
                 bsin = part.getBsin();
-                if(part.getImages().size()>0)
+                if (part.getImages().size() > 0) {
                     this.imageId = part.getImages().get(0).getId();
+                }
             }
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             if (this.getUpdateDate() != null && this.getUpdateDate().toString().length() > 0) {
@@ -91,4 +95,9 @@ public class SearchItem extends ActionSupport {
 
         }
     }
+
+    public String getSearchString() {
+        return searchString;
+    }
+    
 }

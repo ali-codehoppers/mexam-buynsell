@@ -9,7 +9,7 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
     <bean id="dataSource"
-	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="url" value="jdbc:mysql://localhost:3306/mexam_buynsell" />
         <property name="username" value="root" />
         <property name="password" value="admin" />
@@ -73,6 +73,14 @@
     <tx:annotation-driven transaction-manager="transactionManager" />
 
     <bean id="finderAdvisor" class="com.mt.dao.FinderAdvisor" />
+
+    <bean id="verifyAuthentication" class="com.mt.interceptor.Autherntication" abstract="true">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="baseAuthenticationInterceptor" class="com.mt.interceptor.BaseAuthenticationInterceptor" abstract="true">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
     <bean id="abstractDaoGeneric" class="com.mt.dao.DaoGeneric" abstract="true">
         <property name="sessionFactory" ref="sessionFactory"/>
@@ -348,7 +356,7 @@
         <constructor-arg ref="rfqItemDao" />
     </bean> 
     
-        <bean id="transactionService" class="com.mt.services.TransactionService">
+    <bean id="transactionService" class="com.mt.services.TransactionService">
         <constructor-arg ref="transactionDao" />
     </bean>
 

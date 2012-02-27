@@ -8,24 +8,17 @@ import com.mt.services.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
 import java.util.Map;
-import org.apache.struts2.interceptor.CookiesAware;
-import org.apache.struts2.interceptor.SessionAware;
 
-public class Home extends ActionSupport implements CookiesAware, SessionAware {
+public class Home extends ActionSupport{
 
     private String treeJsonString;
     private CategoryService categoryService;
-    private Map cookiesMap;
     private Map session;
     private List<User> userList;
     private UserService userService;
 
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
-    }
-
-    public void setCookiesMap(Map cookiesMap) {
-        this.cookiesMap = cookiesMap;
     }
 
     public void setSession(Map session) {
@@ -42,11 +35,6 @@ public class Home extends ActionSupport implements CookiesAware, SessionAware {
 
     @Override
     public String execute() throws Exception {
-        if (cookiesMap.containsKey("userCookie")) {
-            String username = cookiesMap.get("userCookie").toString();
-            userList = userService.findByUsername(username);
-            session.put("user", userList.get(0));
-        }
         treeJsonString = getCategoryTreeData();
         return SUCCESS;
     }
@@ -106,9 +94,5 @@ public class Home extends ActionSupport implements CookiesAware, SessionAware {
 
     public String getTreeJsonString() {
         return treeJsonString;
-    }
-
-    public Map getCookiesMap() {
-        return cookiesMap;
     }
 }

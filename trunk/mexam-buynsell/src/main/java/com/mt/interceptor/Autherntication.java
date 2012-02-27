@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.mt.interceptor;
 
 import com.mt.hibernate.entities.User;
@@ -15,30 +14,27 @@ import org.apache.struts2.ServletActionContext;
  *
  * @author Administrator
  */
-public class Autherntication extends AbstractInterceptor 
-{
+public class Autherntication extends AbstractInterceptor {
+
     public final static String MUST_AUTHENTICATE = "mustAuthenticate";
-            
-    public String intercept(ActionInvocation invocation) throws Exception
-    {
-        User user;
+
+    public String intercept(ActionInvocation invocation) throws Exception {
+        User user = null;
         HttpServletRequest request = ServletActionContext.getRequest();
-        try
-        {
+
+        try {
             user = (User) request.getSession().getAttribute("user");
-        }
-        catch(IllegalStateException ise)
-        {
+
+        } catch (IllegalStateException ise) {
             user = null;
             System.out.println("Session already expired : " + ise.toString());
         }
-        if(user == null)
-        {
+
+
+        if (user == null) {
             System.out.println("redirecting to login");
             return MUST_AUTHENTICATE;
-        }
-        else
-        {
+        } else {
             invocation.getStack().setValue("user", user);
             return invocation.invoke();
         }

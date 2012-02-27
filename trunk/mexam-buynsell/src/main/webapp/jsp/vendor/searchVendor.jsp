@@ -89,13 +89,20 @@
         <script type="text/javascript">
             var selectedVendorId=0;
             $(document).ready(function () {
-                                    
+                $("#messageInfo").hide();       
                 var mydata = eval(${searchResultJson}); 
-                for(var i=0;i<mydata.length;i++)
-                { 
-                    $("#vendorList").append(getItemHtml(mydata[i]));
+                var searchString = "${searchString}";
+                if(mydata!=null)
+                {
+                    for(var i=0;i<mydata.length;i++)
+                    { 
+                        $("#vendorList").append(getItemHtml(mydata[i]));
+                    }
                 }
-                $("#messageInfo").hide();
+                if((searchString!=null && searchString.length>0) && (mydata==null || mydata.length==0))
+                {
+                    $("#vendorList").append("<span style='font-size:16px'>No record found for <b>"+searchString+"</b>.</span>");
+                }
                 
                 $( "#dialog" ).dialog({
                     autoResize:true,
@@ -192,9 +199,9 @@
                 //                    }
                 //                });
 
-//                var buttonHtml="<a href='javascript:showAddDialog("+selectedVendorId+")' class='btn' style='text-align: center; min-width:180px;'>Add to My Vendors</a>";
-//                $("#buttonCont_"+selectedVendorId).html(buttonHtml);
-//                $( "#dialog" ).dialog( "close" );
+                //                var buttonHtml="<a href='javascript:showAddDialog("+selectedVendorId+")' class='btn' style='text-align: center; min-width:180px;'>Add to My Vendors</a>";
+                //                $("#buttonCont_"+selectedVendorId).html(buttonHtml);
+                //                $( "#dialog" ).dialog( "close" );
                 //alert("buttonCont_"+selectedVendorId);
             }
             
@@ -335,7 +342,7 @@
                     <form id ="searchVendor" method="GET" action="searchVendor">
                         <div>
                             <div style="float: left; width: 70%; margin: 5px; text-align: right">                        
-                                <input name="searchString" class="field_big" style="font-size: 20px; height: 25px; padding: 5px; min-width: 80%;  border-radius:8px;"/>
+                                <input name="searchString" class="field_big" style="font-size: 20px; height: 25px; padding: 5px; min-width: 80%;  border-radius:8px;" value="${searchString}"/>
                             </div>
                             <div style="float: left; width: 250px; margin: auto; height: 100px; padding: 5px">
                                 <a href="javascript:submitForm()" class="btn" style="width: 120px; text-align: center; padding: 2px; padding-top: 8px;">Search</a>
