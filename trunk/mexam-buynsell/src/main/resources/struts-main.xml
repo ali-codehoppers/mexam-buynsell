@@ -8,12 +8,12 @@
     <package name="" namespace="" extends="common">
 
         <action name="hello" class="com.mt.actions.HelloWorld">
-            <interceptor-ref name="basicAuthenticated"/>
+            <interceptor-ref name="basic"/>
             <result name="success">jsp/home.jsp</result>
         </action>
         
         <action name="home" class="com.mt.actions.Home">
-            <interceptor-ref name="basicAuthenticated"/>
+            <interceptor-ref name="basic"/>
             <result name="success">jsp/home.jsp</result>
         </action>
 

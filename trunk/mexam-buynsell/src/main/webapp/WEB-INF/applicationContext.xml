@@ -74,14 +74,6 @@
 
     <bean id="finderAdvisor" class="com.mt.dao.FinderAdvisor" />
 
-    <bean id="verifyAuthentication" class="com.mt.interceptor.Autherntication" abstract="true">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <bean id="baseAuthenticationInterceptor" class="com.mt.interceptor.BaseAuthenticationInterceptor" abstract="true">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
     <bean id="abstractDaoGeneric" class="com.mt.dao.DaoGeneric" abstract="true">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
