@@ -13,20 +13,22 @@
             <interceptor-stack name="basic">                
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="hibernateManagedSession"/>
-            </interceptor-stack>
-            <interceptor-stack name="basicAuthenticated">                
-                <interceptor-ref name="basic"/>
                 <interceptor-ref name="baseAuthenticationInterceptor"/>
             </interceptor-stack>
+            
+<!--            <interceptor-stack name="basicAuthenticated">                
+                <interceptor-ref name="basic"/>
+
+            </interceptor-stack>-->
 
 
             <interceptor-stack name="authenticated">
-                <interceptor-ref name="basicAuthenticated"/>
+                <interceptor-ref name="basic"/>
                 <interceptor-ref name="verifyAuthentication"/>
             </interceptor-stack>
             
             <interceptor-stack name="membershipAuthenticated">
-                <interceptor-ref name="basicAuthenticated"/>
+                <interceptor-ref name="basic"/>
                 <interceptor-ref name="verifyAuthentication"/>
                 <interceptor-ref name="membershipAuthentication"/>
             </interceptor-stack>
