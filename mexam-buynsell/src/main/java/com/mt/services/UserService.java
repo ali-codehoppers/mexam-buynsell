@@ -3,11 +3,17 @@ package com.mt.services;
 import com.mt.hibernate.entities.User;
 import com.mt.idao.IUserDao;
 import java.util.List;
+import org.hibernate.SessionFactory;
 
 public class UserService {
 
     private IUserDao userDao;
 
+    public void setSessionFactory(SessionFactory sessionFactory)
+    {
+        userDao.setSessionFactory(sessionFactory);
+    }
+    
     public UserService(IUserDao userDao) {
         this.userDao = userDao;
     }

@@ -5,24 +5,30 @@
 <struts>
     <package name="common" extends="struts-default">
         <interceptors>
+            <interceptor name="baseAuthenticationInterceptor" class="com.mt.interceptor.BaseAuthenticationInterceptor"/>
             <interceptor name="verifyAuthentication" class="com.mt.interceptor.Autherntication"/>
             <interceptor name="membershipAuthentication" class="com.mt.interceptor.MembershipAuthentication"/>
             <interceptor name="hibernateManagedSession" class="com.mt.interceptor.HibernateManagedSessionContext"/>
 
             <interceptor-stack name="basic">                
                 <interceptor-ref name="defaultStack"/>
-                <interceptor-ref name="hibernateManagedSession"/>                
+                <interceptor-ref name="hibernateManagedSession"/>
+            </interceptor-stack>
+            <interceptor-stack name="basicAuthenticated">                
+                <interceptor-ref name="basic"/>
+                <interceptor-ref name="baseAuthenticationInterceptor"/>
             </interceptor-stack>
 
+
             <interceptor-stack name="authenticated">
+                <interceptor-ref name="basicAuthenticated"/>
                 <interceptor-ref name="verifyAuthentication"/>
-                <interceptor-ref name="basic"/>
             </interceptor-stack>
             
             <interceptor-stack name="membershipAuthenticated">
+                <interceptor-ref name="basicAuthenticated"/>
                 <interceptor-ref name="verifyAuthentication"/>
                 <interceptor-ref name="membershipAuthentication"/>
-                <interceptor-ref name="basic"/>
             </interceptor-stack>
             
             

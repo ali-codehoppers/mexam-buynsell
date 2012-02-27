@@ -26,6 +26,7 @@ public class Inventory extends BaseEntity {
     @Expose
     private int quantity = 0;
     @Expose
+    
     private String description;
     @Expose
     private Long partId;

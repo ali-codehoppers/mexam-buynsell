@@ -11,7 +11,6 @@ import com.mt.hibernate.entities.Company;
 import com.mt.hibernate.entities.Vendor;
 import com.mt.services.CompanyService;
 import com.mt.services.VendorService;
-import com.opensymphony.xwork2.ActionSupport;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,13 +57,11 @@ public class SearchVendor extends AuthenticatedAction {
         searchOpers.add("eq");
         searchStrings.add("" + getUser().getCompanyId());
 
-        companys = companyService.findBySearchString(searchString);
-
-        
-
+        companys = companyService.getFullTextSearch(searchString);
         if (companys.size() > 0) {
             List<Vendor> vendorsList = vendorService.getBy(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers), "", "'", 10, 1);
             //List<Vendor> vendorsList = myCompany.getVendors();
+            //List<Vendor> vendorsList = vendorService.getFullTextSearch(searchString);
             if (vendorsList != null) {
                 for (int i = 0; i < vendorsList.size(); i++) {
                     vendorMap.put(vendorsList.get(i).getVendorId(), vendorsList.get(i));
@@ -129,4 +126,9 @@ public class SearchVendor extends AuthenticatedAction {
     private String[] getStringArray(List<String> list) {
         return list.toArray(new String[list.size()]);
     }
+
+    public String getSearchString() {
+        return searchString;
+    }
+    
 }

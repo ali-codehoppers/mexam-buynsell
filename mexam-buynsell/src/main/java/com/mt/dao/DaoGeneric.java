@@ -8,6 +8,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.dialect.MySQLDialect;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -94,6 +95,32 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
         return true;
     }
 
+    public Session getActiveSession() {
+        return this.getSession();
+    }
+
+    public List<T> getFullTextSearchBy(String[] searchFields, String searchString, String sortField, String sortOrder, int rows, int page) {
+        String sortString = "";
+        String baseQuery = "select obj from " + type.getSimpleName() + " obj";
+        String comaparisonString = getFullTextSearchQuery(searchFields, searchString);
+
+        if (sortField != null && sortField.length() > 0) {
+            if (sortOrder != null && sortOrder.length() > 0) {
+                sortString = " order by " + sortField + " " + sortOrder;
+            } else {
+                sortString = " order by " + sortField;
+            }
+        }
+        String qry = baseQuery + comaparisonString + sortString;
+        Query query;
+        if (rows == 0) {
+            query = getSession().createQuery(qry);
+        } else {
+            query = getSession().createQuery(qry).setFirstResult((page - 1) * rows).setMaxResults(rows);
+        }
+        return query.list();
+    }
+
     public List<T> getBy(String[] searchFields, String[] searchStrings, String[] searchOperators, String sortField, String sortOrder, int rows, int page) {
         //String qry = "select obj from " + type.getSimpleName() +" obj";
 
@@ -117,6 +144,8 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
 
         //String qry=baseQuery+comaparisonString+sortString+pageString;
         String qry = baseQuery + comaparisonString + sortString;
+        MySQLDialect mySQLDialect;
+
         Query query;
         if (rows == 0) {
             query = getSession().createQuery(qry);
@@ -165,5 +194,24 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
             }
         }
         return comaparisonString;
+    }
+
+    private String getFullTextSearchQuery(String[] searchFields, String searchString) {
+        String criteriaString = "";
+        if (searchFields != null && searchFields.length > 0) {
+            for (int i = 0; i < searchFields.length; i++) {
+                if (searchFields[i].length() > 0) {
+                    if (criteriaString.length() > 0) {
+                        criteriaString += ",";
+                    }
+                    criteriaString += searchFields[i];
+                }
+            }
+        }
+        if (criteriaString.length() > 0) {
+            criteriaString = " where Match(" + criteriaString + ") AGAINST ('" + searchString + "' IN BOOLEAN MODE)";
+        }
+
+        return criteriaString;
     }
 }

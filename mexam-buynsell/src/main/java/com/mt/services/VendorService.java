@@ -1,8 +1,10 @@
 package com.mt.services;
 
+import com.mt.hibernate.entities.Inventory;
 import com.mt.hibernate.entities.Vendor;
 import com.mt.idao.IVendorDao;
 import java.util.List;
+import org.hibernate.Session;
 
 public class VendorService {
 
@@ -30,6 +32,17 @@ public class VendorService {
 
     public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {
         return vendorDao.getRecordsCount(searchField, searchString, searchOperator);
+    }
+    
+        public List<Vendor> getFullTextSearch(String searchString) {
+        Session session = vendorDao.getSession();
+        //List result =  session.createSQLQuery("Select i.*,p.*,c.* from Inventory i Left Outer Join Part p on i.parId=p.id Join Company on c.id=i.companyId where Match(partNo, manufacturer) against ('"+searchString+"')").addEntity("inventory", Inventory.class).list();;
+        String query =  "Select *,MATCH(name) AGAINST ('"+searchString+"') as score from companies i where Match(name) AGAINST ('"+searchString+"') order by score desc";
+        List result =  session.createSQLQuery(query).addEntity("vendor", Vendor.class).list();
+        return result;
+//        String []searchField = {"partNo","manufacturer"};
+//        return null;
+//        return inventoryDao.getFullTextSearchBy(searchField, searchString, sortField, sortOrder, rows, page);
     }
 
     public void update(Vendor transientObject) {
