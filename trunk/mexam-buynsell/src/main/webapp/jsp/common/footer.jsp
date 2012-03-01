@@ -1,5 +1,6 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="windows-1252" %>
+<div style="clear: both"></div>
 <div id="footer" style="width: 100%; margin: auto;">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
