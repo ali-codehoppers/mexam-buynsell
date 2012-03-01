@@ -30,7 +30,7 @@ ul.dropdown li{
     zoom: 1;
     height: 50px;
     vertical-align: 50px;
-    padding:2px 0px;
+    padding:8px 0px;
 }
 ul.dropdown a:hover{
     /*color: #000; */

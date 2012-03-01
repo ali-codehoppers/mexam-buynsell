@@ -380,8 +380,7 @@
                             </div>
 
                         </div>
-                        <div style="clear: both">
-                        </div>
+                        <div style="clear: both"></div>
                         <div style="width: 100px; margin: auto">
                             <a href="javascript:submitForm()" class="btn" style="margin-top: 25px; min-width: 100px; text-align: center">Submit</a>
                             <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
@@ -391,7 +390,6 @@
 
             </div>
         </div>
-
         <jsp:include page="../common/footer.jsp" />
     </body>
 </html>
