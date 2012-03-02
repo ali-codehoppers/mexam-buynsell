@@ -17,7 +17,7 @@ public class PaymentInfo {
     private String zip;
     private String ccNum;
     private String cvv2;
-    private PaymentInfoType ccType;
+    private PaymentInfoType__ ccType;
     private String expYear;
     private String expMonth;
     private String emailAddress;
@@ -112,7 +112,7 @@ public class PaymentInfo {
         this.ccNum = ccNum;
     }
 
-    public void setCcType(PaymentInfoType ccType) {
+    public void setCcType(PaymentInfoType__ ccType) {
         this.ccType = ccType;
     }
 
@@ -128,7 +128,7 @@ public class PaymentInfo {
         this.expYear = expYear;
     }
 
-    public PaymentInfoType getCcType() {
+    public PaymentInfoType__ getCcType() {
         return ccType;
     }
 
