@@ -208,8 +208,7 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         PaypalIntegration paypalIntegration = new PaypalIntegration();
         NVPDecoder response = paypalIntegration.DoDirectPaymentCode("Authorization", paymentInfo, "" + amount);
 
-        if (response.get(
-                "ACK").compareTo("Failure") == 0) {
+        if (response.get("ACK").compareTo("Failure") == 0) {
             return "fail";
         } else {
             User user = getUser();

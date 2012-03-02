@@ -284,6 +284,19 @@
     </bean>
 
 
+    <bean id="userClientRatingDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.IUserClientRating</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.UserClientRating" />
+            </bean>
+        </property>
+    </bean>
+
+
+
     <bean id="categoryService" class="com.mt.services.CategoryService">
         <constructor-arg ref="categoryDao" />
     </bean>
@@ -351,6 +364,11 @@
     <bean id="transactionService" class="com.mt.services.TransactionService">
         <constructor-arg ref="transactionDao" />
     </bean>
+
+    <bean id="userClientRatingService" class="com.mt.services.UserClientRatingService">
+        <constructor-arg ref="userClientRatingDao" />
+    </bean>
+
 
 
 </beans>

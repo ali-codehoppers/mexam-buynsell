@@ -22,8 +22,6 @@ public class PaypalIntegration {
     public static String paypalEnvironment;
     public static String paypalAPIUsername;
     public static String paypalAPIPassword;
-    public static String paypalAPIPvtKeyPassword;
-    //public static String paypalAPICertFile;
     public static String paypalAPISignature;
     private NVPCallerServices caller = null;
     Properties prop = new Properties();
@@ -34,8 +32,6 @@ public class PaypalIntegration {
 
         paypalAPIUsername = prop.getProperty("paypalAPIUsername");
         paypalAPIPassword = prop.getProperty("paypalAPIPassword");
-        paypalAPIPvtKeyPassword = prop.getProperty("paypalAPIPvtKeyPassword");
-        //paypalAPICertFile = prop.getProperty("paypalAPICertFile");
         paypalAPISignature = prop.getProperty("paypalAPISignature");
         paypalEnvironment = prop.getProperty("paypalEnvironment");
 
@@ -51,9 +47,9 @@ public class PaypalIntegration {
             //APIProfile profile = ProfileFactory.createSSLAPIProfile();
             APIProfile profile = ProfileFactory.createSignatureAPIProfile();
 
-            profile.setAPIUsername("amier_1329386747_biz_api1.codehoppers.com");
-            profile.setAPIPassword("1329386786");
-            profile.setSignature("AAxCuw9WcIUYIRQOfiOnaQYbx9CRA26UF9COlebLY0jneUeQqSkJq24I");
+            profile.setAPIUsername(paypalAPIUsername);
+            profile.setAPIPassword(paypalAPIPassword);
+            profile.setSignature(paypalAPISignature);
             //profile.setPrivateKeyPassword(paypalAPIPvtKeyPassword);
             //profile.setCertificateFile(paypalAPICertFile);
             profile.setEnvironment(paypalEnvironment);

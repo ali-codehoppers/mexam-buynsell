@@ -31,13 +31,9 @@ public class InventoryService {
 
     public List<Inventory> getFullTextSearch(String searchString) {
         Session session = inventoryDao.getSession();
-        //List result =  session.createSQLQuery("Select i.*,p.*,c.* from Inventory i Left Outer Join Part p on i.parId=p.id Join Company on c.id=i.companyId where Match(partNo, manufacturer) against ('"+searchString+"')").addEntity("inventory", Inventory.class).list();;
         String query =  "Select *,MATCH(manufacturer) AGAINST ('"+searchString+"') as smanu, MATCH(partNo) AGAINST ('"+searchString+"') as spart from inventories i where Match(partNo, manufacturer) AGAINST ('"+searchString+"' IN BOOLEAN MODE) order by smanu*1.25+spart desc,partNo asc";
         List result =  session.createSQLQuery(query).addEntity("inventory", Inventory.class).list();
         return result;
-//        String []searchField = {"partNo","manufacturer"};
-//        return null;
-//        return inventoryDao.getFullTextSearchBy(searchField, searchString, sortField, sortOrder, rows, page);
     }
 
     public long getRecordsCount(String[] searchField, String[] searchString, String[] searchOperator) {

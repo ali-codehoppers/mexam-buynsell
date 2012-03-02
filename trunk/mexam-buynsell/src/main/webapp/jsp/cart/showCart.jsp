@@ -82,7 +82,7 @@
                     height: 100,
                     colNames:['ID','Part No','Manufacturer','Price','Quantity'],
                     colModel:[
-                        {name:'id',index:'id', width:55, align:"center"},                                                
+                        {name:'id',index:'id', width:55, align:"center", key:true},                                                
                         {name:'cell.partNo',index:'partNo', width:200, align:"center",sortable:true},
                         {name:'cell.manufacturer',index:'manufacturer', width:200, align:"center",sortable:true},                        
                         {name:'cell.price',index:'price', width:200, align:"center",sortable:true},                        
@@ -119,8 +119,10 @@
                 $( ".ui-jqgrid-titlebar-close").hide();
                 isCart=true;
                 var rowid=$("#cartVendorList").getDataIds()[0];
+                //var rowid=$('#cartVendorList').jqGrid('getDataIDs')[1];
+                //alert($('#cartVendorList').jqGrid('getDataIDs'));
                 jQuery("#cartVendorList").setSelection(rowid, true);
-            });
+             });
                 
             function sendRFQ(){
                 var partIds = jQuery("#cartList").jqGrid('getGridParam','selarrrow');
