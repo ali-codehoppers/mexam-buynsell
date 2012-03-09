@@ -46,7 +46,7 @@
                         height: 250,
                         colNames:['Part No','Manufacturer','BSIN','UPC/EAN', 'Condition', 'Quantity','Price','Description'],
                         colModel:[
-                            //                            {name:'id',index:'id', width:55,searchtype:"number", align:"center"},                                                
+                           // {name:'cell.id',index:'id', width:55,searchtype:"number", align:"center"},                                                
                             {name:'cell.partNo',index:'partNo',editable:true, width:100, align:"center"},                        
                             {name:'cell.manufacturer',editable:true,index:'manufacturer', width:150},
                             {name:'cell.bsin',index:'bsin', width:100, align:"center"},                                                

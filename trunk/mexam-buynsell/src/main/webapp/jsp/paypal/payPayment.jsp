@@ -11,6 +11,8 @@
         <link href="css/css_sheet.css" rel="stylesheet" type="text/css" />
 
         <script language="JavaScript">
+            
+            
             function generateCC(){
                 var cc_number = new Array(16);
                 var cc_len = 16;
@@ -63,11 +65,24 @@
             }	
 	
         </script>
-
+        <%
+            String error = "";
+            if(request.getParameterMap().containsKey("error")){ 
+                error = request.getParameter("error").toString();             
+            }
+        %>
 
         <script type="text/javascript">
-        
+            var error = "<%=error%>";           
             $(document).ready(function () {
+                if(error == "paymenterror"){
+                    jQuery("#errorMsg").html("Invalid Credit Card Number or Credit Card Verification Code.");
+                    jQuery('#messageContainer').show();
+                }
+                else if(error == "null"){
+                    jQuery("#errorMsg").html("Sorry! We are unable to make a connection, Please try again Later");
+                    jQuery('#messageContainer').show();
+                }
                 $('input:radio[name=membershipType]').click(function() {
                     var val = $('input:radio[name=membershipType]:checked').val();
                     //                    $("#amount").val(val+".00");
@@ -111,6 +126,16 @@
                 </div>
 
                 <div id="formContainder">
+                    <div id="messageContainer" style="margin: auto;display:none">
+                        <table id="messageError" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="6%" align="right"><img src="images/error_left.jpg" alt="" width="38" height="34" /></td>
+                                <td id="errorMsg" width="88%" align="left" class="error_msg"></td>
+                                <td width="5%" align="right" class="error_msg"><a href="#"><img src="images/error_cross.jpg" alt="" width="18" height="18" border="0" onclick="jQuery('#messageContainer').hide()"/></a></td>
+                                <td width="1%" align="left"><img src="images/error_right.jpg" alt="" width="6" height="34" /></td>
+                            </tr>
+                        </table>
+                    </div>
                     <form id ="payAmount" method="POST" action="payAmount">
 
                         <div>
@@ -136,7 +161,7 @@
                             </div>                        
                             <div style="float: left; width: 48%; margin: 5px;">      
                                 <div style="float: left;">    
-                                    <input type="text" size="30" maxlength="32" name="firstName" value="John" class="field_big"/>
+                                    <input type="text" size="30" maxlength="32" name="firstName" value="" class="field_big"/>
                                 </div>
                                 <div style="float: left;" class="fieldError">  
                                     <ch:errortag name="paypal_firstName"></ch:errortag>
@@ -150,7 +175,7 @@
                             </div>                        
                             <div style="float: left; width: 48%; margin: 5px;"> 
                                 <div style="float: left;">    
-                                    <input type="text" size="30" maxlength="32" name="lastName" value="Doe" class="field_big"/>
+                                    <input type="text" size="30" maxlength="32" name="lastName" value="" class="field_big"/>
                                 </div>
                                 <div style="float: left;" class="fieldError">                        
                                     <ch:errortag name="paypal_lastName"></ch:errortag>

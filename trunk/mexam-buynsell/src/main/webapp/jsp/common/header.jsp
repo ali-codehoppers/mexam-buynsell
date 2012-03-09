@@ -1,5 +1,6 @@
 <%@page import="com.mt.hibernate.entities.User"%>
 <%@ page pageEncoding="windows-1252" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%
     String currentTab = request.getParameter("currentTab");
     if (currentTab == null) {
@@ -7,10 +8,23 @@
     }
 %>
 <link rel="stylesheet" href="css/dropdown/style.css" type="text/css" media="screen, projection"/>
-<!--[if lte IE 7]>
-<link rel="stylesheet" type="text/css" href="css/dropdown/ie.css" media="screen" />
-<![endif]-->
 
+<!--[if lt IE 8]>
+<style type="text/css">
+li a {display:inline-block;}
+li a {display:block;}
+</style>
+<![endif]-->
+<style>
+
+    .submitBtn{
+        background:url(images/signin.jpg) no-repeat;
+        cursor:pointer;
+        width: 75px;
+        height: 25px;
+        border: none;
+    }
+</style>
 <script type="text/javascript" src="js/dropdown/jquery.dropdownPlain.js"></script>
 <div id="header" class="header" style="width: 100%; margin: auto;">
     <div id="header_Top" style="margin: auto">
@@ -64,6 +78,18 @@
                         <a href="searchItem">BUY</a>
                     </li>
                     <% if ((session.getAttribute("user") != null) && !((User) session.getAttribute("user")).getCompany().isIsExpired()) {%> 
+                    <li>
+                        <a href="#">Profile</a>
+                        <ul class="sub_menu" style="z-index: 99">
+                            <li><a href="#">Performance</a></li>
+                            <li><a href="#">Reports</a>
+                            <li><a href="#">Manage Membership</a>
+                            <li><a href="#">Alerts</a>
+                            <li><a href="#">Reminders</a>
+                            <li><a href="#">Summary</a>
+                            </li>
+                        </ul>
+                    </li>
                     <%if (currentTab.equals("sell")) {%>
                     <li class="navigation_radius">
                         <%} else {%>
@@ -74,9 +100,7 @@
                             <li>
                                 <a href="#">Manage Inventory</a>
                                 <ul>
-                                    <li><a href="showAddInventory">Add New Inventory</a></li>
-                                    <li><a href="#">Update Inventory</a></li>
-                                    <li><a href="showInventory">View Inventory</a></li>
+                                    <li><a href="showAddInventory">Add New Inventory</a></li><li><a href="#">Update Inventory</a></li><li><a href="showInventory">View Inventory</a></li>
                                 </ul>
 
                             </li>
@@ -95,9 +119,9 @@
                         <a href="#">Vendors</a>
                         <ul class="sub_menu" style="z-index: 99">
                             <li><a href="searchVendor">Search Vendor</a></li>
-                            <li><a href="showMyVendors">View My Vendors</a></li>
                             <li><a href="showMyVendors">Manage My Vendors</a></li>                            
                             <li><a href="showVendors">View All Vendors</a></li>
+                            <li><a href="#">Leave Feedback</a></li>
                         </ul>
                     </li>
                     <%if (currentTab.equals("broadcast")) {%>
@@ -124,11 +148,22 @@
                             <li><a href="showRFQs">View RFQs</a></li>
                         </ul>
                     </li>
-                    <% }%>
+                    <li>
+                        <a href="#">Messages (0)</a>
+                        <ul class="sub_menu" style="z-index: 99">
+                            <li><a href="#">User (0)</a></li>
+                            <li><a href="#">Buy-n-Sell (0)</a></li>
+
+                    </li>
+                </ul>
+                </li>
+                <% }%>
+
                 </ul>
             </div>
             <div style="float: left">
-                <% if (session.getAttribute("user") == null) {%> 
+                <% if (session.getAttribute(
+                            "user") == null) {%> 
                 <form id="loginFormComp" name="loginFormComp" method="post" action="login" style="margin: auto;">
                     <table width="200" border="0" cellspacing="3" cellpadding="2">
                         <tr>
@@ -148,8 +183,9 @@
                             <td colspan="2">
                                 <input type="checkbox" name="rememberMe" id="rememberMe" value="true" />
                                 <label for="checkbox" style="font-size: 10pt">Remember Me</label>
-                                <a style="margin-right: 0px" href="javascript:onSignInClick()"><img src="images/signin.jpg" alt="" border="0" /></a>
-                                <div><a href="#"  style="font-size: 7pt">Forgot Password?</a> <a href="showRegistration"  style="font-size: 7pt">Sign Up</a></div>
+                                <input type="submit" class="submitBtn" value=""/>
+                                <!--<a style="margin-right: 0px" href="javascript:onSignInClick()"><img src="images/signin.jpg" alt="" border="0" /></a>-->
+                                <div><a href="#"  style="font-size: 7pt">Forgot Password?</a> <a href="showRegistrationInfo"  style="font-size: 7pt">Register Now</a></div>
                             </td>  
                         </tr>
                     </table>
@@ -222,9 +258,10 @@
             });
             
         }
-        <% if (session.getAttribute("user") != null) {%> 
-            if(!isCart)
-                getCartItemsCount();
+        <% if (session.getAttribute(
+                    "user") != null) {%> 
+                        if(!isCart)
+                            getCartItemsCount();
         <% }%>
     </script>
 </div>

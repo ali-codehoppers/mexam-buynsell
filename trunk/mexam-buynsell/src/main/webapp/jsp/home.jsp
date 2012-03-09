@@ -108,6 +108,15 @@
                 font-size: 12px;
                 line-height: 14px;
             }
+            
+            .membershipLink
+            {
+                color:#A75D49!important;
+            }
+            
+            .membershipLink:hover{
+                text-decoration: underline;
+            }
 
         </style>
 
@@ -194,7 +203,7 @@
                 //                $("#tree").jstree("set_theme","apple");
                 
             <% if ((session.getAttribute("user") != null) && ((User) session.getAttribute("user")).getCompany().isIsExpired()) {%> 
-                    var infoMessage = "<nobr>You account is expired. Please <a href='payPayment'> pay your membership fee </a> to access full functionality.<nobr>";
+                    var infoMessage = "<nobr>You account is expired. Please <a href='payPayment' class='membershipLink'> pay your membership fee </a> to access full functionality.<nobr>";
                     showInfo(infoMessage);
             <%}%>
                 

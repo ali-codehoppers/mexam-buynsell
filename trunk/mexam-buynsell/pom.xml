@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gid</groupId>
     <version>1.0</version>
-    <packaging>war</packaging>
+    <packaging>war</packaging> 
 
     <properties>
         <struts2.version>2.1.8.1</struts2.version>

@@ -30,6 +30,7 @@ public class Register extends ActionSupport implements SessionAware {
     private String firstName;
     private String lastName;
     private String email;
+    private String verifyEmail;
     private String userName;
     private String password;
     private String verifyPassword;
@@ -91,6 +92,10 @@ public class Register extends ActionSupport implements SessionAware {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setVerifyEmail(String verifyEmail) {
+        this.verifyEmail = verifyEmail;
     }
 
     public void setFirstName(String firstName) {
@@ -181,10 +186,13 @@ public class Register extends ActionSupport implements SessionAware {
         }
 
         if (verifyPassword == null || verifyPassword.length() == 0 || password.compareTo(verifyPassword) != 0) {
-            session.put("register_verifyPassword", "Both passwords should be same.");
+            session.put("register_verifyPassword", "Both passwords do not match.");
             valid = false;
         }
-
+        if (verifyEmail == null || verifyEmail.length() == 0 || email.compareTo(verifyEmail) != 0) {
+            session.put("register_verifyEmail", "Email Addresses are not a match.");
+            valid = false;
+        }
         if (!valid) {
             return INPUT;
         }
