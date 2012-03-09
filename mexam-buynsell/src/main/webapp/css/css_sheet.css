@@ -126,19 +126,19 @@ A:hover {
 
 .navigation_radius{
     margin:0 auto; height:50px; background-color:#fff;
-                   font: bold 13px Arial, Verdana, Helvetica, sans-serif;
-                   color: #333;
-                   position:relative; 
-                   -webkit-border-radius: 6px;
-                   -moz-border-radius: 6px;
-                   border-radius: 6px;
+    font: bold 13px Arial, Verdana, Helvetica, sans-serif;
+    color: #333;
+    position:relative; 
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
 
-                   border-top-left-radius: 5px 5px;
-                   border-bottom-right-radius: 5% 5%;
-                   border-top-right-radius: 5px;
-                   
+    border-top-left-radius: 5px 5px;
+    border-bottom-right-radius: 5% 5%;
+    border-top-right-radius: 5px;
 
-                   border-radius: 10px 10px 0px 0px}
+
+    border-radius: 10px 10px 0px 0px}
 A.topnav:active,  A.topnav:link, A.topnav:visited {
     font: normal 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
     color: #77a2e0;
@@ -244,7 +244,7 @@ A.h1_sub:hover {
     -webkit-border-radius:8px;
     border-radius:8px;
     text-align: center;
-    
+
 }
 
 
@@ -303,4 +303,12 @@ A.h1_sub:hover {
     -moz-border-radius:8px;
     -webkit-border-radius:8px;
     border-radius:8px;
+}
+
+.alignFieldLabel{
+    float: left;
+    width: 48%;
+    margin: 5px;
+    text-align: right;
+    vertical-align: middle;
 }

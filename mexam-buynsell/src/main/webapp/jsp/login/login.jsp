@@ -23,6 +23,33 @@
             .link a:hover{
                 text-decoration: underline;
             }
+            .submitBtn2{
+                float:left;
+                display:inline-block;
+                line-height:35px;
+                color:#B2B2B2;
+                font-weight:bold;
+                font-size:13px;
+                text-shadow:0 1px 0 #fff;
+                border:1px solid #DFDFDF;
+                margin:25px 5px 5px 0;
+                -moz-border-radius:8px;
+                -webkit-border-radius:8px;
+                border-radius:8px;
+                text-align: center;
+                width: 100px;
+                height: 37px;
+                padding:0px;
+
+            }
+
+
+            .submitBtn2:hover {
+                color:#333;
+                border-color:#cacaca;
+                background:#F8F8F8;
+                text-align: center;
+            }
 
         </style>
 
@@ -133,24 +160,24 @@
                                     <!--  <div style="clear: both"></div> -->
 
                                 </div>
-
+                                <div style="clear: both"></div> 
 
                             </div>
                             <div>
                                 <div class="link" style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">
                                     <a href="#"  style="font-size:10pt">Forgot Password?</a>
-                                    </div>
-                                <div class="link" style="float: left; width: 48%; margin: 5px;">
-                                <a href="showRegistration"  style="font-size:10pt">Sign Up</a>
                                 </div>
-                                
+                                <div class="link" style="float: left; width: 48%; margin: 5px;">
+                                    <a href="showRegistrationInfo"  style="font-size:10pt">Sign Up</a>
+                                </div>
+                                <div style="clear: both"></div> 
                             </div>
                         </div>
 
                         <div>
                             <div style="margin-left: 48%;  padding: 5px">
-                                <a href="javascript:submitForm()" class="btn" style="width: 100px; text-align: center; padding: 2px; padding-top: 8px; margin-top: 25px;">Login</a>
-                                <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
+                                <button type="submit" class="submitBtn2" style="">Login</button>
+                              
                             </div>
                             <div style="clear: both"></div>
                         </div>

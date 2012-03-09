@@ -34,7 +34,7 @@ public class Inventory extends BaseEntity {
     @Expose
     private long companyId;
     private Company company;
-
+    
     public void setCompany(Company company) {
         this.company = company;
     }
@@ -100,7 +100,7 @@ public class Inventory extends BaseEntity {
     public Part getPart() {
         return part;
     }
-
+    
     public String getDescription() {
         return description;
     }

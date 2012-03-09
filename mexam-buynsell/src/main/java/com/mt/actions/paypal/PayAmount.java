@@ -152,7 +152,7 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         }
 
 
-        if (cvv2Number == null || cvv2Number.length()<1) {
+        if (cvv2Number == null || cvv2Number.length() < 1) {
             session.put("paypal_cvv2Number", "Verification number is missing.");
             valid = false;
 
@@ -207,7 +207,9 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         }
         PaypalIntegration paypalIntegration = new PaypalIntegration();
         NVPDecoder response = paypalIntegration.DoDirectPaymentCode("Authorization", paymentInfo, "" + amount);
-
+        if (response == null || response.get("ACK") == null) {
+            return "null";
+        }
         if (response.get("ACK").compareTo("Failure") == 0) {
             return "fail";
         } else {

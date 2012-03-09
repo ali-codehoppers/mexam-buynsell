@@ -1,0 +1,22 @@
+#header{
+    display: none;
+}
+/*#header_top{
+    display:none;
+}
+*/
+.footer{
+    display: none;
+}
+
+.btn{
+    display:none;
+}
+
+.alignFieldLabel{
+    float: left;
+    width: 48%;
+    margin: 5px;
+    text-align: right;
+    vertical-align: middle;
+}

@@ -10,7 +10,18 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/> 
         <link href="css/css_sheet.css" rel="stylesheet" type="text/css" />
         <style>
-
+            .alignField{
+                float: left;
+                width: 48%;
+                margin: 5px;
+            }
+            .alignFieldLabel{
+                float: left;
+                width: 40%;
+                margin: 5px;
+                text-align: right;
+                vertical-align: middle;
+            }
         </style>
 
         <script type="text/javascript">
@@ -19,7 +30,7 @@
             var infoMessage = "${info}";
             var errorMessage = "${error}";
             var successMessage = "${message}";
-            
+            var isValidUserName = false;
  
             $(document).ready(function () {
                 
@@ -68,7 +79,12 @@
             });
             function submitForm()
             {
-                $("#register").submit();
+                if(isValidUserName){
+                    $("#register").submit();
+                }
+                else{
+                    checkUserNameUniqueness(true);
+                }
             }
             
             function hideInfo()
@@ -104,7 +120,42 @@
                 }
                 return false;
             }
-            
+            function checkUserNameUniqueness(toSubmit){
+                var userName = jQuery("#userNameForm").val();
+                jQuery("#loader").attr("src","images/loader16.gif");
+                jQuery("#loader").show();
+                jQuery("#nameError").hide();
+                $.ajax({
+                    type:"post",
+                    url:"checkUserName",
+                    data:"userName="+userName,
+                    success:function(msg){
+                        var data = eval('('+msg+')');
+                        if(data.length>0){
+                            isValidUserName = false;
+                            jQuery("#loader").attr("src","images/error.png"); 
+                            jQuery("#nameError").show();
+                        }else{
+                            isValidUserName = true;
+                            jQuery("#loader").attr("src","images/ok.png");
+                            if(toSubmit){
+                                submitForm();
+                            }
+                        }
+                    }
+                });
+            }
+            function validateEmailFormat(){
+            var patt = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
+            var email = jQuery("#email").val();
+            if(patt.test(email))
+                {
+                    $("#validEmailMsg").hide();
+                }
+                else{
+                    $("#validEmailMsg").show();
+                }
+            }
             
         </script>
         <title>Buy & Sell</title>
@@ -139,10 +190,10 @@
                                                         </div>-->
 
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Name:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
                                         <input id="name" name="name" class="field_big"/>
                                     </div>
@@ -154,10 +205,10 @@
 
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Address:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
                                         <textarea id="address" name="address" class="field_big" style="min-height: 50px; min-width: 250px;"></textarea>
                                     </div>
@@ -168,10 +219,10 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     City:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
                                         <input id="city" name="city" class="field_big"/>
                                     </div>
@@ -183,10 +234,10 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Country:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
                                         <select id="country" name="country" class="field_big" style="min-width: 20%" onchange="javascript:populateStates(this.value)"></select>
                                     </div>
@@ -198,10 +249,10 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     State:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
                                         <select id="state" name="stateVal" class="field_big" style="min-width: 20%">                       
                                         </select>
@@ -214,10 +265,10 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Phone Number:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
                                         <input name="phoneNo" id="phoneNo" class="field_big"/>
                                     </div>
@@ -229,10 +280,10 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Fax Number:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
                                         <input name="faxNo" id="faxNo" class="field_big"/>
                                     </div>
@@ -244,10 +295,10 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Zip:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">       
+                                <div class="alignField">       
                                     <div style="float: left;">    
                                         <input name="zip" id="zip" class="field_big"/>
                                     </div>
@@ -260,10 +311,10 @@
                             </div>
 
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Web Address:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">    
+                                <div class="alignField">    
                                     <div style="float: left;">    
                                         <input name="webAddress" id="webAddress" class="field_big"/>
                                     </div>
@@ -275,10 +326,10 @@
                                 </div>
                             </div>    
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Company Category:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">   
+                                <div class="alignField">   
                                     <div style="float: left;">    
                                         <select id="companyCategory" name="companyCategoryId" class="field_big" style="min-width: 20%"></select>
                                     </div>
@@ -295,10 +346,10 @@
                             <h3 style="width: 100%; text-align: center">Company Administrator</h3>
 
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     First Name:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignFieldLabel">                        
                                     <div style="float: left;">    
                                         <input id="firstName" name="firstName" class="field_big"/>
                                     </div>
@@ -309,10 +360,10 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Last Name:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
                                         <input id="lastName" name="lastName" class="field_big"/>
                                     </div>
@@ -323,12 +374,12 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Email:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
-                                        <input id="email" name="email" class="field_big"/>
+                                        <input id="email" name="email" onkeyup="validateEmailFormat()" class="field_big"/> <span id="validEmailMsg" style="display: none;color:red" ><img src="images/loader16.gif" style="display:none" alt="checking"> Invalid E-mail</span>
                                     </div>
                                     <div style="float: left;" class="fieldError">                        
                                         <ch:errortag name="register_email"></ch:errortag>
@@ -337,12 +388,26 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                                    User Name::
+                                <div class="alignFieldLabel">                        
+                                    Re-Confirm Email:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">     
+                                <div class="alignField">                        
                                     <div style="float: left;">    
-                                        <input id="userName" name="userName" class="field_big"/>
+                                        <input id="verifyEmail" name="verifyEmail" class="field_big"/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="register_verifyEmail"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+                                </div>
+                            </div>
+                            <div>
+                                <div class="alignFieldLabel">                        
+                                    User Name:
+                                </div>                        
+                                <div class="alignField">     
+                                    <div style="float: left;">    
+                                        <input id="userNameForm" name="userName" class="field_big" onblur="checkUserNameUniqueness(false)" /> <img id="loader" src="images/loader16.gif" style="display:none" alt="checking"> <span id="nameError" style="display: none;color:red" >Username already exists</span>
                                     </div>
                                     <div style="float: left;" class="fieldError">                        
                                         <ch:errortag name="register_userName"></ch:errortag>
@@ -351,10 +416,10 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                <div class="alignFieldLabel">                        
                                     Password:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
                                         <input type="password" id="password" name="password" class="field_big"/>
                                     </div>
@@ -365,10 +430,10 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="float: left; width: 40%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                                    Verify Password:
+                                <div class="alignFieldLabel">                        
+                                    Re-Confirm Password:
                                 </div>                        
-                                <div style="float: left; width: 48%; margin: 5px;">                        
+                                <div class="alignField">                        
                                     <div style="float: left;">    
                                         <input type="password" id="verifyPassword" name="verifyPassword" class="field_big"/>
                                     </div>

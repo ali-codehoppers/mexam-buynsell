@@ -13,12 +13,22 @@
         <script type="text/javascript" src="js/grid/i18n/grid.locale-en.js"></script>                                
         <script type="text/javascript" src="js/grid/jquery.jqGrid.min.js"></script>                
 
-        <link href="css/css_sheet.css" rel="stylesheet" type="text/css" />
+        <link href="css/css_sheet.css" rel="stylesheet" type="text/css" media="screen" />
+        <link href="css/print.css" rel="stylesheet" type="text/css" media="print" />
         <style>
             span
             {
                 font-size: 16px;
                 margin: 10px;
+            }
+            .billLayout{
+                color:#626262;
+                border:1px solid #77A2E0;
+                padding:15px;
+            }
+            .billLayout legend{
+                color:#77A2E0;
+                font-weight: bold;
             }
 
         </style>
@@ -43,126 +53,30 @@
                     </div>
                 </div>
 
-                <div id="listContainer" style="margin: auto; width: 900px; margin-top: 25px; font-size: 16px;">
+                <div id="listContainer" style="margin:auto; width:500px; margin-top: 25px; font-size: 16px;">
 
-                    <div style="text-align: center; min-width: 900px; margin: 10px; font-size: 18px;"><b>Payment completed successfully.</b></div>
+                    <div style="text-align: center; min-width: auto; margin: 10px; font-size: 18px;"><b>Payment Completed</b> <b style="color:green">Successfully.</b></div>
                     <br/>
 
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            First Name:
-                        </div>                        
-                        <div style="float: left; width: 48%; margin: 5px; color: #555555">      
-                            ${firstName}
-                        </div>
-                        <div style="clear: both"></div> 
-                    </div>
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            Last Name:
-                        </div>                        
-                        <div style="float: left; width: 48%; margin: 5px; color: #555555">      
-                            ${lastName}
-                        </div>
-                        <div style="clear: both"></div> 
-                    </div>
+                    <fieldset class="billLayout">
+                        <legend>Customer Info</legend>
+                        <div><b>Name</b>: ${firstName} ${lastName}</div>
+                        <div><b>Card Type</b>: ${creditCardType}</div>
+                        <div><b>Card No</b>: ${secureCreditCardNumber}</div>
+                    </fieldset>
+                    <br/>
+                    <fieldset class="billLayout">
+                        <legend>Billing Address</legend>
+                        <div><b>Address</b>: ${address1}, ${address2}</div>
+                        <div><b>City</b>: ${city}</div>
+                        <div><b>State</b>: ${state}</div>
+                        <div><b>Zip Code</b>: ${zip}</div>
+                        <div><b>Country</b>: United States</div>
+                        <div><b>Amount</b>: ${amount} USD</div>
+                    </fieldset> 
 
-
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            Payment Types:
-                        </div>                        
-                        <div style="float: left; width: 48%; margin: 5px; color: #555555">      
-                            ${creditCardType}
-                        </div>
-                        <div style="clear: both"></div> 
-                    </div>
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            Card Number:
-                        </div>                        
-                        <div style="float: left; width: 48%; margin: 5px; color: #555555">      
-                            ${secureCreditCardNumber}
-                        </div>
-                        <div style="clear: both"></div> 
-                    </div>
-
-                    <br>
-                    <div style="clear: both"></div> 
-                    <div style="margin-left: 35%; margin-top:15px;">
-                        <span style="font-weight: bold; font-size: 14px;"> Billing Address:</span>
-                        <div style="clear: both"></div> 
-                    </div>
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            Address 1:
-                        </div>                        
-                        <div style="float: left; width: 48%; margin: 5px; color: #555555">      
-                            ${address1}
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            Address 2:
-                        </div>   
-                        <div style="float: left; width: 48%; margin: 5px; color: #555555">                     
-                            ${address2}
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            City:
-                        </div>   
-                        <div style="float: left; width: 48%; margin: 5px; color: #555555">                     
-                            ${city}
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            State:
-                        </div>    
-
-                        <div style="float: left; width: 48%; margin: 5px; color: #555555">                     
-                            ${state}
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            ZIP Code:
-                        </div>    
-                        <div style="float: left; width: 48%; margin: 5px; color: #555555">                     
-                            ${zip}
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            Country:
-                        </div>                        
-                        <div style="float: left; width: 48%; margin: 5px;"> 
-                            United States
-                            <div style="clear: both"></div> 
-                        </div>
-                    </div>
-
-                    <div>
-                        <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
-                            Amount:
-                        </div>                        
-                        <div style="float: left; width: 48%; margin: 5px; color: #555555">                     
-                            ${amount}
-                        </div>
-                        <div style="clear: both"></div>                     
-                    </div>
-
-                    <div style="width: 200px; margin: auto">
+                    <div style="width: 400px; margin: auto">
+                        <a href="javascript:window.print()" class="btn" style="min-width: 100px; color: #3a3a3a; margin-top: 25px;">Print Receipt</a>
                         <a href="home" class="btn" style="min-width: 100px; color: #3a3a3a; margin-top: 25px;">Continue</a>
                         <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
                     </div>

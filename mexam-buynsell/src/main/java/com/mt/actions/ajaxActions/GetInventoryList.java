@@ -137,10 +137,13 @@ public class GetInventoryList extends AuthenticatedAction {
         private String upc_ean;
 
         public InventoryExtended(Inventory inventory) {
+            
+            this.setId(inventory.getId());
             this.setQuantity(inventory.getQuantity());
             this.setCond(inventory.getCond());
             this.setCompany(inventory.getCompany());
             this.setCompanyId(inventory.getCompanyId());
+            this.setPrice(inventory.getPrice());
             this.setCreationDate(inventory.getCreationDate());
             this.setPartId(inventory.getPartId());
             this.setPartNo(inventory.getPartNo());

@@ -323,6 +323,10 @@
             <interceptor-ref name="basic"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
+        <action name="checkUserName" class="com.mt.actions.ajaxActions.CheckUserName">
+            <interceptor-ref name="basic"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
         <action name="updateInventoryItem" class="com.mt.actions.ajaxActions.UpdateInventoryItem">
             <interceptor-ref name="authenticated"/>
             <result name="success" type="redirect">showInventory</result>
@@ -505,6 +509,8 @@
         <action name="payAmount" class="com.mt.actions.paypal.PayAmount">
             <interceptor-ref name="authenticated"/>
 <!--            <result name="success" >jsp/paypal/paymentComplete.jsp</result>-->
+            <result name="fail" type="redirect">payPayment?error=paymenterror</result>
+            <result name="null" type="redirect">payPayment?error=null</result>
             <result name="success" type="redirect">paymentComplete</result>
             <result name="input" type="chain">payPayment</result>
         </action>
