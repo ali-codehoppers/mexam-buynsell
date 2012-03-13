@@ -137,11 +137,12 @@
             function addVendor()
             {
                 var id = selectedVendorId;
-                var notes = $("#notes").val();
+                var notes = jQuery("#notes").val();
+                var prior = jQuery("#priority").val(); 
                 $.ajax({
                     type:       "get",
                     url:        "addVendorAjax",
-                    data:       {vendorId:id, notes:notes},
+                    data:       {vendorId:id,priority:prior, notes:notes},
                     success:    function(msg) {
                         if(msg.length>0)
                         {
@@ -374,7 +375,22 @@
                         <h1 style="width: 100%; text-align: center" id="titleDialog">Add Vendor</h1>
                         <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
                     </div>
-
+                    <div style="margin-top: 20px; min-width: 500px;">
+                        <div style="float: left; width: 20%;">
+                            <h3 style="font: normal 18px 'Trebuchet MS'; color: #444;margin: auto">Priority : </h3>
+                        </div>
+                        <div style=" text-align: left">
+                            <select name="priority" id="priority" >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
                     <div style="margin-top: 20px; min-width: 500px;">
                         <div style="float: left; width: 20%;">
                             <h3 style="font: normal 18px 'Trebuchet MS'; color: #444;margin: auto">Notes : </h3>

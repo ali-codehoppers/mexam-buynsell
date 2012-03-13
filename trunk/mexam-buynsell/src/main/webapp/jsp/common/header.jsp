@@ -193,7 +193,7 @@ li a {display:block;}
                 <% } else {%>
                 <table width="270" border="0" cellspacing="0" cellpadding="1">
                     <tr style="font-size: 14px; color: #ffffff; text-align: center;">
-                        <td colspan="1" style="text-align: right;">Welcome,  <%= ((User) session.getAttribute("user")).getFirstName()%> &nbsp;&nbsp;|&nbsp; <a href="logout"> Sign Out</td>
+                        <td colspan="1" style="text-align: right;">Welcome,  <%= ((User) session.getAttribute("user")).getCompany().getName() %> &nbsp;&nbsp;|&nbsp; <a href="logout"> Sign Out</td>
                         <!--                        <td colspan="1" style="text-align: left; width: auto">&nbsp;&nbsp;|&nbsp; <a href="logout"> Sign Out</a></td>-->
                     </tr>
                 </table>

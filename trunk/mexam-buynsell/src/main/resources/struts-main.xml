@@ -54,6 +54,10 @@
 
                 
             <!--      Part    -->
+        <action name="findPart" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="membershipAuthenticated"/>
+            <result name="success">jsp/part/findPart.jsp</result>
+        </action>            
         <action name="showSearchPart" class="com.mt.actions.DoNothing">
             <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/part/showSearchPart.jsp</result>
@@ -289,9 +293,9 @@
             <result name="success" type="redirect">viewUser?messeage=${message}&amp;userId=${user.id} </result>
         </action>
 
-        <action name="viewUser" class="com.mt.actions.User.ViewUser">
+        <action name="dashboard" class="com.mt.actions.DoNothing">
             <interceptor-ref name="basic"/>
-            <result name="success">jsp/user/viewUser.jsp</result>
+            <result name="success">jsp/user/dashboard.jsp</result>
         </action>
 
         <!-- //     User    -->
