@@ -94,7 +94,7 @@
                         <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
                     </div>
                 </div>
-                <div id="vendorListContainer" style="margin: auto; width: 600px;">
+                <div id="vendorListContainer" style="margin:auto;width:885px">
                     <table id="vendorList"></table>
                     <div id="pager"></div>
                 </div>

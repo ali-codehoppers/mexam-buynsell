@@ -209,6 +209,9 @@
 
                         </table>
                     </div>
+                    <div style="float:left">
+                        <a href="javascript:addVendor()" class="btn" style="margin-top: 25px; margin-bottom: 15px;min-width: 150px;text-align: center;">Add as My Vendor</a>
+                    </div>
                 </div>
                 <div style="clear: both">
                 </div>

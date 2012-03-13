@@ -17,6 +17,7 @@ public class AddVendorAjax extends AuthenticatedAction {
     private Company company;
     private Vendor vendor;
     private int vendorId;
+    private int priority;
     private CompanyService companyService;
     private VendorService vendorService;
     private String notes;
@@ -36,6 +37,10 @@ public class AddVendorAjax extends AuthenticatedAction {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     @Override
@@ -58,6 +63,7 @@ public class AddVendorAjax extends AuthenticatedAction {
             vendor.setCompany(company);
             vendor.setVendor(vendorCompany);
             vendor.setVendorId(vendorId);
+            vendor.setPriority(priority);
             vendor.setNotes(notes);
             vendor.setCreatedBy(getUser().getId());
             vendor.setUpdatedBy(getUser().getId());
