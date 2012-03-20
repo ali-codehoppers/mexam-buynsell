@@ -27,6 +27,12 @@ public class Transaction extends BaseEntity {
     private double amount;
     @Expose
     private int subscriptionDuration;
+    @Expose
+    private int billingAddressId;
+    @Expose
+    private int shippingAddressId;
+    @Expose
+    private int shippingIsSame;
 
     public void setAmount(double amount) {
         this.amount = amount;
@@ -50,6 +56,18 @@ public class Transaction extends BaseEntity {
 
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
+    }
+
+    public void setBillingAddressId(int billingAddressId) {
+        this.billingAddressId = billingAddressId;
+    }
+
+    public void setShippingAddressId(int shippingAddressId) {
+        this.shippingAddressId = shippingAddressId;
+    }
+
+    public void setShippingIsSame(int shippingIsSame) {
+        this.shippingIsSame = shippingIsSame;
     }
 
     public double getAmount() {
@@ -78,4 +96,17 @@ public class Transaction extends BaseEntity {
     public String getTransactionId() {
         return transactionId;
     }
+
+    public int getBillingAddressId() {
+        return billingAddressId;
+    }
+
+    public int getShippingAddressId() {
+        return shippingAddressId;
+    }
+
+    public int getShippingIsSame() {
+        return shippingIsSame;
+    }
+    
 }
