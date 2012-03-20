@@ -214,7 +214,10 @@
             <interceptor-ref name="membershipAuthenticated"/>
             <result name="success" type="redirect">home</result>
         </action>
-
+        <action name="showAddress" class="com.mt.actions.addressCheck">
+            <interceptor-ref name="membershipAuthenticated"/>
+            <result name="success">jsp/cart/address.jsp</result>
+        </action>
 
             <!-- //     Cart    -->
        
@@ -293,9 +296,9 @@
             <result name="success" type="redirect">viewUser?messeage=${message}&amp;userId=${user.id} </result>
         </action>
 
-        <action name="dashboard" class="com.mt.actions.DoNothing">
-            <interceptor-ref name="basic"/>
-            <result name="success">jsp/user/dashboard.jsp</result>
+        <action name="userDashboard" class="com.mt.actions.User.UserDashboard">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/user/userDashboard.jsp</result>
         </action>
 
         <!-- //     User    -->
@@ -322,7 +325,10 @@
 
 
         <!--      Ajax Actions    -->
-        
+        <action name="doNothing" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="basic"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>        
         <action name="getCategories" class="com.mt.actions.ajaxActions.GetCategories">
             <interceptor-ref name="basic"/>
             <result >jsp/common/ajax.jsp</result>
@@ -375,14 +381,20 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
-
-        
+        <action name="getInventoryListWeek" class="com.mt.actions.ajaxActions.GetInventoryListWeek">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>        
         <action name="getVendorsList" class="com.mt.actions.ajaxActions.GetVendors">
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
         
         <action name="getMyVendorsList" class="com.mt.actions.ajaxActions.GetMyVendors">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        <action name="getMyVendorsListWeek" class="com.mt.actions.ajaxActions.GetMyVendorsWeek">
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
@@ -416,7 +428,22 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>
-
+        <action name="getRFQsReceivedLatest" class="com.mt.actions.ajaxActions.GetRFQsReceivedLatest">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        <action name="getRFQsReceivedWeek" class="com.mt.actions.ajaxActions.GetRFQsReceivedWeek">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        <action name="getRFQsSentLatest" class="com.mt.actions.ajaxActions.GetRFQsSentLatest">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
+        <action name="getRFQsSentWeek" class="com.mt.actions.ajaxActions.GetRFQsSentWeek">
+            <interceptor-ref name="authenticated"/>
+            <result >jsp/common/ajax.jsp</result>
+        </action>
         <action name="getRFQItemsList" class="com.mt.actions.ajaxActions.GetRFQItemsList">
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
@@ -495,7 +522,7 @@
             <interceptor-ref name="basic"/>
         </action>
         
-        <action name="payPayment" class="com.mt.actions.DoNothing">
+        <action name="payPayment" class="com.mt.actions.paypal.PayPayment">
             <interceptor-ref name="authenticated"/>
             <result >jsp/paypal/payPayment.jsp</result>
         </action>

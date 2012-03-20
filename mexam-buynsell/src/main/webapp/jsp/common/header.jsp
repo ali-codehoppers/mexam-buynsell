@@ -79,7 +79,7 @@ li a {display:block;}
                     </li>
                     <% if ((session.getAttribute("user") != null) && !((User) session.getAttribute("user")).getCompany().isIsExpired()) {%> 
                     <li>
-                        <a href="#">Profile</a>
+                        <a href="#">PROFILE</a>
                         <ul class="sub_menu" style="z-index: 99">
                             <li><a href="#">Performance</a></li>
                             <li><a href="#">Reports</a>
@@ -116,7 +116,7 @@ li a {display:block;}
                         <%} else {%>
                     <li>
                         <% }%>
-                        <a href="#">Vendors</a>
+                        <a href="#">VENDORS</a>
                         <ul class="sub_menu" style="z-index: 99">
                             <li><a href="searchVendor">Search Vendor</a></li>
                             <li><a href="showMyVendors">Manage My Vendors</a></li>                            
@@ -149,7 +149,7 @@ li a {display:block;}
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Messages (0)</a>
+                        <a href="#">MESSAGES (0)</a>
                         <ul class="sub_menu" style="z-index: 99">
                             <li><a href="#">User (0)</a></li>
                             <li><a href="#">Buy-n-Sell (0)</a></li>
@@ -193,8 +193,7 @@ li a {display:block;}
                 <% } else {%>
                 <table width="270" border="0" cellspacing="0" cellpadding="1">
                     <tr style="font-size: 14px; color: #ffffff; text-align: center;">
-                        <td colspan="1" style="text-align: right;">Welcome,  <%= ((User) session.getAttribute("user")).getCompany().getName() %> &nbsp;&nbsp;|&nbsp; <a href="logout"> Sign Out</td>
-                        <!--                        <td colspan="1" style="text-align: left; width: auto">&nbsp;&nbsp;|&nbsp; <a href="logout"> Sign Out</a></td>-->
+                        <td colspan="1" style="text-align: right;">Welcome,  <%= ((User) session.getAttribute("user")).getCompany().getName() %>&nbsp;&nbsp; </td><td>| <a href="#">Help</a> |&nbsp;<a href="logout"> Sign Out</a></td>
                     </tr>
                 </table>
                 <table width="270" border="0" cellspacing="0" cellpadding="1" style="margin-top: 5px; display: none;" id="cartItemsCont">

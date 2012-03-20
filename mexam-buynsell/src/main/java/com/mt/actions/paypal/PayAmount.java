@@ -19,11 +19,16 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
 
     private String firstName;
     private String lastName;
-    private String address1;
-    private String address2;
-    private String zip;
-    private String city;
-    private String state;
+    private String billingAddress1;
+    private String billingAddress2;
+    private String billingZip;
+    private String billingCity;
+    private String billingState;
+    private String shippingAddress1;
+    private String shippingAddress2;
+    private String shippingZip;
+    private String shippingCity;
+    private String shippingState;
     private double amount;
     private String creditCardNumber;
     private String cvv2Number;
@@ -37,20 +42,8 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
     private TransactionService transactionService;
     private Map session;
 
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
-
     public void setAmount(double amount) {
         this.amount = amount;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public void setCreditCardNumber(String creditCardNumber) {
@@ -81,14 +74,6 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         this.lastName = lastName;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
     public void setCompanyService(CompanyService companyService) {
         this.companyService = companyService;
     }
@@ -106,6 +91,46 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         this.session = map;
     }
 
+    public void setBillingAddress1(String billingAddress1) {
+        this.billingAddress1 = billingAddress1;
+    }
+
+    public void setBillingAddress2(String billingAddress2) {
+        this.billingAddress2 = billingAddress2;
+    }
+
+    public void setBillingCity(String billingCity) {
+        this.billingCity = billingCity;
+    }
+
+    public void setBillingState(String billingState) {
+        this.billingState = billingState;
+    }
+
+    public void setBillingZip(String billingZip) {
+        this.billingZip = billingZip;
+    }
+
+    public void setShippingAddress1(String shippingAddress1) {
+        this.shippingAddress1 = shippingAddress1;
+    }
+
+    public void setShippingAddress2(String shippingAddress2) {
+        this.shippingAddress2 = shippingAddress2;
+    }
+
+    public void setShippingCity(String shippingCity) {
+        this.shippingCity = shippingCity;
+    }
+
+    public void setShippingState(String shippingState) {
+        this.shippingState = shippingState;
+    }
+
+    public void setShippingZip(String shippingZip) {
+        this.shippingZip = shippingZip;
+    }
+
     @Override
     public String execute() throws Exception {
 
@@ -120,25 +145,25 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
             valid = false;
         }
 
-        if (address1 == null || address1.length() < 1) {
+        if (billingAddress1 == null || billingAddress1.length() < 1) {
             session.put("paypal_address1", "Address is missing.");
             valid = false;
         }
 
-        if (city == null || city.length() < 1) {
+        if (billingCity == null || billingCity.length() < 1) {
             session.put("paypal_city", "City is missing.");
             valid = false;
         }
 
-        if (zip == null || zip.length() < 1) {
+        if (billingZip == null || billingZip.length() < 1) {
             session.put("paypal_zip", "Zip code is missing.");
             valid = false;
-        } else if (zip.length() < 5) {
+        } else if (billingZip.length() < 5) {
             session.put("paypal_zip", "Zip code is invalid.");
             valid = false;
         }
 
-        if (state == null || state.length() < 1) {
+        if (billingState == null || billingState.length() < 1) {
             session.put("paypal_state", "State is missing.");
             valid = false;
         }
@@ -179,15 +204,15 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
 
         paymentInfo.setExpYear(expdate_year);
 
-        paymentInfo.setZip(zip);
+        paymentInfo.setZip(billingZip);
 
-        paymentInfo.setBillingList1(address1);
+        paymentInfo.setBillingList1(billingAddress1);
 
-        paymentInfo.setBillingList2(address2);
+        paymentInfo.setBillingList2(billingAddress2);
 
-        paymentInfo.setCity(city);
+        paymentInfo.setCity(billingCity);
 
-        paymentInfo.setState(state);
+        paymentInfo.setState(billingState);
 
         paymentInfo.setCountryCode(
                 "US");
@@ -247,11 +272,11 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
 
             session.put("firstName", firstName);
             session.put("lastName", lastName);
-            session.put("address1", address1);
-            session.put("address2", address2);
-            session.put("zip", zip);
-            session.put("city", city);
-            session.put("state", state);
+            session.put("address1", billingAddress1);
+            session.put("address2", billingAddress2);
+            session.put("zip", billingZip);
+            session.put("city", billingCity);
+            session.put("state", billingState);
             session.put("amount", amount);
             session.put("creditCardNumber", creditCardNumber);
             session.put("creditCardType", creditCardType);
@@ -261,21 +286,10 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         }
     }
 
-    public String getAddress1() {
-        return address1;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
     public double getAmount() {
         return amount;
     }
 
-    public String getCity() {
-        return city;
-    }
 
     public String getCreditCardNumber() {
         return creditCardNumber;
@@ -307,11 +321,45 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         return lastName;
     }
 
-    public String getState() {
-        return state;
+    public String getBillingAddress1() {
+        return billingAddress1;
     }
 
-    public String getZip() {
-        return zip;
+    public String getBillingAddress2() {
+        return billingAddress2;
     }
+
+    public String getBillingCity() {
+        return billingCity;
+    }
+
+    public String getBillingState() {
+        return billingState;
+    }
+
+    public String getBillingZip() {
+        return billingZip;
+    }
+
+    public String getShippingAddress1() {
+        return shippingAddress1;
+    }
+
+    public String getShippingAddress2() {
+        return shippingAddress2;
+    }
+
+    public String getShippingCity() {
+        return shippingCity;
+    }
+
+    public String getShippingState() {
+        return shippingState;
+    }
+
+    public String getShippingZip() {
+        return shippingZip;
+    }
+    
+
 }
