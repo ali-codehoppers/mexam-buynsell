@@ -13,6 +13,8 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Part.findByName", query = "select c from Part c where c.partNo like ?"),
     @NamedQuery(name = "Part.findByBSIN", query = "select c from Part c where c.bsin like ?"),
     @NamedQuery(name = "Part.findByUPC", query = "select c from Part c where c.upc_ean like ?"),
+    @NamedQuery(name = "Part.findByNSN", query = "select c from Part c where c.nsn like ?"),
+    @NamedQuery(name = "Part.findByCode", query = "select c from Part c where c.upc_ean like ? or c.bsin like ? or c.nsn like ? "),
     @NamedQuery(name = "Part.findByCategory", query = "select p from Part p inner join p.subcategory as sub where sub.categoryId = cast(? as string)"),
     @NamedQuery(name = "Part.findByManufacturer", query = "select p from Part p where p.manufacturer like ?"),
     @NamedQuery(name = "Part.findBySearchString", query = "select p from Part p where p.partNo like ? or p.manufacturer like ? or p.name like ?")
@@ -44,6 +46,8 @@ public class Part extends BaseEntity {
     private String bsin;
     @Expose
     private String upc_ean;
+    @Expose
+    private String nsn;
 
     public void setPartNo(String partNo) {
         this.partNo = partNo;
@@ -97,6 +101,11 @@ public class Part extends BaseEntity {
         this.upc_ean = upc_ean;
     }
 
+    public void setNsn(String nsn) {
+        this.nsn = nsn;
+    }
+    
+
     public Part() {
     }
 
@@ -118,6 +127,10 @@ public class Part extends BaseEntity {
 
     public String getManufacturer() {
         return manufacturer;
+    }
+
+    public String getNsn() {
+        return nsn;
     }
 
     @OneToMany(targetEntity = Image.class, fetch = FetchType.LAZY, mappedBy = "partId")

@@ -34,6 +34,7 @@
         <mapping class="com.mt.hibernate.entities.Transaction"/>                                                                                                                                                                                                                        
         <mapping class="com.mt.hibernate.entities.Address"/>                                                                                                                                                                                                                        
         <mapping class="com.mt.hibernate.entities.UserClientRating"/>                                                                                                              
+        <mapping class="com.mt.hibernate.entities.Email"/>                                                                                                              
         
     </session-factory>
 </hibernate-configuration>

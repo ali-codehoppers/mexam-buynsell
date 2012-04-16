@@ -24,6 +24,11 @@ li a {display:block;}
         height: 25px;
         border: none;
     }
+    .header_bottom{
+        height:100px;
+        display:table-cell;
+        vertical-align:bottom;
+    }
 </style>
 <script type="text/javascript" src="js/dropdown/jquery.dropdownPlain.js"></script>
 <div id="header" class="header" style="width: 100%; margin: auto;">
@@ -51,19 +56,63 @@ li a {display:block;}
     </div>
     <div id="header_Bottom" style="margin: auto">
         <div style="width: 990px; margin: auto;">
-            <div style="float: left; min-height: 100%;padding-top:70px; display:table-cell; vertical-align:bottom; min-width: 720px; ">
-                <!-- <table border="0" cellspacing="0" cellpadding="0" style="height: 100%; margin-top: 72px;">
-                     <tr>
-                         <td width="66" align="center"><a href="#" class="topnav">HOME</a></td>
-                         <td width="100" align="center"><a href="#" class="topnav">ABOUT US</a></td>
-                         <td width="53" align="center"><a href="#" class="topnav">BUY</a></td>
-                         <td width="77" align="center" valign="middle" class="navigation_radius">SELL</td>
-                         <td width="100" align="center"><a href="#" class="topnav">FEATURES</a></td>
-                         <td width="100" align="center"><a href="#" class="topnav">CONTACT US</a></td>
-                         <td width="100" align="center" nowrap="nowrap"><a href="#" class="topnav">SITE MAP</a></td>
-                         <td width="26">&nbsp;</td>
-                     </tr>
-                 </table>-->
+            <div style="position:absolute;right: 150px;color:#B0B0B0">
+                <% if (session.getAttribute(
+                            "user") == null) {%> 
+                <form id="loginFormComp" name="loginFormComp" method="post" action="login" style="margin: auto;">
+                    <table cellspacing="10">
+                        <tr>
+                            <td>Login: </td>
+                            <td>
+                                <input type="text" id="userName" name="userName" class="input_"  value="Username" onBlur="if (this.value == ''){this.value = 'Username'; }" onFocus="if (this.value== 'Username') {this.value = ''; }" />
+                            </td>
+                            <td>
+                                <input type="password" id="password" name="password" class="input_"  value="Password" onBlur="if (this.value == ''){this.value = 'Password'; }" onFocus="if (this.value== 'Password') {this.value = ''; }" />
+                            </td>
+                            <td>
+                                <input type="submit" class="submitBtn" value=""/>
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <input type="checkbox" name="rememberMe" id="rememberMe" value="true" />
+                                <span style="font-size: 10pt">Remember Me</span>
+                            </td>
+                            <td colspan="2">
+                                <div><a href="forgotPassword"  style="font-size: 8pt">Forgot Password?</a> <a href="showRegistrationInfo"  style="font-size: 8pt">Register Now</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <% } else {%>
+                <table border="0" cellspacing="0" cellpadding="1">
+                    <tr style="font-size: 14px; color: #ffffff;">
+                        <td colspan="1" style="text-align: right;">Welcome,  <%= ((User) session.getAttribute("user")).getCompany().getName()%>&nbsp;&nbsp; </td><td>| <a href="#">Help</a> |&nbsp;<a href="logout"> Sign Out</a></td>
+                    </tr>
+                </table>
+                <div style="position:absolute;right:0px">
+                    <table border="0" cellspacing="0" cellpadding="1" style="margin-top: 5px; display: none;" id="cartItemsCont">
+                        <tr style="font-size: 14px; color: #ffffff; text-align: right;">
+                            <td colspan="1" style="text-align: right;">
+                                <div style="float: right">
+                                    <div style="float: left; width: auto">
+                                        <a href="showCart"><img src="images/shopping_cart_32.png"></a>
+                                    </div>
+                                    <div style="float: left;width: auto; margin-top: 7px;">
+                                        <a href="showCart" id="cartItems"></a>
+                                    </div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div style="clear: both"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <% }%>
+
+            </div>
+            <div style="" class="header_bottom">
                 <ul class="dropdown">
                     <%if (currentTab.equals("Home")) {%>
                     <li class="navigation_radius"><a href="home">HOME</a></li>
@@ -78,16 +127,21 @@ li a {display:block;}
                         <a href="searchItem">BUY</a>
                     </li>
                     <% if ((session.getAttribute("user") != null) && !((User) session.getAttribute("user")).getCompany().isIsExpired()) {%> 
+                    <%if (currentTab.equals("user")) {%>
+                    <li class="navigation_radius">
+                        <%} else {%>
                     <li>
-                        <a href="#">PROFILE</a>
+                        <% }%>
+
+                        <a href="#">USER</a>
                         <ul class="sub_menu" style="z-index: 99">
+                            <li><a href="userDashboard">Dashboard</a></li>
+                            <li><a href="#">Profile</a></li>
                             <li><a href="#">Performance</a></li>
-                            <li><a href="#">Reports</a>
-                            <li><a href="#">Manage Membership</a>
-                            <li><a href="#">Alerts</a>
-                            <li><a href="#">Reminders</a>
-                            <li><a href="#">Summary</a>
-                            </li>
+                            <li><a href="#">Reports</a></li>
+                            <li><a href="#">Manage Membership</a></li>
+                            <li><a href="#">Alerts</a></li>
+                            <li><a href="#">Reminders</a></li>
                         </ul>
                     </li>
                     <%if (currentTab.equals("sell")) {%>
@@ -106,7 +160,7 @@ li a {display:block;}
                             </li>
                             <li><a href="#">Manage Parts</a>
                                 <ul>
-                                    <li><a href="showAddPart">Add New Part</a></li>
+                                    <li><a href="findPart">Add New Part</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -154,68 +208,12 @@ li a {display:block;}
                             <li><a href="#">User (0)</a></li>
                             <li><a href="#">Buy-n-Sell (0)</a></li>
 
+
+                        </ul>
                     </li>
-                </ul>
-                </li>
-                <% }%>
+                    <% }%>
 
                 </ul>
-            </div>
-            <div style="float: left">
-                <% if (session.getAttribute(
-                            "user") == null) {%> 
-                <form id="loginFormComp" name="loginFormComp" method="post" action="login" style="margin: auto;">
-                    <table width="200" border="0" cellspacing="3" cellpadding="2">
-                        <tr>
-                            <td colspan="2">MEMBER LOGIN</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input type="text" id="userName" name="userName" class="input_"  value="Username" onBlur="if (this.value == ''){this.value = 'Username'; }" onFocus="if (this.value== 'Username') {this.value = ''; }" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input type="password" id="password" name="password" class="input_"  value="Password" onBlur="if (this.value == ''){this.value = 'Password'; }" onFocus="if (this.value== 'Password') {this.value = ''; }" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input type="checkbox" name="rememberMe" id="rememberMe" value="true" />
-                                <label for="checkbox" style="font-size: 10pt">Remember Me</label>
-                                <input type="submit" class="submitBtn" value=""/>
-                                <!--<a style="margin-right: 0px" href="javascript:onSignInClick()"><img src="images/signin.jpg" alt="" border="0" /></a>-->
-                                <div><a href="#"  style="font-size: 7pt">Forgot Password?</a> <a href="showRegistrationInfo"  style="font-size: 7pt">Register Now</a></div>
-                            </td>  
-                        </tr>
-                    </table>
-                </form>
-                <% } else {%>
-                <table width="270" border="0" cellspacing="0" cellpadding="1">
-                    <tr style="font-size: 14px; color: #ffffff; text-align: center;">
-                        <td colspan="1" style="text-align: right;">Welcome,  <%= ((User) session.getAttribute("user")).getCompany().getName() %>&nbsp;&nbsp; </td><td>| <a href="#">Help</a> |&nbsp;<a href="logout"> Sign Out</a></td>
-                    </tr>
-                </table>
-                <table width="270" border="0" cellspacing="0" cellpadding="1" style="margin-top: 5px; display: none;" id="cartItemsCont">
-                    <tr style="font-size: 14px; color: #ffffff; text-align: right;">
-                        <td colspan="1" style="text-align: right;">
-                            <div style="float: right">
-                                <div style="float: left; width: auto">
-                                    <a href="showCart"><img src="images/shopping_cart_32.png"></a>
-                                </div>
-                                <div style="float: left;width: auto; margin-top: 7px;">
-                                    <a href="showCart" id="cartItems"></a>
-                                </div>
-                                <div style="clear: both"></div>
-                            </div>
-                            <div style="clear: both"></div>
-                        </td>
-                    </tr>
-                </table>
-                <% }%>
-
-            </div>
-            <div style="clear: both">
             </div>
         </div>
     </div>

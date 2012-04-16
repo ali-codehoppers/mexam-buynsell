@@ -463,7 +463,7 @@
                             <br/>
                             <span style="font-weight: bold; font-size: 14px;"> Shipping Address:</span>
                             <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
-                            <input type="checkbox" value="true" onclick="copyAddress(this)" /> <span> Same as Billing</span>
+                            <input type="checkbox" value="1" name="shippingIsSame" onclick="copyAddress(this)" /> <span> Same as Billing</span>
                         </div>
                         <div>
                             <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        

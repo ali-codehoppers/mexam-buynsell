@@ -8,6 +8,8 @@ import com.mt.hibernate.entities.User;
 import com.mt.services.UserService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -87,14 +89,17 @@ public class Login extends ActionSupport implements CookiesAware, ServletRespons
             return "fail";
         } else {
             for (int i = 0; i < userList.size(); i++) {
-                if (userList.get(i).getPassword().compareTo(password) == 0) {
+                MessageDigest mdEnc = MessageDigest.getInstance("MD5"); // Encryption algorithm
+                mdEnc.update(password.getBytes(), 0, password.length());
+                String md5Password = new BigInteger(1, mdEnc.digest()).toString(16);
+                if (userList.get(i).getPassword().compareTo(md5Password) == 0) {
                     User user = userList.get(i);
                     if (user.getCompany().getExpiryDate().compareTo(new Timestamp(System.currentTimeMillis())) < 0) {
                         user.getCompany().setIsExpired(true);
                         userService.update(user);
                     }
                     if (rememberMe) {
-                      Cookie cookie = new Cookie("userCookie", userName);
+                        Cookie cookie = new Cookie("userCookie", userName);
                         cookie.setMaxAge(14 * 24 * 60 * 60);
                         ServletActionContext.getResponse().addCookie(cookie);
 

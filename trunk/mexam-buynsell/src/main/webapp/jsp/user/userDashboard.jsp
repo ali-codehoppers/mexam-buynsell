@@ -279,7 +279,9 @@
         </script>
     </head>
     <body>
-        <jsp:include page="../common/header.jsp" />
+        <jsp:include page="../common/header.jsp" >
+            <jsp:param name="currentTab" value="user"/>
+        </jsp:include>
         <div id="container" class="container" style="min-height: 335px;height: 100%" >
             <div style="float:left">
                 <div class="accordion" style="width: 250px;padding-top: 20px">
@@ -303,25 +305,18 @@
                         <div><%=((User) session.getAttribute("user")).getCompany().getCity()%>, <%=((User) session.getAttribute("user")).getCompany().getState().getName()%></div>
                         <div style="text-align: right;font-size: 10pt"><a href="#">Edit</a></div>
                         <hr/><br/>
-                        <div><b>Total Inventory</b>:</div>
-                        <div><s:property value="totalInventory" /></div>
-                        <div><b>Favorite Vendors</b>:</div>
-                        <div>5</div>
+                        <div>Total Inventory: <s:property value="totalInventory" /></div>
+                        <div>Favorite Vendors: <s:property value="totalVendors" /></div>
                     </div>
                 </div>
                 <div class="accordion" style="width: 250px;padding-top:0px">
                     <h3><a href="#">Recent Activity</a></h3>
                     <div>
-                        <div><b>New Inventory</b>:</div>
-                        <div><s:property value="latestInventory" /></div>
-                        <div><b>New Favorite Vendors</b>:</div>
-                        <div><s:property value="latestVendors" /></div>
-                        <div><b>New Messages</b>:</div>
-                        <div>1</div>
-                        <div><b>New RFQ Received</b>:</div>
-                        <div><s:property value="latestRFQsReceived" /></div>
-                        <div><b>New RFQ Sent</b>:</div>
-                        <div><s:property value="latestRFQsSent" /></div>
+                        <div>New Inventory: <s:property value="latestInventory" /> </div>
+                        <div>New Favorites: <s:property value="latestVendors" /> </div>
+                        <div>New Messages: 0</div>
+                        <div>New RFQ Received: <s:property value="latestRFQsReceived" /> </div>
+                        <div>New RFQ Sent: <s:property value="latestRFQsSent" /></div>
 
                     </div>
                 </div>

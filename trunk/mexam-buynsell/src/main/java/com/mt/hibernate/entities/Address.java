@@ -69,7 +69,6 @@ public class Address extends BaseEntity {
 
     
     public Address() {
-        System.out.println("Creating a Address Obj");
     }
 
     public String getAddress1() {

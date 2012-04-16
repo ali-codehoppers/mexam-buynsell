@@ -7,7 +7,9 @@ package com.mt.actions.paypal;
 import com.mt.actions.AuthenticatedAction;
 import com.mt.hibernate.entities.Company;
 import com.mt.hibernate.entities.Transaction;
+import com.mt.hibernate.entities.Address;
 import com.mt.hibernate.entities.User;
+import com.mt.services.AddressService;
 import com.mt.services.CompanyService;
 import com.mt.services.TransactionService;
 import com.paypal.sdk.core.nvp.NVPDecoder;
@@ -29,6 +31,7 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
     private String shippingZip;
     private String shippingCity;
     private String shippingState;
+    private int shippingIsSame;
     private double amount;
     private String creditCardNumber;
     private String cvv2Number;
@@ -40,6 +43,7 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
     ////////////////////////////
     private CompanyService companyService;
     private TransactionService transactionService;
+    private AddressService addressService;
     private Map session;
 
     public void setAmount(double amount) {
@@ -80,6 +84,10 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
 
     public void setTransactionService(TransactionService transactionService) {
         this.transactionService = transactionService;
+    }
+
+    public void setAddressService(AddressService addressService) {
+        this.addressService = addressService;
     }
 
     public void setMembershipType(String membershipType) {
@@ -129,6 +137,10 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
 
     public void setShippingZip(String shippingZip) {
         this.shippingZip = shippingZip;
+    }
+
+    public void setShippingIsSame(int shippingIsSame) {
+        this.shippingIsSame = shippingIsSame;
     }
 
     @Override
@@ -191,34 +203,23 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
             return INPUT;
         }
         PaymentInfo paymentInfo = new PaymentInfo();
-
         paymentInfo.setCcNum(creditCardNumber);
-
         paymentInfo.setCvv2(cvv2Number);
-
         paymentInfo.setFirstName(firstName);
-
         paymentInfo.setLastName(lastName);
-
         paymentInfo.setExpMonth(expdate_month);
-
         paymentInfo.setExpYear(expdate_year);
-
         paymentInfo.setZip(billingZip);
-
         paymentInfo.setBillingList1(billingAddress1);
-
         paymentInfo.setBillingList2(billingAddress2);
-
         paymentInfo.setCity(billingCity);
-
         paymentInfo.setState(billingState);
-
         paymentInfo.setCountryCode(
                 "US");
         paymentInfo.setPaymentType(creditCardType);
 //        paymentInfo.setEmailAddress(email);
 //        paymentInfo.setTelephone(telephone);
+
 
         if (membershipType.equals(
                 "1")) {
@@ -238,11 +239,11 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         if (response.get("ACK").compareTo("Failure") == 0) {
             return "fail";
         } else {
+
+
             User user = getUser();
             Company company = companyService.getById(user.getCompanyId());
-
             Transaction transaction = new Transaction();
-
             Timestamp transactionTime = new Timestamp(System.currentTimeMillis());
 
             transaction.setCompany(company);
@@ -252,7 +253,6 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
             transaction.setCreationDate(transactionTime);
             transaction.setTransactionId(response.get("TRANSACTIONID"));
             transaction.setSubscriptionDuration(duration);
-
             if (company.getExpiryDate() != null && company.getExpiryDate().compareTo(transactionTime) <= 0) {
                 Timestamp expiryDate = transactionTime;
                 expiryDate.setMonth(transactionTime.getMonth() + duration);
@@ -268,8 +268,35 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
             session.put("user", user);
 
             companyService.update(company);
-            transactionService.addNew(transaction);
-
+            int transId = transactionService.addNew(transaction);
+            Address address = new Address();
+            address.setTransId(transId);
+            address.setAddress1(billingAddress1);
+            address.setAddress2(billingAddress2);
+            address.setCity(billingCity);
+            address.setState(billingState);
+            address.setZip(billingZip);
+            address.setCountry("US");
+            address.setType("b");
+            int billingId = addressService.addNew(address);
+            address = new Address();
+            address.setTransId(transId);
+            address.setAddress1(shippingAddress1);
+            address.setAddress2(shippingAddress2);
+            address.setCity(shippingCity);
+            address.setState(shippingState);
+            address.setZip(shippingZip);
+            address.setCountry("US");
+            address.setType("s");
+            int shippingId = addressService.addNew(address);
+            if (shippingIsSame != 1) {
+                shippingIsSame = 0;
+            }
+            transaction = transactionService.getById(transId);
+            transaction.setBillingAddressId(billingId);
+            transaction.setShippingAddressId(shippingId);
+            transaction.setShippingIsSame(shippingIsSame);
+            transactionService.update(transaction);
             session.put("firstName", firstName);
             session.put("lastName", lastName);
             session.put("address1", billingAddress1);
@@ -289,7 +316,6 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
     public double getAmount() {
         return amount;
     }
-
 
     public String getCreditCardNumber() {
         return creditCardNumber;
@@ -360,6 +386,8 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
     public String getShippingZip() {
         return shippingZip;
     }
-    
 
+    public int getShippingIsSame() {
+        return shippingIsSame;
+    }
 }

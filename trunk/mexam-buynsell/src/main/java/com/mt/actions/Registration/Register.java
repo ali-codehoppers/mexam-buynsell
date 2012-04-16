@@ -14,6 +14,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import java.sql.Timestamp;
 import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
+import java.math.*;
+import java.security.*;
 
 public class Register extends ActionSupport implements SessionAware {
 
@@ -197,8 +199,11 @@ public class Register extends ActionSupport implements SessionAware {
             return INPUT;
         }
 
+        MessageDigest mdEnc = MessageDigest.getInstance("MD5"); // Encryption algorithm
+        mdEnc.update(password.getBytes(), 0, password.length());
+        String md5Password = new BigInteger(1, mdEnc.digest()).toString(16);
+        
         State state = stateService.getById(stateVal);
-
         company = new Company();
         company.setName(name);
         company.setAddress(address);
@@ -217,7 +222,7 @@ public class Register extends ActionSupport implements SessionAware {
         user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setPassword(password);
+        user.setPassword(md5Password);
         user.setUsername(userName);
         user.setEmail(email);
         user.setCompany(company);

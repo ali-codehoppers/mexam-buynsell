@@ -10,7 +10,7 @@ import com.mt.services.PartService;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
 
-public class SearchPart extends ActionSupport {
+public class FindPart extends ActionSupport {
 
     private String searchString;
     private List<Part> parts;
