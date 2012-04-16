@@ -27,11 +27,17 @@ public class PartService {
     public List<Part> findByBSIN(String BSIN) {
         return partDao.findByBSIN(BSIN);
     }
+    public List<Part> findByCode(String UPC, String BSIN, String NSN) {
+        return partDao.findByCode(UPC, BSIN, NSN);
+    }
+    
 
     public List<Part> findByManufacturer(String manufacturer) {
         return partDao.findByManufacturer(manufacturer);
     }
-
+    public List<Part> findByNSN(String nsn) {
+        return partDao.findByNSN(nsn);
+    }
     public List<Part> findBySearchString(String searchString) {
         return partDao.findBySearchString("%" + searchString + "%", "%" + searchString + "%", "%" + searchString + "%");
     }

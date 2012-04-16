@@ -57,9 +57,36 @@
             <ref bean="pool"/>
         </constructor-arg>
     </bean>
-
-
-
+   <!-- <bean id="emailForgotPassword" class="com.mt.actions.email.ForgotPassword" />
+   		
+    <bean id="sendEmailForgotPassword" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	
+        <property name="targetObject" ref="emailForgotPassword" />
+        <property name="targetMethod" value="printMe" />
+		
+    </bean>
+    <bean id="simpleTrigger"
+          class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		
+        <property name="jobDetail" ref="sendEmailForgotPassword" />
+        <property name="repeatInterval" value="5000" />
+        <property name="startDelay" value="1000" />
+		
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="sendEmailForgotPassword" />
+            </list>
+        </property>
+		
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger" />
+            </list>
+        </property>
+    </bean>
+-->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" >
         <property name="dataSource" ref="pooledDS"/>
         <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration"/>
@@ -303,6 +330,16 @@
             </bean>
         </property>
     </bean>
+    <bean id="emailDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.IEmailDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.Email" />
+            </bean>
+        </property>
+    </bean>
 
 
 
@@ -379,7 +416,9 @@
     <bean id="userClientRatingService" class="com.mt.services.UserClientRatingService">
         <constructor-arg ref="userClientRatingDao" />
     </bean>
-
+    <bean id="emailService" class="com.mt.services.EmailService">
+        <constructor-arg ref="emailDao" />
+    </bean>
 
 
 </beans>

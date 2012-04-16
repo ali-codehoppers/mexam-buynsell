@@ -34,7 +34,7 @@
         </action>
         <action name="login" class="com.mt.actions.Login.Login">
             <interceptor-ref name="basic"/>
-            <result name="success" type="redirect">home</result>
+            <result name="success" type="redirect">userDashboard</result>
             <result name="input">jsp/login/login.jsp</result>
             <interceptor-ref name="cookie">
                 <param name="cookiesName">userCookie</param>
@@ -53,18 +53,14 @@
             <!-- //     Login    -->
 
                 
-            <!--      Part    -->
-        <action name="findPart" class="com.mt.actions.DoNothing">
-            <interceptor-ref name="membershipAuthenticated"/>
-            <result name="success">jsp/part/findPart.jsp</result>
-        </action>            
+            <!--      Part    -->           
         <action name="showSearchPart" class="com.mt.actions.DoNothing">
             <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/part/showSearchPart.jsp</result>
         </action>
-        <action name="searchPart" class="com.mt.actions.part.SearchPart">
+        <action name="findPart" class="com.mt.actions.part.FindPart">
             <interceptor-ref name="membershipAuthenticated"/>
-            <result name="success">jsp/part/searchParts.jsp</result>
+            <result name="success">jsp/part/findPart.jsp</result>
         </action>
         <action name="viewPart" class="com.mt.actions.part.ViewPart">
             <interceptor-ref name="basic"/>
@@ -245,6 +241,13 @@
         </action>
 
             <!-- //     RFQ    -->
+  <!--  Email -->
+        <action name="emailForgotPassword" class="com.mt.actions.email.ForgotPassword">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/registration/forgotPassword.jsp</result>
+        </action>
+  
+  <!-- // Email -->
   
        
             <!--      Registration    -->
@@ -253,7 +256,10 @@
             <interceptor-ref name="basic"/>
             <result name="success">jsp/registration/newRegistration.jsp</result>
         </action>
-        
+        <action name="forgotPassword" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="basic"/>
+            <result name="success">jsp/registration/forgotPassword.jsp</result>
+        </action>        
         <action name="showRegistrationInfo" class="com.mt.actions.DoNothing">
             <interceptor-ref name="basic"/>
             <result name="success">jsp/registration/newRegistrationInfo.jsp</result>
@@ -516,6 +522,10 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/common/ajax.jsp</result>
         </action>     
+        <action name="getExistingParts" class="com.mt.actions.ajaxActions.GetExistingPart">
+            <interceptor-ref name="authenticated"/>
+            <result>jsp/common/ajax.jsp</result>
+        </action> 
         <!-- //     Ajax Actions    -->
 
         <action name="getImage" class="com.mt.actions.GetImage">
@@ -536,6 +546,7 @@
             <interceptor-ref name="authenticated"/>
             <result >jsp/paypal/payPalListener.jsp</result>
         </action>
+        
         
         <action name="payAmount" class="com.mt.actions.paypal.PayAmount">
             <interceptor-ref name="authenticated"/>

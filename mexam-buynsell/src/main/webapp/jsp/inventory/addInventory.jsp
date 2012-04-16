@@ -57,6 +57,14 @@
                     $("#messageSuccess").hide();                        
                 }
                 getMfgs();
+                
+                if($("#bsin").val()=="")
+                    $("#bsin").removeAttr("readonly");
+                if($("#nsn").val()=="")
+                    $("#nsn").removeAttr("readonly");
+                if($("#upc_ean").val()=="")
+                    $("#upc_ean").removeAttr("readonly");
+            
             });
             
             function submitForm()
@@ -290,7 +298,7 @@
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">   
                                     <div style="float: left;">    
-                                        <input id="upc_ean" name="upc_ean" class="field_big" value="${upc_ean}" onchange="getInfoByUPC()"/>
+                                        <input id="upc_ean" name="upc_ean" class="field_big" value="${upc_ean}" ${readOnly} onchange="getInfoByUPC()"/>
                                     </div>
                                     <div style="float: left;" class="fieldError">                        
                                         <ch:errortag name="addInventory_upc_ean"></ch:errortag>
@@ -305,7 +313,7 @@
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">   
                                     <div style="float: left;">    
-                                        <input id="bsin" name="bsin" class="field_big" value="${bsin}" onchange="getInfoByBsin()"/>
+                                        <input id="bsin" name="bsin" class="field_big" value="${bsin}" ${readOnly} onchange="getInfoByBsin()"/>
                                     </div>
                                     <div style="float: left;" class="fieldError">                        
                                         <ch:errortag name="addInventory_bsin"></ch:errortag>
@@ -313,6 +321,21 @@
                                     <div style="clear: both"></div> 
                                 </div>
                             </div>
+                            <div>
+                                <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
+                                    NSN:
+                                </div>                        
+                                <div style="float: left; width: 48%; margin: 5px;">   
+                                    <div style="float: left;">    
+                                        <input id="nsn" name="nsn" class="field_big" value="${nsn}" ${readOnly} onchange=""/>
+                                    </div>
+                                    <div style="float: left;" class="fieldError">                        
+                                        <ch:errortag name="addInventory_bsin"></ch:errortag>
+                                    </div>
+                                    <div style="clear: both"></div> 
+                                </div>
+                            </div>
+
                             <div style="min-height: 25px; clear: both;"></div>
                             <div>
                                 <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
@@ -320,7 +343,7 @@
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
                                     <div style="float: left;">    
-                                        <input id="manufacturer" name="manufacturer" class="field_big" value="${manufacturer}"/>
+                                        <input id="manufacturer" name="manufacturer" class="field_big" ${readOnly} value="${manufacturer}"/>
                                     </div>
                                     <div style="float: left;" class="fieldError">                        
                                         <ch:errortag name="addInventory_manufacturer"></ch:errortag>
@@ -334,7 +357,7 @@
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">   
                                     <div style="float: left;">    
-                                        <input id="partNo" name="partNo" class="field_big" value="${partNo}"/>
+                                        <input id="partNo" name="partNo" class="field_big" ${readOnly} value="${partNo}"/>
                                     </div>
                                     <div style="float: left;" class="fieldError">                        
                                         <ch:errortag name="addInventory_partNo"></ch:errortag>
