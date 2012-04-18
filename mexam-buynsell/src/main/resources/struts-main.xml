@@ -287,6 +287,12 @@
 <!--            <result name="success" type="redirect">viewRegistration?messeage=${message}&amp;companyId=${company.id}&amp;userId=${user.id} </result>-->
             <result>jsp/registration/registrationComplete.jsp</result>
         </action>
+        
+        <action name="verifyEmailAddress" class="com.mt.actions.Registration.VerifyEmailAddress">
+            <interceptor-ref name="basic" />
+            <result name="error" type="chain" >forgotPassword</result>
+            <result>jsp/registration/emailVerified.jsp</result>
+        </action>
 
         
             <!-- //     Registeration    -->
@@ -305,6 +311,10 @@
         <action name="userDashboard" class="com.mt.actions.User.UserDashboard">
             <interceptor-ref name="authenticated"/>
             <result name="success">jsp/user/userDashboard.jsp</result>
+        </action>
+        <action name="editUser" class="com.mt.actions.DoNothing">
+            <interceptor-ref name="authenticated"/>
+            <result name="success">jsp/user/editUser.jsp</result>
         </action>
 
         <!-- //     User    -->

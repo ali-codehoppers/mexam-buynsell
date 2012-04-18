@@ -36,7 +36,7 @@
                 text-shadow:0 1px 0 #fff;
                 margin-top: 5px;
                 border:1px solid #DFDFDF;
-                
+
                 -moz-border-radius:8px;
                 -webkit-border-radius:8px;
                 border-radius:8px;
@@ -46,13 +46,15 @@
                 padding:0px;
 
             }
-
-
             .submitBtn2:hover {
                 color:#333;
                 border-color:#cacaca;
                 background:#F8F8F8;
                 text-align: center;
+            }
+            a.dark:hover{
+                color:#666666;
+                text-decoration: underline;
             }
         </style>
         <script type="text/javascript">
@@ -303,7 +305,7 @@
                         <div><%=((User) session.getAttribute("user")).getCompany().getCompanyCategory()%></div>
                         <div><b>Location</b>:</div>
                         <div><%=((User) session.getAttribute("user")).getCompany().getCity()%>, <%=((User) session.getAttribute("user")).getCompany().getState().getName()%></div>
-                        <div style="text-align: right;font-size: 10pt"><a href="#">Edit</a></div>
+                        <div style="text-align: right;font-size: 10pt"><a href="#" class="dark">Edit</a></div>
                         <hr/><br/>
                         <div>Total Inventory: <s:property value="totalInventory" /></div>
                         <div>Favorite Vendors: <s:property value="totalVendors" /></div>

@@ -8,8 +8,9 @@ import com.mt.services.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
 import java.util.Map;
+import org.apache.struts2.interceptor.SessionAware;
 
-public class Home extends ActionSupport{
+public class Home extends ActionSupport implements SessionAware{
 
     private String treeJsonString;
     private CategoryService categoryService;
@@ -35,6 +36,9 @@ public class Home extends ActionSupport{
 
     @Override
     public String execute() throws Exception {
+        if(session.containsKey("emailInCheck")){
+            session.remove("emailInCheck");
+        }
         treeJsonString = getCategoryTreeData();
         return SUCCESS;
     }

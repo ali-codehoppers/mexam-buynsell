@@ -57,36 +57,105 @@
             <ref bean="pool"/>
         </constructor-arg>
     </bean>
-   <!-- <bean id="emailForgotPassword" class="com.mt.actions.email.ForgotPassword" />
-   		
-    <bean id="sendEmailForgotPassword" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-	
-        <property name="targetObject" ref="emailForgotPassword" />
-        <property name="targetMethod" value="printMe" />
-		
+    
+    <!-- quartz beans >
+    <bean id="forgotPasswordEmail" class="com.mt.emails.ForgotPasswordEmail">
+        <constructor-arg>
+            <ref bean="emailService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="userService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="templateService"/>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="simpleTrigger"
+
+    <bean name="forgotPasswordJob"
+          class="org.springframework.scheduling.quartz.JobDetailBean">
+ 
+        <property name="jobClass" value="com.mt.jobs.ForgotPasswordJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="forgotPasswordEmail" value-ref="forgotPasswordEmail" />
+            </map>
+        </property>
+ 
+    </bean>
+
+    <bean id="forgotPasswordTrigger"
           class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		
-        <property name="jobDetail" ref="sendEmailForgotPassword" />
-        <property name="repeatInterval" value="5000" />
-        <property name="startDelay" value="1000" />
+        <property name="jobDetail" ref="forgotPasswordJob" />
+        <property name="repeatInterval" value="120000" />
+        <property name="startDelay" value="60000" />
 		
     </bean>
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="jobDetails">
             <list>
-                <ref bean="sendEmailForgotPassword" />
+                <ref bean="forgotPasswordJob" />
             </list>
         </property>
 		
         <property name="triggers">
             <list>
-                <ref bean="simpleTrigger" />
+                <ref bean="forgotPasswordTrigger" />
             </list>
         </property>
     </bean>
--->
+    <bean id="paymentReceiptEmail" class="com.mt.emails.PaymentReceiptEmail">
+        <constructor-arg>
+            <ref bean="emailService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="userService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="transactionService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="templateService"/>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="paymentReceiptJob"
+          class="org.springframework.scheduling.quartz.JobDetailBean">
+ 
+        <property name="jobClass" value="com.mt.jobs.PaymentReceiptJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="paymentReceiptEmail" value-ref="paymentReceiptEmail" />
+            </map>
+        </property>
+ 
+    </bean>
+
+    <bean id="paymentReceiptTrigger"
+          class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		
+        <property name="jobDetail" ref="paymentReceiptJob" />
+        <property name="repeatInterval" value="120000" />
+        <property name="startDelay" value="60000" />
+		
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="paymentReceiptJob" />
+            </list>
+        </property>
+		
+        <property name="triggers">
+            <list>
+                <ref bean="paymentReceiptTrigger" />
+            </list>
+        </property>
+    </bean>
+
+<! //quartz bean -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" >
         <property name="dataSource" ref="pooledDS"/>
         <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration"/>
@@ -340,7 +409,16 @@
             </bean>
         </property>
     </bean>
-
+    <bean id="templateDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.ITemplateDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.Template" />
+            </bean>
+        </property>
+    </bean>
 
 
     <bean id="categoryService" class="com.mt.services.CategoryService">
@@ -419,6 +497,8 @@
     <bean id="emailService" class="com.mt.services.EmailService">
         <constructor-arg ref="emailDao" />
     </bean>
-
+    <bean id="templateService" class="com.mt.services.TemplateService">
+        <constructor-arg ref="templateDao" />
+    </bean>
 
 </beans>
