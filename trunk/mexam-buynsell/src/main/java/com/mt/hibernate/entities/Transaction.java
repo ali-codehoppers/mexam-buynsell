@@ -73,7 +73,7 @@ public class Transaction extends BaseEntity {
     public double getAmount() {
         return amount;
     }
-    @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "companyId")
     public Company getCompany() {
         return company;

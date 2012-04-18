@@ -18,13 +18,14 @@ import javax.persistence.NamedQuery;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "emails")
 @NamedQueries({
-    @NamedQuery(name = "Email.findByType", query = "select c from Email c where c.type = ?")
+    @NamedQuery(name = "Email.findByType", query = "select c from Email c where c.type = ? and c.isSent = 0")
     
 })
 public class Email extends BaseEntity {
     private String type;
     private int transactionId;
     private int isSent;
+    private int numberOfTries;
 
     public void setIsSent(int isSent) {
         this.isSent = isSent;
@@ -34,20 +35,20 @@ public class Email extends BaseEntity {
         this.transactionId = transactionId;
     }
 
-    
-
     public void setType(String type) {
         this.type = type;
     }
-    
+
+    public void setNumberOfTries(int numberOfTries) {
+        this.numberOfTries = numberOfTries;
+    }
+   
     public Email(){
-        System.out.println("Creating Email Entity");
     }
 
     public int getIsSent() {
         return isSent;
     }
-
 
     public String getType() {
         return type;
@@ -56,9 +57,8 @@ public class Email extends BaseEntity {
     public int getTransactionId() {
         return transactionId;
     }
-    
-    
-    
-          
-    
+
+    public int getNumberOfTries() {
+        return numberOfTries;
+    } 
 }

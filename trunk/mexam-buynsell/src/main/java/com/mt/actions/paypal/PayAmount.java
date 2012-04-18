@@ -8,9 +8,11 @@ import com.mt.actions.AuthenticatedAction;
 import com.mt.hibernate.entities.Company;
 import com.mt.hibernate.entities.Transaction;
 import com.mt.hibernate.entities.Address;
+import com.mt.hibernate.entities.Email;
 import com.mt.hibernate.entities.User;
 import com.mt.services.AddressService;
 import com.mt.services.CompanyService;
+import com.mt.services.EmailService;
 import com.mt.services.TransactionService;
 import com.paypal.sdk.core.nvp.NVPDecoder;
 import java.sql.Timestamp;
@@ -44,6 +46,7 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
     private CompanyService companyService;
     private TransactionService transactionService;
     private AddressService addressService;
+    private EmailService emailService;   
     private Map session;
 
     public void setAmount(double amount) {
@@ -88,6 +91,10 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
 
     public void setAddressService(AddressService addressService) {
         this.addressService = addressService;
+    }
+
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
     }
 
     public void setMembershipType(String membershipType) {
@@ -308,6 +315,13 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
             session.put("creditCardNumber", creditCardNumber);
             session.put("creditCardType", creditCardType);
 
+            Email email = new Email();
+            email.setIsSent(0);
+            email.setType("PAYMENT_RECEIPT");
+            email.setTransactionId(transId);
+            email.setCreatedBy(user.getId());
+            emailService.addNew(email);
+            
             return SUCCESS;
 
         }
