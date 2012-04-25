@@ -32,6 +32,7 @@ public class InventoryService {
     public List<Inventory> getFullTextSearch(String searchString) {
         Session session = inventoryDao.getSession();
         String query =  "Select *,MATCH(manufacturer) AGAINST ('"+searchString+"') as smanu, MATCH(partNo) AGAINST ('"+searchString+"') as spart from inventories i where Match(partNo, manufacturer) AGAINST ('"+searchString+"' IN BOOLEAN MODE) order by smanu*1.25+spart desc,partNo asc";
+        System.out.println(query);
         List result =  session.createSQLQuery(query).addEntity("inventory", Inventory.class).list();
         return result;
     }

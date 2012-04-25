@@ -68,7 +68,7 @@
 
     <body>
 
-        <jsp:include page="../common/header.jspf" >
+        <jsp:include page="../common/header.jsp" >
             <jsp:param name="currentTab" value="sell"/>
         </jsp:include>
 

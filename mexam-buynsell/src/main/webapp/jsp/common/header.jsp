@@ -29,6 +29,12 @@ li a {display:block;}
         display:table-cell;
         vertical-align:bottom;
     }
+    .hide{
+        display: none;
+    }
+    .sub_menu .hide{
+        display:none;
+    }
 </style>
 <script type="text/javascript" src="js/dropdown/jquery.dropdownPlain.js"></script>
 <div id="header" class="header" style="width: 100%; margin: auto;">
@@ -136,12 +142,13 @@ li a {display:block;}
                         <a href="#">USER</a>
                         <ul class="sub_menu" style="z-index: 99">
                             <li><a href="userDashboard">Dashboard</a></li>
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="#">Performance</a></li>
-                            <li><a href="#">Reports</a></li>
-                            <li><a href="#">Manage Membership</a></li>
-                            <li><a href="#">Alerts</a></li>
-                            <li><a href="#">Reminders</a></li>
+                            <li><a href="viewVendor">Profile</a></li>
+                            <li><a href="editUser">Settings</a></li>
+                            <li class="hide"><a href="#">Performance</a></li>
+                            <li class="hide"><a href="#">Reports</a></li>
+                            <li class="hide"><a href="#">Manage Membership</a></li>
+                            <li class="hide"><a href="#">Alerts</a></li>
+                            <li class="hide"><a href="#">Reminders</a></li>
                         </ul>
                     </li>
                     <%if (currentTab.equals("sell")) {%>
@@ -175,7 +182,7 @@ li a {display:block;}
                             <li><a href="searchVendor">Search Vendor</a></li>
                             <li><a href="showMyVendors">Manage My Vendors</a></li>                            
                             <li><a href="showVendors">View All Vendors</a></li>
-                            <li><a href="#">Leave Feedback</a></li>
+                            <li class="hide"><a href="#">Leave Feedback</a></li>
                         </ul>
                     </li>
                     <%if (currentTab.equals("broadcast")) {%>
@@ -188,7 +195,7 @@ li a {display:block;}
                             <li><a href="showAddBroadcast">New Broadcast</a></li>
                             <li><a href="showMyBroadcasts">View My Broadcasts</a>
                             <li><a href="showBroadcasts">View All Broadcasts</a>
-                            <li><a href="#">Set Broadcast Filters</a>
+                            <li class="hide"><a href="#">Set Broadcast Filters</a>
                             </li>
                         </ul>
                     </li>
@@ -202,7 +209,7 @@ li a {display:block;}
                             <li><a href="showRFQs">View RFQs</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="hide">
                         <a href="#">MESSAGES (0)</a>
                         <ul class="sub_menu" style="z-index: 99">
                             <li><a href="#">User (0)</a></li>

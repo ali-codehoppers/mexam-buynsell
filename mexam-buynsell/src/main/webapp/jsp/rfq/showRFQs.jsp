@@ -28,12 +28,13 @@
                     datatype: "json",
                     height: 250,
                     //colNames:['PartNo','Name','Quantity','Price'],
-                    colNames:['Received Date','Subject','Sent By','Company'],
+                    colNames:['Received Date','Subject','Sent By','Company','Replied'],
                     colModel:[
                         {name:'cell.date',index:'creationDate', width:200, align:"center",sortable:true, formatter:isNewFormatter},                                                
                         {name:'cell.title',index:'title', width:200, sortable:true,formatter:isNewFormatter},
                         {name:'cell.senderName',index:'sender.firstName', width:200, sortable:true,formatter:isNewFormatter},                        
-                        {name:'cell.senderCompanyName',index:'sender.company.name', width:200, sortable:true,formatter:isNewFormatter}                        
+                        {name:'cell.senderCompanyName',index:'sender.company.name', width:200, sortable:true,formatter:isNewFormatter},                        
+                        {name:'cell.isReplied',index:'isReplied', width:200, sortable:true,formatter:isNewFormatter}                        
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
@@ -92,149 +93,160 @@
                             $( "#dialog" ).dialog( "open" );
                         }
                     },
-                    jsonReader : { 
-                        root: "rows", 
-                        page: "page", 
-                        total: "total", 
-                        records: "records", 
-                        repeatitems: false, 
-                        cell: "cell", 
-                        id: "id"
-                    }
-                });
-             
-             
-                function isNewFormatter (cellvalue, options, rowObject)
-                {
-                    if(rowObject.cell.isNew==true)
-                        return "<b>"+cellvalue+"</b>";
-                    else
-                        return cellvalue;
+                jsonReader : { 
+                    root: "rows", 
+                    page: "page", 
+                    total: "total", 
+                    records: "records", 
+                    repeatitems: false, 
+                    cell: "cell", 
+                    id: "id"
                 }
-
-             
-                jQuery("#rfqsListSent").jqGrid('navGrid','#pager_s',{edit:false,add:false,del:true});
-                                
-                $( "#dialog" ).dialog({
-                    autoResize:true,
-                    autoOpen: false,
-                    modal: true,
-                    width:'auto'
-                });
-                $( ".ui-jqgrid-titlebar-close").hide();
             });
-  
-            function getRFQ(id,caller)
+             
+             
+            function isNewFormatter (cellvalue, options, rowObject)
             {
-                $.ajax({
-                    type:       "get",
-                    url:        "getRFQ?rfqId="+id,
-                    data:       {},
-                    success:    function(msg) {
-                        var data = eval('('+msg+')');
-                        jQuery("#div_subject").html(data.title);
-                        jQuery("#div_sender").html(data.senderName);                
-                        jQuery("#div_senderCompany").html(data.senderCompanyName);                                        
-                        jQuery("#div_message").html(data.message);                         
-                        jQuery("#div_date").html(data.date);
-                        jQuery("#div_sentTo").html(data.sentTo);
-                        if(caller==1)
-                        {
-                            setIsRead(id,true);
-                            jQuery("#sentToCont").hide();
-                            jQuery("#senderCont").show();
-                            jQuery("#senderCompanyCont").show();
-                        }
-                        else
-                        {
-                            jQuery("#sentToCont").show();
-                            jQuery("#senderCont").hide();
-                            jQuery("#senderCompanyCont").hide();
-                        }
-                    }
-                });
+                if(rowObject.cell.isNew==true)
+                    return "<b>"+cellvalue+"</b>";
+                else
+                    return cellvalue;
             }
-            function createRFQItemsGrid(rfqId,caller){
-                var editPrice = false;
-                var editQantity = false;
-                
-                if(caller==1){
-                    editPrice = true;
-                }else{
-                    editQantity = true;
-                }
-                    
-                jQuery("#rfqItemsList").jqGrid('GridUnload');   
-                jQuery("#rfqItemsList").jqGrid({
-                    url:'getRFQItemsList?rfqId='+rfqId,
-                    datatype: "json",
-                    cellEdit:true,
-                    cellsubmit:'clientArray',
-                    //cellurl:'updateRFQ',
-                    //mtype:'POST',
-                    height: 200,
-                    colNames:['Part No','Manufacturer','BSIN','UPC/EAN','Condition','Price','Quantity'],
-                    colModel:[
-                        //{name:'id',index:'id', width:125, align:"center"},
-                        {name:'cell.partNo',index:'inventory.partNo', width:125, align:"center",sortable:true},
-                        {name:'cell.manufacturer',index:'inventory.manufacturer', width:180, align:"center",sortable:true}, 
-                        {name:'cell.bsin',index:'bsin', width:125, align:"center"},                                                
-                        {name:'cell.upc_ean',index:'upc_ean', width:125, align:"center"},                                                
-                        {name:'cell.cond',index:'cond', width:100, align:"center",sortable:true},                        
-                        {name:'price',jsonmap:'cell.price',index:'price',label:'price', width:120, align:"center",sortable:true,editable:editPrice, edittype: 'text', editoptions: { size: 20, maxlength: 30}},                        
-                        {name:'quantity',jsonmap:'cell.quantity',index:'quantity', width:120, align:"center",sortable:true,editable:editQantity,edittype: 'text', editoptions: { size: 20, maxlength: 30}}                        
-                    ],
-                    rowNum:10,
-                    rowList:[10,20,30],
-                    pager: '#pager',
-                    sortname: 'id',
-                    viewrecords: true,
-                    sortorder: "desc",
-                    caption: "RFQ Items",
-                    jsonReader : { 
-                        root: "rows", 
-                        page: "page", 
-                        total: "total", 
-                        records: "records", 
-                        repeatitems: false, 
-                        cell: "cell", 
-                        id: "id"
-                    }
-                });
-                jQuery("#rfqItemsList").jqGrid('navGrid','#pager',{edit:true,add:false,del:true});
-            }
-            function setIsRead(id,val)
-            {
-                $.ajax({
-                    type:       "get",
-                    url:        "setRFQIsRead",
-                    data:       {rfqId:id, value:val},
-                    success:    function(msg) {
-                        jQuery("#rfqsListReceived").trigger('reloadGrid');
-                        jQuery("#rfqsListSent").trigger('reloadGrid');
-                    }
-                });
-            }
-            function updateRFQ(elementId){
 
-                var changedCells = jQuery("#"+elementId).getChangedCells();
-                for(var index in changedCells)
-                {
-                    var price = changedCells[index].price;
-                    var id = changedCells[index].id
-                    var quantity = changedCells[index].quantity;
-                    $.ajax({
-                        type:       "get",
-                        url:        "updateRFQ",
-                        data:       {"id":id, "price":price,"quantity":quantity},
-                        success:    function(msg) {
-                            jQuery("#"+elementId).trigger('reloadGrid');
-                            //  jQuery("#rfqsListSent").trigger('reloadGrid');
-                        }
-                    });
+             
+            jQuery("#rfqsListSent").jqGrid('navGrid','#pager_s',{edit:false,add:false,del:true});
+                                
+            $( "#dialog" ).dialog({
+                autoResize:true,
+                autoOpen: false,
+                modal: true,
+                width:'auto'
+            });
+            $( ".ui-jqgrid-titlebar-close").hide();
+        });
+  
+        function getRFQ(id,caller)
+        {
+            $.ajax({
+                type:       "get",
+                url:        "getRFQ?rfqId="+id,
+                data:       {},
+                success:    function(msg) {
+                    var data = eval('('+msg+')');
+                    jQuery("#div_subject").html(data.title);
+                    jQuery("#div_sender").html(data.senderName);                
+                    jQuery("#div_senderCompany").html(data.senderCompanyName);                                        
+                    jQuery("#div_message").html(data.message);                         
+                    jQuery("#div_date").html(data.date);
+                    jQuery("#div_sentTo").html(data.sentTo);
+                    if(caller==1)
+                    {
+                        setIsRead(id,true);
+                        jQuery("#sentToCont").hide();
+                        jQuery("#senderCont").show();
+                        jQuery("#senderCompanyCont").show();
+                    }
+                    else
+                    {
+                        jQuery("#sentToCont").show();
+                        jQuery("#senderCont").hide();
+                        jQuery("#senderCompanyCont").hide();
+                    }
                 }
+            });
+        }
+        var shoulEmail = false;
+        function createRFQItemsGrid(rfqId,caller){
+            var editPrice = false;
+            var editQantity = false;
                 
+            if(caller==1){
+                shouldEmail = true;
+                editPrice = true;
+            }else{
+                shouldEmail = false;
+                editQantity = true;
             }
+                    
+            jQuery("#rfqItemsList").jqGrid('GridUnload');   
+            jQuery("#rfqItemsList").jqGrid({
+                url:'getRFQItemsList?rfqId='+rfqId,
+                datatype: "json",
+                cellEdit:true,
+                cellsubmit:'clientArray',
+                //cellurl:'updateRFQ',
+                //mtype:'POST',
+                height: 200,
+                colNames:['Part No','Manufacturer','BSIN','UPC/EAN','Condition','Price','Quantity'],
+                colModel:[
+                    //{name:'id',index:'id', width:125, align:"center"},
+                    {name:'cell.partNo',index:'inventory.partNo', width:125, align:"center",sortable:true},
+                    {name:'cell.manufacturer',index:'inventory.manufacturer', width:180, align:"center",sortable:true}, 
+                    {name:'cell.bsin',index:'bsin', width:125, align:"center"},                                                
+                    {name:'cell.upc_ean',index:'upc_ean', width:125, align:"center"},                                                
+                    {name:'cell.cond',index:'cond', width:100, align:"center",sortable:true},                        
+                    {name:'price',jsonmap:'cell.price',index:'price',label:'price', width:120, align:"center",sortable:true,editable:editPrice, edittype: 'text', editoptions: { size: 20, maxlength: 30}},                        
+                    {name:'quantity',jsonmap:'cell.quantity',index:'quantity', width:120, align:"center",sortable:true,editable:editQantity,edittype: 'text', editoptions: { size: 20, maxlength: 30}}                        
+                ],
+                rowNum:10,
+                rowList:[10,20,30],
+                pager: '#pager',
+                sortname: 'id',
+                viewrecords: true,
+                sortorder: "desc",
+                caption: "RFQ Items",
+                jsonReader : { 
+                    root: "rows", 
+                    page: "page", 
+                    total: "total", 
+                    records: "records", 
+                    repeatitems: false, 
+                    cell: "cell", 
+                    id: "id"
+                }
+            });
+            jQuery("#rfqItemsList").jqGrid('navGrid','#pager',{edit:true,add:false,del:true});
+        }
+        function setIsRead(id,val)
+        {
+            $.ajax({
+                type:       "get",
+                url:        "setRFQIsRead",
+                data:       {rfqId:id, value:val},
+                success:    function(msg) {
+                    jQuery("#rfqsListReceived").trigger('reloadGrid');
+                    jQuery("#rfqsListSent").trigger('reloadGrid');
+                }
+            });
+        }
+        function updateRFQ(elementId){
+
+            var changedCells = jQuery("#"+elementId).getChangedCells();
+            // alert(shouldEmail);
+            var sendEmail = false;
+               
+            for(var index in changedCells)
+            {
+                if(shouldEmail == true && index == changedCells.length-1)
+                {
+                    sendEmail = shouldEmail;
+                }
+                var price = changedCells[index].price;
+                var id = changedCells[index].id
+                var quantity = changedCells[index].quantity;
+                $.ajax({
+                    type:       "get",
+                    url:        "updateRFQ",
+                    data:       {"id":id, "price":price,"quantity":quantity,"shouldEmail":sendEmail},
+                    success:    function(msg) {
+                        jQuery("#"+elementId).trigger('reloadGrid');
+                        //  jQuery("#rfqsListSent").trigger('reloadGrid');
+                        jQuery("#dialog").dialog("close");
+                    }
+                });
+            }
+                
+        }
   
             
         </script>

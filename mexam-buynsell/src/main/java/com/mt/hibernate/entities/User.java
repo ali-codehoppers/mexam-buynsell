@@ -14,7 +14,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 @NamedQueries({
     @NamedQuery(name = "User.findByName", query = "select u from User u where u.firstName like ? or u.lastName like ?"),
     @NamedQuery(name = "User.findByEmail", query = "select u from User u where u.email = ? "),
-    @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username like ?")})
+    @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username like ?"),
+    @NamedQuery(name = "User.findByCompanyId", query = "select u from User u where u.companyId = ?")
+})
+
 public class User extends BaseEntity {
 
     @Expose

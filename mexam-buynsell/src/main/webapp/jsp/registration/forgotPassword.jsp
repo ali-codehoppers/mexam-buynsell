@@ -54,7 +54,7 @@
                     <% }%>
                     <br/>
                     <div>
-                        <form id="verifyEmail" name="verifyEmail" action="verifyEmailAddress">
+                        <form id="verifyEmail" name="verifyEmail" action="verifyEmailAddress" method="POST">
                             <b>Email</b>: <input type="text" name="email" />
                             <br/>
                             <br/>

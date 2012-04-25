@@ -160,7 +160,7 @@
        
             <!--      Vendor    -->
         <action name="viewVendor" class="com.mt.actions.vendor.ViewVendor">
-            <interceptor-ref name="basic"/>
+            <interceptor-ref name="membershipAuthenticated"/>
             <result name="success">jsp/vendor/viewVendor.jsp</result>
         </action>
         <action name="showMyVendors" class="com.mt.actions.vendor.ShowMyVendor">
@@ -312,10 +312,20 @@
             <interceptor-ref name="authenticated"/>
             <result name="success">jsp/user/userDashboard.jsp</result>
         </action>
-        <action name="editUser" class="com.mt.actions.DoNothing">
+        <action name="editUser" class="com.mt.actions.User.EditUser">
             <interceptor-ref name="authenticated"/>
+            <result name="password">jsp/user/editUser.jsp</result>
             <result name="success">jsp/user/editUser.jsp</result>
         </action>
+        <action name="saveEditUser" class="com.mt.actions.User.SaveEditUser">
+            <interceptor-ref name="authenticated"/>
+            <result name="success" type="redirect">editUser</result>
+        </action>        
+        <action name="saveEditPassword" class="com.mt.actions.User.SaveEditPassword">
+            <interceptor-ref name="authenticated"/>
+            <result name="fail" type="redirect">editUser?errorType=${errorType}</result>
+            <result name="success" type="redirect">editUser</result>
+        </action> 
 
         <!-- //     User    -->
 
@@ -335,7 +345,10 @@
             <interceptor-ref name="basic"/>
             <result name="success">jsp/company/viewCompany.jsp</result>
         </action>
-
+        <action name="saveEditCompany" class="com.mt.actions.Company.SaveEditCompany">
+            <interceptor-ref name="authenticated"/> 
+            <result name="success" type="redirect">editUser</result>
+        </action>
 
         <!-- //     Company    -->
 

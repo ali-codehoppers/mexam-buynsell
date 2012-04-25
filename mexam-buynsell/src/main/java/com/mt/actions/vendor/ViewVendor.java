@@ -5,6 +5,7 @@
 package com.mt.actions.vendor;
 
 import com.mt.hibernate.entities.Company;
+import com.mt.hibernate.entities.User;
 import com.mt.services.CompanyService;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -17,6 +18,7 @@ public class ViewVendor extends ActionSupport {
     private int companyId;
     private Company company;
     private CompanyService companyService;
+    private User user;
 
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
@@ -26,8 +28,15 @@ public class ViewVendor extends ActionSupport {
         this.companyService = companyService;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    
     public String execute() {
-        System.out.println(companyId);
+        if(companyId==0){
+            companyId = user.getCompanyId(); 
+        }
         company = companyService.getById(companyId);
         return SUCCESS;
     }

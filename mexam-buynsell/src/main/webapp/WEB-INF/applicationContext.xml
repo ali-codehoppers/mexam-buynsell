@@ -58,7 +58,7 @@
         </constructor-arg>
     </bean>
     
-    <!-- quartz beans >
+    <!-- quartz beans -->
     <bean id="forgotPasswordEmail" class="com.mt.emails.ForgotPasswordEmail">
         <constructor-arg>
             <ref bean="emailService"/>
@@ -154,8 +154,105 @@
             </list>
         </property>
     </bean>
+    <bean id="rfqRequestedEmail" class="com.mt.emails.RFQRequestedEmail">
+        <constructor-arg>
+            <ref bean="emailService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="userService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="rFQService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="templateService"/>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
-<! //quartz bean -->
+    <bean name="rfqRequestedJob"
+          class="org.springframework.scheduling.quartz.JobDetailBean">
+ 
+        <property name="jobClass" value="com.mt.jobs.RFQRequestedJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="rFQRequestedEmail" value-ref="rfqRequestedEmail" />
+            </map>
+        </property>
+ 
+    </bean>
+
+    <bean id="rfqRequestedTrigger"
+          class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		
+        <property name="jobDetail" ref="rfqRequestedJob" />
+        <property name="repeatInterval" value="120000" />
+        <property name="startDelay" value="60000" />
+		
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="rfqRequestedJob" />
+            </list>
+        </property>
+		
+        <property name="triggers">
+            <list>
+                <ref bean="rfqRequestedTrigger" />
+            </list>
+        </property>
+    </bean>
+        <bean id="rfqRespondedEmail" class="com.mt.emails.RFQRespondedEmail">
+        <constructor-arg>
+            <ref bean="emailService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="userService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="rFQService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="templateService"/>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="rfqRespondedJob"
+          class="org.springframework.scheduling.quartz.JobDetailBean">
+ 
+        <property name="jobClass" value="com.mt.jobs.RFQRespondedJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="rFQRespondedEmail" value-ref="rfqRespondedEmail" />
+            </map>
+        </property>
+ 
+    </bean>
+
+    <bean id="rfqRespondedTrigger"
+          class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		
+        <property name="jobDetail" ref="rfqRespondedJob" />
+        <property name="repeatInterval" value="120000" />
+        <property name="startDelay" value="60000" />
+		
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="rfqRespondedJob" />
+            </list>
+        </property>
+		
+        <property name="triggers">
+            <list>
+                <ref bean="rfqRespondedTrigger" />
+            </list>
+        </property>
+    </bean>
+<!-- quartz bean -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" >
         <property name="dataSource" ref="pooledDS"/>
         <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration"/>

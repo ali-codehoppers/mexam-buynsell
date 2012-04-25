@@ -20,6 +20,7 @@ public class SendRFQforItems extends AuthenticatedAction {
     private RFQService rFQService;
     private String jsonString;
     private RFQItemService rFQItemService;
+    private EmailService emailService;
     private List<Integer> partids;
     private String subject;
     private String message;
@@ -60,6 +61,10 @@ public class SendRFQforItems extends AuthenticatedAction {
         this.subject = subject;
     }
 
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
     @Override
     public String execute() throws Exception {
 
@@ -98,9 +103,17 @@ public class SendRFQforItems extends AuthenticatedAction {
         rfq.setCreatedBy(getUser().getId());
         rfq.setCreationDate(new Timestamp(System.currentTimeMillis()));
         rfq.setUpdatedBy(getUser().getId());
-
-        rFQService.addNew(rfq);
-
+        int rfqId = rFQService.addNew(rfq);
+        
+        Email email = new Email();
+        email.setIsSent(0);
+        email.setTransactionId(rfqId);
+        email.setType("RFQ_REQUESTED");
+        email.setCreatedBy((long)getUser().getId());
+        email.setUpdatedBy((long)getUser().getId());
+        email.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        email.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        emailService.addNew(email);
         List<RFQItem> rFQItems = new ArrayList<RFQItem>();
         for (CartItem cartItem : cartItems) {
             if (partids.contains(cartItem.getId())) {
