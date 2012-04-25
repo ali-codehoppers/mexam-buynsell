@@ -12,8 +12,10 @@ import com.mt.services.CompanyService;
 import com.mt.services.InventoryService;
 import com.mt.hibernate.entities.Company;
 import com.mt.hibernate.entities.Inventory;
-import com.mt.actions.Inventory.UploadLog;
-import com.mt.actions.ajaxActions.GetMyVendors;
+import com.mt.hibernate.entities.Part;
+import com.mt.hibernate.entities.SubCategory;
+import com.mt.services.PartService;
+import com.mt.util.BSINGenerator;
 import com.mt.util.RecordsJson;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class UploadInventory extends AuthenticatedAction implements SessionAware
     private Inventory inventory;
     private InventoryService inventoryService;
     private CompanyService companyService;
+    private PartService partService;
     private List<UploadLog> uploadLog;
     private String uploadLogJson;
     private Map session;
@@ -69,6 +72,10 @@ public class UploadInventory extends AuthenticatedAction implements SessionAware
         this.inventoryService = inventoryService;
     }
 
+    public void setPartService(PartService partService) {
+        this.partService = partService;
+    }
+
     public String execute() throws Exception {
         uploadLog = new ArrayList<UploadLog>();
         CsvReader inventoryFromCSV = new CsvReader(csvUpload.toString());
@@ -81,26 +88,29 @@ public class UploadInventory extends AuthenticatedAction implements SessionAware
             double price = Double.parseDouble(inventoryFromCSV.get("Price"));
             int quantity = Integer.parseInt(inventoryFromCSV.get("Quantity"));
             String description = inventoryFromCSV.get("Description");
+            String bsin = inventoryFromCSV.get("bsin");
+            String upc = inventoryFromCSV.get("upc_ean");
+            String nsn = inventoryFromCSV.get("nsn");
             Company company = companyService.getById(getUser().getCompanyId());
             boolean valid = true;
             if (quantity < 1) {
-                
+
                 valid = false;
             }
             if (partNo == null || partNo.length() < 1) {
-               
+
                 valid = false;
             }
             if (manufacturer == null || manufacturer.length() < 1) {
-                
+
                 valid = false;
             }
             if (condition == null || condition.length() < 1) {
-               
+
                 valid = false;
             }
             if (price <= 0) {
-                
+
                 valid = false;
             }
             UploadLog log = new UploadLog();
@@ -118,13 +128,17 @@ public class UploadInventory extends AuthenticatedAction implements SessionAware
                 List<String> searchStrings = new ArrayList<String>();
                 searchFields.add("manufacturer");
                 searchOpers.add("eq");
-                searchStrings.add("'"+manufacturer+"'");
+                searchStrings.add("'" + manufacturer + "'");
                 searchFields.add("partNo");
                 searchOpers.add("eq");
-                searchStrings.add("'"+partNo+"'");
+                searchStrings.add("'" + partNo + "'");
                 searchFields.add("cond");
                 searchOpers.add("eq");
-                searchStrings.add("'"+condition+"'");
+                searchStrings.add("'" + condition + "'");
+                searchFields.add("createdBy");
+                searchOpers.add("eq");
+                searchStrings.add("'" + getUser().getId() + "'");
+
                 List<Inventory> inventories = inventoryService.getBy(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers), "", "", 10, 1);
                 if (inventories.size() > 0) {
                     inventory = inventories.get(0);
@@ -136,6 +150,28 @@ public class UploadInventory extends AuthenticatedAction implements SessionAware
                     log.setStatus("Inventory Updated");
                     inventoryService.update(inventory);
                 } else {
+                    int partId = -1;
+                    List<Part> parts = partService.findByCode(upc, bsin, nsn);
+                    if (parts.size() > 0) {
+                        partId = parts.get(0).getId();
+                    } else {
+                        while (true) {
+                            bsin = BSINGenerator.getNext();
+                            if (partService.findByBSIN(bsin).isEmpty()) {
+                                break;
+                            }
+                        }
+                        Part part = new Part();
+                        part.setManufacturer(manufacturer);
+                        part.setDescription(description);
+                        part.setOverview(description);
+                        part.setPartNo(partNo);
+                        part.setBsin(bsin);
+                        part.setCreationDate(new Timestamp(System.currentTimeMillis()));
+                        part.setCreatedBy(getUser().getId());
+                        part.setUpdatedBy(getUser().getId());
+                        partId = partService.addNew(part);
+                    }
                     inventory = new Inventory();
                     inventory.setPartNo(partNo);
                     inventory.setDescription(description);
@@ -145,6 +181,8 @@ public class UploadInventory extends AuthenticatedAction implements SessionAware
                     inventory.setManufacturer(manufacturer);
                     inventory.setCompany(company);
                     inventory.setCreationDate(new Timestamp(System.currentTimeMillis()));
+                    inventory.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+                    inventory.setPartId((long)partId);
                     inventory.setCreatedBy(getUser().getId());
                     inventory.setUpdatedBy(getUser().getId());
                     inventoryService.addNew(inventory);

@@ -83,17 +83,12 @@ public class AddUser extends ActionSupport {
     public String execute() throws Exception {
 
         System.out.println("State Id : " + stateId);
-
-        
-        
         State state = stateService.getById(stateId);
-
         if (state == null) {
             System.out.println("State is null");
         }
         else
             System.out.println("State is "+state.getName());
-
         user = new User();
         user.setFirstName(name);
         user.setAddress(address);
@@ -103,7 +98,6 @@ public class AddUser extends ActionSupport {
         user.setEmail(email);
         user.setPassword(password);
         user.setUsername(userName);
-
         userervice.addNew(user);
         message = "User added sucessfully";
         return SUCCESS;

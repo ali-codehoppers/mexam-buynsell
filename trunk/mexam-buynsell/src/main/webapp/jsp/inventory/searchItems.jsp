@@ -164,9 +164,7 @@
              
             function submitForm()
             {
-                
-                
-                //$("#searchPart").submit();
+                $("#searchPart").submit();
             }
             
             function getItemHtml(item)
@@ -286,7 +284,7 @@
                                 <input name="searchString" class="field_big" style="font-size: 20px; height: 25px; padding: 5px; min-width: 80%;  border-radius:8px;" value="${searchString}"/>
                             </div>
                             <div style="float: left; width: 250px; margin: auto; height: 100px; padding: 5px">
-                                <a href="javascript:submitForm()" class="btn" style="width: 120px; text-align: center; padding: 2px; padding-top: 8px;">Search</a>
+                                <a href="javascript: $('#searchItem').submit();" class="btn" style="width: 120px; text-align: center; padding: 2px; padding-top: 8px;">Search</a>
                                 <!--<button value="Add Inventory" align="center" class="button">Submit</button>-->
                             </div>
                             <div style="clear: both"></div>

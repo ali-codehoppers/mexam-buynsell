@@ -141,9 +141,10 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
         if (rows != 0 && page != 0) {
             pageString = " LIMIT " + 5 + ", " + rows;
         }
-
+        
         //String qry=baseQuery+comaparisonString+sortString+pageString;
         String qry = baseQuery + comaparisonString + sortString;
+       // System.out.println(qry);
         MySQLDialect mySQLDialect;
 
         Query query;

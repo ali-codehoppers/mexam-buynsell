@@ -16,6 +16,7 @@ import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
 import java.math.*;
 import java.security.*;
+import java.util.List;
 
 public class Register extends ActionSupport implements SessionAware {
 
@@ -195,6 +196,11 @@ public class Register extends ActionSupport implements SessionAware {
             session.put("register_verifyEmail", "Email Addresses are not a match.");
             valid = false;
         }
+        List<User> emailUsers = userService.findByEmail(email);
+        if (emailUsers.size() > 0) {
+            session.put("register_verifyEmail", "Email already used");
+            valid = false;
+        }
         if (!valid) {
             return INPUT;
         }
@@ -202,7 +208,7 @@ public class Register extends ActionSupport implements SessionAware {
         MessageDigest mdEnc = MessageDigest.getInstance("MD5"); // Encryption algorithm
         mdEnc.update(password.getBytes(), 0, password.length());
         String md5Password = new BigInteger(1, mdEnc.digest()).toString(16);
-        
+
         State state = stateService.getById(stateVal);
         company = new Company();
         company.setName(name);

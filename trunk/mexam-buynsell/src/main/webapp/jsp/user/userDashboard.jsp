@@ -305,7 +305,7 @@
                         <div><%=((User) session.getAttribute("user")).getCompany().getCompanyCategory()%></div>
                         <div><b>Location</b>:</div>
                         <div><%=((User) session.getAttribute("user")).getCompany().getCity()%>, <%=((User) session.getAttribute("user")).getCompany().getState().getName()%></div>
-                        <div style="text-align: right;font-size: 10pt"><a href="#" class="dark">Edit</a></div>
+                        <div style="text-align: right;font-size: 10pt"><a href="editUser" class="dark">Edit</a></div>
                         <hr/><br/>
                         <div>Total Inventory: <s:property value="totalInventory" /></div>
                         <div>Favorite Vendors: <s:property value="totalVendors" /></div>

@@ -121,10 +121,19 @@
                         id: "id"
                     }
                 });
-                jQuery("#inventoryList").jqGrid('navGrid','#pager',{edit:true,editfunc:getInventoryItem,add:false,del:false})
+                jQuery("#inventoryList").jqGrid('navGrid','#pager',{edit:false,add:false,del:false})
                 //alert(conditions);
                 $("#tabs").tabs();
-                $('#prodImageCont a').lightBox();
+              // $('#prodImageCont a').lightBox();
+                var currId = "${companyId}";
+                var sessId = "${user.companyId}";
+                if(currId==sessId){
+                    jQuery("#actionButton").html('<a href="editUser" class="btn" style="margin-top: 25px; margin-bottom: 15px;min-width: 150px;text-align: center;">Settings</a>');
+                }else{
+                    jQuery("#actionButton").html('<a href="javascript:addVendor()" class="btn" style="margin-top: 25px; margin-bottom: 15px;min-width: 150px;text-align: center;">Add as My Vendor</a>');
+                }
+               
+                
             });
  
             
@@ -132,7 +141,9 @@
         <title>Buy & Sell</title>
     </head>
     <body>
-        <jsp:include page="../common/header.jsp" />
+        <jsp:include page="../common/header.jsp" >
+            <jsp:param name="currentTab" value="vendor"/>
+        </jsp:include>
 
         <div id="container" class="container" style="min-height: 335px;">
             <div id="content">
@@ -209,8 +220,8 @@
 
                         </table>
                     </div>
-                    <div style="float:left">
-                        <a href="javascript:addVendor()" class="btn" style="margin-top: 25px; margin-bottom: 15px;min-width: 150px;text-align: center;">Add as My Vendor</a>
+                    <div id="actionButton" style="float:left">
+                        
                     </div>
                 </div>
                 <div style="clear: both">

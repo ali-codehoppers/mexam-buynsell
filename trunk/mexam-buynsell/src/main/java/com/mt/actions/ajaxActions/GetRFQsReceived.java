@@ -88,7 +88,7 @@ public class GetRFQsReceived extends AuthenticatedAction {
 
         searchFields.add("receiverId");
         searchOpers.add("eq");
-        searchStrings.add("" + company.getId());
+        searchStrings.add("" + getUser().getId());
 
         rFQExtendeds = new ArrayList<RFQExtended>();
 //        if (searchField == null) {

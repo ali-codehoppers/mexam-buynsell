@@ -9,11 +9,10 @@ public class UserService {
 
     private IUserDao userDao;
 
-    public void setSessionFactory(SessionFactory sessionFactory)
-    {
+    public void setSessionFactory(SessionFactory sessionFactory) {
         userDao.setSessionFactory(sessionFactory);
     }
-    
+
     public UserService(IUserDao userDao) {
         this.userDao = userDao;
     }
@@ -21,12 +20,17 @@ public class UserService {
     public List<User> findByName(String name) {
         return userDao.findByName(name);
     }
+
     public List<User> findByEmail(String email) {
         return userDao.findByEmail(email);
     }
-    
+
     public List<User> findByUsername(String userName) {
         return userDao.findByUsername(userName);
+    }
+
+    public List<User> findByCompanyId(int companyId) {
+        return userDao.findByCompanyId(companyId);
     }
 
     public Integer addNew(User newInstance) {
