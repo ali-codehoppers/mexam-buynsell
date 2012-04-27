@@ -36,6 +36,7 @@
         <mapping class="com.mt.hibernate.entities.UserClientRating"/>                                                                                                              
         <mapping class="com.mt.hibernate.entities.Email"/>                                                                                                              
         <mapping class="com.mt.hibernate.entities.Template"/>                                                                                                              
+        <mapping class="com.mt.hibernate.entities.Message"/>                                                                                                              
         
     </session-factory>
 </hibernate-configuration>

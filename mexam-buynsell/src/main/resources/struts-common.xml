@@ -9,11 +9,13 @@
             <interceptor name="verifyAuthentication" class="com.mt.interceptor.Autherntication"/>
             <interceptor name="membershipAuthentication" class="com.mt.interceptor.MembershipAuthentication"/>
             <interceptor name="hibernateManagedSession" class="com.mt.interceptor.HibernateManagedSessionContext"/>
+            <interceptor name="checkNewMessages" class="com.mt.interceptor.CheckNewMessages"/>
 
             <interceptor-stack name="basic">                
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="hibernateManagedSession"/>
                 <interceptor-ref name="baseAuthenticationInterceptor"/>
+
             </interceptor-stack>
             
 <!--            <interceptor-stack name="basicAuthenticated">                
@@ -25,12 +27,14 @@
             <interceptor-stack name="authenticated">
                 <interceptor-ref name="basic"/>
                 <interceptor-ref name="verifyAuthentication"/>
+
             </interceptor-stack>
             
             <interceptor-stack name="membershipAuthenticated">
                 <interceptor-ref name="basic"/>
                 <interceptor-ref name="verifyAuthentication"/>
                 <interceptor-ref name="membershipAuthentication"/>
+               
             </interceptor-stack>
             
             

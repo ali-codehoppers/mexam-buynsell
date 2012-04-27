@@ -351,6 +351,12 @@
         </action>
 
         <!-- //     Company    -->
+        <!--     Message    -->
+        <action name="showMessages" class="com.mt.actions.Message.ShowMessages">
+            <interceptor-ref name="authenticated"/> 
+            <result name="success">jsp/message/showMessages.jsp</result>
+        </action>        
+        <!-- //     Message    -->
 
 
         <!--      Ajax Actions    -->
@@ -549,6 +555,22 @@
             <interceptor-ref name="authenticated"/>
             <result>jsp/common/ajax.jsp</result>
         </action> 
+        <action name="getMessages" class="com.mt.actions.ajaxActions.GetMessages">
+            <interceptor-ref name="authenticated"/>
+            <result>jsp/common/ajax.jsp</result>
+        </action>         
+        <action name="getMessageById" class="com.mt.actions.ajaxActions.GetMessageById">
+            <interceptor-ref name="authenticated"/>
+            <result>jsp/common/ajax.jsp</result>
+        </action> 
+        <action name="markMessageAsRead" class="com.mt.actions.ajaxActions.MarkMessageAsRead">
+            <interceptor-ref name="authenticated"/>
+            <result>jsp/common/ajax.jsp</result>
+        </action>     
+        <action name="deleteMessage" class="com.mt.actions.ajaxActions.DeleteMessage">
+            <interceptor-ref name="authenticated"/>
+            <result>jsp/common/ajax.jsp</result>
+        </action>           
         <!-- //     Ajax Actions    -->
 
         <action name="getImage" class="com.mt.actions.GetImage">
