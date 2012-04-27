@@ -516,7 +516,16 @@
             </bean>
         </property>
     </bean>
-
+    <bean id="messageDao" parent="abstractDaoFinderImp">
+        <property name="proxyInterfaces">
+            <value>com.mt.idao.IMessageDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoGeneric">
+                <constructor-arg value="com.mt.hibernate.entities.Message" />
+            </bean>
+        </property>
+    </bean>
 
     <bean id="categoryService" class="com.mt.services.CategoryService">
         <constructor-arg ref="categoryDao" />
@@ -597,5 +606,7 @@
     <bean id="templateService" class="com.mt.services.TemplateService">
         <constructor-arg ref="templateDao" />
     </bean>
-
+    <bean id="messageService" class="com.mt.services.MessageService">
+        <constructor-arg ref="messageDao" />
+    </bean>
 </beans>

@@ -209,11 +209,16 @@ li a {display:block;}
                             <li><a href="showRFQs">View RFQs</a></li>
                         </ul>
                     </li>
-                    <li class="hide">
-                        <a href="#">MESSAGES (0)</a>
+                    <%if (currentTab.equals("messages")) {%>
+                    <li class="navigation_radius">
+                        <%} else {%>
+                    <li>
+                        <% }%>
+                        <a href="#">MESSAGES (<span id="totalMessageCount">${totalMessageCount}</span>)</a>
                         <ul class="sub_menu" style="z-index: 99">
-                            <li><a href="#">User (0)</a></li>
-                            <li><a href="#">Buy-n-Sell (0)</a></li>
+                            <li><a href="showMessages?type=user">User (${userMessageCount})</a></li>
+                            <li><a href="showMessages?type=rfq">RFQ (${rfqMessageCount})</a></li>
+                            <li><a href="showMessages?type=bns">Buy-n-Sell (${bnsMessageCount})</a></li>
 
 
                         </ul>
