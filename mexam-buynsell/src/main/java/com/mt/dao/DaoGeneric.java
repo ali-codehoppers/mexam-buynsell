@@ -82,6 +82,15 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
         return (Long) query.uniqueResult();
     }
 
+    public long getRecordsCountIn(String searchField, String searchString) {
+        String baseQuery = "select count(obj) from " + type.getSimpleName() + " obj";
+        baseQuery += " WHERE " + searchField + " IN (" + searchString + ") ";
+        String qry = baseQuery;
+        Query query = getSession().createQuery(qry);
+        //query.setParameter(sortString, qry)
+        return (Long) query.uniqueResult();
+    }
+
     public boolean updateRecord(int id, String[] fieldName, String[] fieldValue) {
         String updateQuery = "";
         String baseQuery = "UPDATE " + type.getSimpleName();
@@ -141,10 +150,47 @@ public class DaoGeneric<T, PK extends Serializable> implements IDaoGeneric<T, PK
         if (rows != 0 && page != 0) {
             pageString = " LIMIT " + 5 + ", " + rows;
         }
-        
+
         //String qry=baseQuery+comaparisonString+sortString+pageString;
         String qry = baseQuery + comaparisonString + sortString;
-       // System.out.println(qry);
+        // System.out.println(qry);
+        MySQLDialect mySQLDialect;
+
+        Query query;
+        if (rows == 0) {
+            query = getSession().createQuery(qry);
+        } else {
+            query = getSession().createQuery(qry).setFirstResult((page - 1) * rows).setMaxResults(rows);
+        }
+
+
+        return query.list();
+    }
+
+    public List<T> getByIn(String searchField, String searchString, String sortField, String sortOrder, int rows, int page) {
+        //String qry = "select obj from " + type.getSimpleName() +" obj";
+
+        String sortString = "";
+        String pageString = "";
+
+        String baseQuery = "select obj from " + type.getSimpleName() + " obj";
+        baseQuery += " WHERE " + searchField + " IN (" + searchString + ") ";
+
+        if (sortField != null && sortField.length() > 0) {
+            if (sortOrder != null && sortOrder.length() > 0) {
+                sortString = " order by " + sortField + " " + sortOrder;
+            } else {
+                sortString = " order by " + sortField;
+            }
+        }
+
+        if (rows != 0 && page != 0) {
+            pageString = " LIMIT " + 5 + ", " + rows;
+        }
+
+        //String qry=baseQuery+comaparisonString+sortString+pageString;
+        String qry = baseQuery + sortString;
+        System.out.println(qry);
         MySQLDialect mySQLDialect;
 
         Query query;

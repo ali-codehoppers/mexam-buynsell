@@ -17,11 +17,12 @@ import java.util.List;
  *
  * @author Muaz
  */
-public class GetMessages extends AuthenticatedAction {
+public class GetMessagesLatest extends AuthenticatedAction {
 
+    private String jsonString = "";
+    private MessageService messageService;
     private int rows = 0;
     private int page = 0;
-    private String type;
     private String sidx;
     private String sord;
     private String searchField;
@@ -30,9 +31,7 @@ public class GetMessages extends AuthenticatedAction {
     private List<String> searchFields;
     private List<String> searchStrings;
     private List<String> searchOpers;
-    private String jsonString = "";
-    private MessageService messageService;
-    private List<MessageExtended> messagesExtended;
+        private List<MessageExtended> messagesExtended;
 
     public void setMessageService(MessageService messageService) {
         this.messageService = messageService;
@@ -44,6 +43,26 @@ public class GetMessages extends AuthenticatedAction {
 
     public void setRows(int rows) {
         this.rows = rows;
+    }
+
+    public void setSearchField(String searchField) {
+        this.searchField = searchField;
+    }
+
+    public void setSearchFields(List<String> searchFields) {
+        this.searchFields = searchFields;
+    }
+
+    public void setSearchOper(String searchOper) {
+        this.searchOper = searchOper;
+    }
+
+    public void setSearchOpers(List<String> searchOpers) {
+        this.searchOpers = searchOpers;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
     }
 
     public void setSearchStrings(List<String> searchStrings) {
@@ -58,10 +77,6 @@ public class GetMessages extends AuthenticatedAction {
         this.sord = sord;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String execute() throws Exception {
         searchFields = new ArrayList<String>();
         searchOpers = new ArrayList<String>();
@@ -70,9 +85,9 @@ public class GetMessages extends AuthenticatedAction {
         searchFields.add("sendToId");
         searchOpers.add("eq");
         searchStrings.add("" + getUser().getCompanyId());
-        searchFields.add("type");
+        searchFields.add("unread");
         searchOpers.add("eq");
-        searchStrings.add("'" + type + "'");
+        searchStrings.add("1");
         searchFields.add("deleted");
         searchOpers.add("eq");
         searchStrings.add("0");
@@ -88,8 +103,7 @@ public class GetMessages extends AuthenticatedAction {
         jsonString = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(recordsJson);
         return SUCCESS;
     }
-
-    public String getJsonString() {
+      public String getJsonString() {
         return jsonString;
     }
 
@@ -115,6 +129,7 @@ public class GetMessages extends AuthenticatedAction {
             this.setSubject(message.getSubject());
             this.setMessage(message.getMessage());
             this.setUnread(message.isUnread());
+            this.setType(message.getType());
             this.senderName=message.getSentBy().getFirstName()+" "+message.getSentBy().getLastName();
         }
 

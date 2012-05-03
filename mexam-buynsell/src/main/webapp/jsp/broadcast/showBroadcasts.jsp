@@ -18,16 +18,24 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                //var mydata = ${broadcastJson};                
+                //var mydata = ${broadcastJson};
+                $( "#radio" ).buttonset();   
+                generateGrid("getBroadcastsList");
+                
+            });
+            
+            function generateGrid(url)
+            {
+                jQuery("#broadcastList").jqGrid('GridUnload');   
                 jQuery("#broadcastList").jqGrid({
-                    url:'getBroadcastsList',
+                    url:url,
                     datatype: "json",
                     height: 250,
                     colNames:['Posted','Company','Part #','Manufacturer', 'Condition', 'Qty','Price','Notes/Description'],                    
                     colModel:[
                         {name:'cell.creationDate',index:'creationDate', width:180, align:"center"},                                                
                         {name:'cell.companyString',index:'companyString', width:150, align:"center"},                                                                        
-//                        {name:'cell.countryString',index:'countryString', width:120, align:"center"},                                                                                                
+                        //                        {name:'cell.countryString',index:'countryString', width:120, align:"center"},                                                                                                
                         {name:'cell.partNo',index:'partNo', width:150, align:"center"},                        
                         {name:'cell.manufacturer',index:'manufacturer', width:150},
                         {name:'cell.cond',index:'cond', width:100},                        
@@ -64,9 +72,17 @@
                     }
                 });
                 jQuery("#broadcastList").jqGrid('navGrid','#pager',{edit:false,add:false,del:false});
- 
-            });
-            
+            }
+            function testing(){
+                $.ajax({
+                    type:       "get",
+                    url:        "getBroadcastsFavorite",
+                    data:       {},
+                    success:    function(msg) {                    
+                        alert(msg);
+                    }
+                });
+            }
             
    
         </script>
@@ -79,16 +95,28 @@
         </jsp:include>
         <div id="container" class="container" style="min-height: 335px; width: 100%">
             <div id="content">
-                <div id="title"> 
-                    <div style="margin:auto">
-                        <h1 style="width: 100%; text-align: center" id="listTitle">Broadcasts</h1>
-                        <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
-                    </div>
+                <div style="text-align: center; width: 100%;margin-top: 25px;">
+                    <div id="radio">
+                        <input type="radio" id="radio1" name="radio" onclick="$('#search_bar').slideUp('slow');generateGrid('getBroadcastsList')" checked="checked" /><label for="radio1">From All</label>
+                        <input type="radio" id="radio2" name="radio" onclick="$('#search_bar').slideUp('slow');generateGrid('getBroadcastsFavorite')" /><label for="radio2">From Favorites</label>
+                        <input type="hidden" id="radio3" name="" onclick="$('#search_bar').slideDown('slow')" /><label for="radio3"></label>
+                    </div>  
                 </div>
+                <div id="search_bar" style="text-align: center; width: 100%;margin-top: 10px;display: none">
+                    <input type="text" class="search" style="width:150px;height: 22px;float:none;background-color: #D1D1D1" /> <a href="#" class="btn" style="float:none">Search</a>
+                </div>
+                <div style="">
+                    <div id="title"> 
+                        <div style="margin:auto">
+                            <h1 style="width: 100%; text-align: center" id="listTitle">Broadcasts</h1>
+                            <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
+                        </div>
+                    </div>
 
-                <div id="listContainer" style="margin: auto; width: 1090px;">
-                    <table id="broadcastList"></table>
-                    <div id="pager"></div>
+                    <div id="listContainer" style="margin: auto; width: 1090px;">
+                        <table id="broadcastList"></table>
+                        <div id="pager"></div>
+                    </div>
                 </div>
             </div>
         </div>

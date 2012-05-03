@@ -4,5 +4,5 @@ import com.mt.hibernate.entities.Broadcast;
 import java.util.List;
 
 public interface IBroadcastDao extends IDaoGeneric<Broadcast, Integer> {
-	List<Broadcast> findByName(String name);
+	List<Broadcast> findByFavorite(String companyIds);
 }

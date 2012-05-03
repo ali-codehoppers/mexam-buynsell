@@ -22,10 +22,14 @@ public interface IDaoGeneric<T, PK extends Serializable> {
     List<T> getAll();
 
     List<T> getBy(String[] searchFields, String[] searchStrings, String[] searchOperators, String sortField, String sortOrder, int rows, int page);
+    
+    List<T> getByIn(String searchField, String searchString, String sortField, String sortOrder, int rows, int page);
 
     List<T> getFullTextSearchBy(String[] searchFields, String searchString, String sortField, String sortOrder, int rows, int page);
 
     long getRecordsCount(String[] searchFields, String[] searchStrings, String[] searchOperators);
+   
+    long getRecordsCountIn(String searchField, String searchString);
     
     Session getSession();
     

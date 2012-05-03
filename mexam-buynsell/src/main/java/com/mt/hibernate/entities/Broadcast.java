@@ -8,6 +8,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @javax.persistence.Table(name = "broadcasts")
+@NamedQueries({
+    @NamedQuery(name = "Broadcast.findByFavorite", query = "select b from Vendor b where b.companyId IN(?)")
+})
 public class Broadcast extends BaseEntity {
 
     @Expose

@@ -122,9 +122,16 @@
             }
             function checkUserNameUniqueness(toSubmit){
                 var userName = jQuery("#userNameForm").val();
+
                 jQuery("#loader").attr("src","images/loader16.gif");
                 jQuery("#loader").show();
                 jQuery("#nameError").hide();
+                if($.trim(userName) == ""){
+                    isValidUserName = false;
+                    jQuery("#loader").attr("src","images/error.png"); 
+                    
+                    return;
+                }
                 $.ajax({
                     type:"post",
                     url:"checkUserName",
@@ -146,9 +153,9 @@
                 });
             }
             function validateEmailFormat(){
-            var patt = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
-            var email = jQuery("#email").val();
-            if(patt.test(email))
+                var patt = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
+                var email = jQuery("#email").val();
+                if(patt.test(email))
                 {
                     $("#validEmailMsg").hide();
                 }

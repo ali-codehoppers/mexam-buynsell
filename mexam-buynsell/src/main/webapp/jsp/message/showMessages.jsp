@@ -26,8 +26,7 @@
                     width:'450'
                 });
                 $( "#tabs" ).tabs(); 
-                var type='${type}';
-                window.location+= "#"+type+"-tab";
+
                 jQuery("#userMessages").jqGrid({
                     url:'getMessages?type=USER',
                     datatype: "json",
@@ -49,6 +48,10 @@
                     caption: "User Messages",
                     onSelectRow: function(ids) {
                         // getMessage(ids);
+                    },
+                    loadComplete:function(){
+                        jQuery("#messageId").val("0");
+                        closeMessage();
                     },
                     jsonReader : { 
                         root: "rows", 
@@ -83,6 +86,10 @@
                     onSelectRow: function(ids) {
                         // getMessage(ids);
                     },
+                    loadComplete:function(){
+                        jQuery("#messageId").val("0");
+                        closeMessage();
+                    },
                     jsonReader : { 
                         root: "rows", 
                         page: "page", 
@@ -94,9 +101,11 @@
                     }
                 });
                 jQuery("#rfqMessages").jqGrid('navGrid','#pager_rfq',{edit:false,add:false,del:true});
+                var type='${type}';
+                $("#"+type+"-tab").show();
             });
             function openMessage(cellvalue, options, rowObject){
-                return "<a href='javascript:getMessage("+cellvalue+")' class='btn' style='float:none'>Open</a>";
+                return "<a href='javascript:getMessage("+cellvalue+")' class='btn dark' style='float:none'>Open</a>";
             }
             function isNewFormatter (cellvalue, options, rowObject)
             {
@@ -137,9 +146,11 @@
                         $("#rfqMessageCount").html(data.rfqMessageCount);
                         $("#bnsMessageCount").html(data.bnsMessageCount);
                         $("#totalMessageCount").html(data.totalMessageCount);
-                        $("#userMessages").trigger('reloadGrid');
-                        $("#rfqMessages").trigger('reloadGrid');
-                        //$("#rfqMessages").trigger('reloadGrid');
+                        if(id!=0){
+                            $("#userMessages").trigger('reloadGrid');
+                            $("#rfqMessages").trigger('reloadGrid');
+                            //$("#rfqMessages").trigger('reloadGrid');
+                        }
                         $("#dialog").dialog("close");
                         
 
@@ -150,6 +161,10 @@
         <style type="text/css">
             .message th{
                 text-align: left;
+            }
+            a.dark:hover{
+                color:#666666;
+
             }
 
         </style>

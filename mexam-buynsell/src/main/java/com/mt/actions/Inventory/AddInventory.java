@@ -10,6 +10,8 @@ import com.mt.hibernate.entities.Inventory;
 import com.mt.services.CompanyService;
 import com.mt.services.InventoryService;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -73,7 +75,6 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
     public void setSession(Map map) {
         this.session = map;
     }
-    
 
     @Override
     public void validate() {
@@ -129,29 +130,53 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
             valid = false;
         }
 
-        if (!valid) 
-        {
+        if (!valid) {
             return INPUT;
         }
-
-
+        List<String> searchFields = new ArrayList<String>();
+        List<String> searchOpers = new ArrayList<String>();
+        List<String> searchStrings = new ArrayList<String>();
+        searchFields.add("manufacturer");
+        searchOpers.add("eq");
+        searchStrings.add("'" + manufacturer + "'");
+        searchFields.add("partNo");
+        searchOpers.add("eq");
+        searchStrings.add("'" + partNo + "'");
+        searchFields.add("cond");
+        searchOpers.add("eq");
+        searchStrings.add("'" + condition + "'");
+        searchFields.add("createdBy");
+        searchOpers.add("eq");
+        searchStrings.add("'" + getUser().getId() + "'");
         Company company = companyService.getById(getUser().getCompanyId());
-
-        inventory = new Inventory();
-        inventory.setPartNo(partNo);
-        inventory.setDescription(description);
-        inventory.setPrice(price);
-        inventory.setQuantity(quantity);
-        inventory.setCond(condition);
-        inventory.setManufacturer(manufacturer);
-        inventory.setCompany(company);
-        inventory.setPartId(partId);
-        inventory.setCreationDate(new Timestamp(System.currentTimeMillis()));
-        inventory.setCreatedBy(getUser().getId());
-        inventory.setUpdatedBy(getUser().getId());
-        inventoryService.addNew(inventory);
-
-        message = "Inventory added sucessfully";
+        List<Inventory> inventories = inventoryService.getBy(getStringArray(searchFields), getStringArray(searchStrings), getStringArray(searchOpers), "", "", 10, 1);
+        if (inventories.size() > 0) {
+            inventory = new Inventory();
+            inventory = inventories.get(0);
+            inventory.setDescription(description);
+            inventory.setQuantity(inventory.getQuantity() + quantity);
+            inventory.setPrice(price);
+            inventory.setUpdatedBy(getUser().getId());
+            inventory.setCompany(company);
+            message = "Inventory Updated";
+            inventoryService.update(inventory);
+        } else {
+            
+            inventory = new Inventory();
+            inventory.setPartNo(partNo);
+            inventory.setDescription(description);
+            inventory.setPrice(price);
+            inventory.setQuantity(quantity);
+            inventory.setCond(condition);
+            inventory.setManufacturer(manufacturer);
+            inventory.setCompany(company);
+            inventory.setPartId(partId);
+            inventory.setCreationDate(new Timestamp(System.currentTimeMillis()));
+            inventory.setCreatedBy(getUser().getId());
+            inventory.setUpdatedBy(getUser().getId());
+            inventoryService.addNew(inventory);
+            message = "Inventory added sucessfully";
+        }
         return SUCCESS;
     }
 
@@ -198,5 +223,8 @@ public class AddInventory extends AuthenticatedAction implements SessionAware {
     public Long getPartId() {
         return partId;
     }
-    
+
+    private String[] getStringArray(List<String> list) {
+        return list.toArray(new String[list.size()]);
+    }
 }
