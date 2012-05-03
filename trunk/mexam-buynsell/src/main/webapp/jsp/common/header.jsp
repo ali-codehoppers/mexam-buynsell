@@ -214,14 +214,14 @@ li a {display:block;}
                         <%} else {%>
                     <li>
                         <% }%>
-                        <a href="#">MESSAGES (<span id="totalMessageCount">${totalMessageCount}</span>)</a>
-                        <ul class="sub_menu" style="z-index: 99">
+                        <a href="showMessages">MESSAGES (<span id="totalMessageCount">${totalMessageCount}</span>)</a>
+                        <!--<ul class="sub_menu" style="z-index: 99">
                             <li><a href="showMessages?type=user">User (${userMessageCount})</a></li>
                             <li><a href="showMessages?type=rfq">RFQ (${rfqMessageCount})</a></li>
                             <li><a href="showMessages?type=bns">Buy-n-Sell (${bnsMessageCount})</a></li>
 
 
-                        </ul>
+                        </ul>-->
                     </li>
                     <% }%>
 

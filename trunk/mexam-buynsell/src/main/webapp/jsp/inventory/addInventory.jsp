@@ -178,7 +178,7 @@
                 $("#partNo").val("");
                 $("#bsin").val("");
                 $("#partId").val("0");
-                if(upc_ean.length>12)
+                if(upc_ean.length>11)
                 {
                     $("#manufacturer").attr('readonly', true);
                     $("#partNo").attr('readonly', true);
@@ -195,6 +195,7 @@
                             var isFilled=false;
                             if(msg.length>0)
                             {
+                               alert(msg);
                                 var data = eval('('+msg+')');
                                 if(data!=null)
                                 {
@@ -203,6 +204,7 @@
                                     $("#partNo").val(data["partNo"]);
                                     $("#partId").val(data["id"]);
                                     $("#bsin").val(data["bsin"]);
+                                    $("#description").val(data["description"]);
                                 }
                             }
                             if(!isFilled)
@@ -265,6 +267,24 @@
                     }
                 })
             }
+            function validateFormInventory(){
+                var price = jQuery("#inventoryPrice").val();
+                var quantity = jQuery("#inventoryQuantity").val();
+                var hasError = true;    
+                if(!parseFloat(price)){
+                    jQuery("#errorPrice").html("Price is not a valid number");
+                    hasError = false;
+                }
+                else
+                    jQuery("#errorPrice").html("");
+                if(!parseInt(quantity)){
+                    jQuery("#errorQuantity").html("Quantity is not a valid number");
+                    hasError = false;
+                }else
+                    jQuery("#errorQuantity").html("");
+
+                return hasError;
+            }
 
         </script>
         <title>Buy & Sell</title>
@@ -289,7 +309,7 @@
                 </div>
 
                 <div id="formContainder">
-                    <form id ="formInventory" method="POST" action="addInventory">
+                    <form id ="formInventory" method="POST" action="addInventory" onsubmit="return validateFormInventory();">
                         <div>
                             <input id="partId" name="partId" value="${partId}" type="hidden"/>
                             <div>
@@ -388,9 +408,9 @@
                                     </div>                        
                                     <div style="float: left; width: 48%; margin: 5px;">      
                                         <div style="float: left;">    
-                                            <input name="price" class="field_big"/>
+                                            <input id="inventoryPrice" name="price" class="field_big"/>
                                         </div>
-                                        <div style="float: left;" class="fieldError">  
+                                        <div style="float: left;" class="fieldError" id="errorPrice">  
                                             <ch:errortag name="addInventory_price"></ch:errortag>
                                         </div>
                                         <div style="clear: both"></div> 
@@ -403,9 +423,9 @@
                                     </div>                        
                                     <div style="float: left; width: 48%; margin: 5px;"> 
                                         <div style="float: left;">    
-                                            <input name="quantity" class="field_big"/>
+                                            <input id="inventoryQuantity" name="quantity" class="field_big"/>
                                         </div>
-                                        <div style="float: left;" class="fieldError">                        
+                                        <div style="float: left;" class="fieldError" id="errorQuantity">                        
                                             <ch:errortag name="addInventory_quantity"></ch:errortag>
                                         </div>
                                         <div style="clear: both"></div> 
@@ -418,7 +438,7 @@
                                     </div>                        
                                     <div style="float: left; width: 48%; margin: 5px;">
                                         <div style="float: left;">    
-                                            <textarea name="description" class="field_big" rows="3" style="height: 50px; min-width: 250px"></textarea>
+                                            <textarea name="description" id="description" class="field_big" rows="3" style="height: 50px; min-width: 250px"></textarea>
                                         </div>
                                         <div style="float: left;" class="fieldError">                        
                                             <ch:errortag name="addInventory_description"></ch:errortag>

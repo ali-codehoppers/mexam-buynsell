@@ -35,6 +35,7 @@
         <action name="login" class="com.mt.actions.Login.Login">
             <interceptor-ref name="basic"/>
             <result name="success" type="redirect">userDashboard</result>
+            <result name="expired" type="redirect">home</result>
             <result name="input">jsp/login/login.jsp</result>
             <interceptor-ref name="cookie">
                 <param name="cookiesName">userCookie</param>
@@ -571,6 +572,18 @@
             <interceptor-ref name="authenticated"/>
             <result>jsp/common/ajax.jsp</result>
         </action>           
+        <action name="getMessagesLatest" class="com.mt.actions.ajaxActions.GetMessagesLatest">
+            <interceptor-ref name="authenticated"/>
+            <result>jsp/common/ajax.jsp</result>
+        </action>
+        <action name="getMessagesWeek" class="com.mt.actions.ajaxActions.GetMessagesWeek">
+            <interceptor-ref name="authenticated"/>
+            <result>jsp/common/ajax.jsp</result>
+        </action>    
+        <action name="getBroadcastsFavorite" class="com.mt.actions.ajaxActions.GetBroadcastsFavorite">
+            <interceptor-ref name="authenticated"/>
+            <result>jsp/common/ajax.jsp</result>
+        </action> 
         <!-- //     Ajax Actions    -->
 
         <action name="getImage" class="com.mt.actions.GetImage">

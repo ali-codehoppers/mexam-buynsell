@@ -110,8 +110,11 @@ public class Login extends ActionSupport implements CookiesAware, ServletRespons
                     session.put("user", userList.get(i));
 
 
-
-                    return SUCCESS;
+                    if (user.getCompany().isIsExpired()) {
+                        return "expired";
+                    } else {
+                        return SUCCESS;
+                    }
                 }
             }
             error = "The username or password you entered is incorrect.";

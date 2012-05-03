@@ -30,9 +30,13 @@ public class MarkMessageAsRead extends AuthenticatedAction {
     }
 
     public String execute() throws Exception {
-        Message message = messageService.getById(id);
-        message.setUnread(false);
-        messageService.addOrUpdate(message);
+        if (id != 0) {
+            Message message = messageService.getById(id);
+            if (message.isUnread()) {
+                message.setUnread(false);
+                messageService.addOrUpdate(message);
+            }
+        }
         List<Message> messages = messageService.findCountByType(getUser().getCompanyId());
         HashMap hashMap = new HashMap();
         long totalMessageCount = 0;

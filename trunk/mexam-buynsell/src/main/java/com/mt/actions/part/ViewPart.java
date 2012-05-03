@@ -16,7 +16,7 @@ public class ViewPart extends ActionSupport {
     private String message;
     private Part part;
     private PartService partService;
-    
+    private String msg = "Not Defined";
     public void setPartId(int partId) {
         this.partId = partId;
     }
@@ -61,4 +61,10 @@ public class ViewPart extends ActionSupport {
     public String getMessage() {
         return message;
     }
+
+    public String getMsg() {
+        return msg;
+    }
+
+
 }

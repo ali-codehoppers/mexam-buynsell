@@ -46,7 +46,7 @@
                         height: 250,
                         colNames:['Part No','Manufacturer','BSIN','UPC/EAN', 'Condition', 'Quantity','Price','Description'],
                         colModel:[
-                           // {name:'cell.id',index:'id', width:55,searchtype:"number", align:"center"},                                                
+                            // {name:'cell.id',index:'id', width:55,searchtype:"number", align:"center"},                                                
                             {name:'cell.partNo',index:'partNo',editable:true, width:100, align:"center"},                        
                             {name:'cell.manufacturer',editable:true,index:'manufacturer', width:150},
                             {name:'cell.bsin',index:'bsin', width:100, align:"center"},                                                
@@ -225,6 +225,29 @@
                 {
                     $("#formInventory").submit();
                 }
+                function validateFormInventory(){
+                    var price = jQuery("#price").val();
+                    var quantity = jQuery("#quantity").val();
+                    var hasError = true;
+                    if(!parseFloat(price)){
+                        jQuery("#errorPrice").html("Price is not a valid number");
+                        jQuery("#errorPrice").show();
+                        hasError = false;
+                    }
+                    else{
+                        jQuery("#errorPrice").html("");
+                        jQuery("#errorPrice").hide();    
+                    }
+                    if(!parseInt(quantity)){
+                        jQuery("#errorQuantity").html("Quantity is not a valid number");
+                        jQuery("#errorQuantity").show();
+                        hasError = false;
+                    }else{
+                        jQuery("#errorQuantity").html("");
+                        jQuery("#errorQuantity").hide();
+                    }
+                    return hasError;
+                }
         </script>
         <title>Buy & Sell</title>
     </head>
@@ -255,7 +278,7 @@
                 <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
             </div>
             <div id="formContainder">
-                <form id ="formInventory" method="POST" action="updateInventoryItem">
+                <form id ="formInventory" method="POST" action="updateInventoryItem" onsubmit="return validateFormInventory();">
                     <div>
                         <input type="hidden" id="id" name="id" value="${id}"/>
                         <div>
@@ -311,7 +334,7 @@
                                     <div style="float: left;">    
                                         <input id="price" name="price" class="field_big" value="${price}"/>
                                     </div>
-                                    <div style="float: left;" class="fieldError">  
+                                    <div id="errorPrice" style="float: left;" class="fieldError">  
                                         <ch:errortag name="udpateInventory_price"></ch:errortag>
                                     </div>
                                     <div style="clear: both"></div> 
@@ -326,7 +349,7 @@
                                     <div style="float: left;">    
                                         <input id="quantity" name="quantity" value="${quantity}" class="field_big"/>
                                     </div>
-                                    <div style="float: left;" class="fieldError">                        
+                                    <div id="errorQuantity" style="float: left;" class="fieldError">                        
                                         <ch:errortag name="updateInventory_quantity"></ch:errortag>
                                     </div>
                                     <div style="clear: both"></div> 

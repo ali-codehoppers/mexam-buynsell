@@ -183,7 +183,29 @@
                 subCatId=value;
                 $("#subCategoryId").val(value);
             }
-
+                function validateFormInventory(){
+                    var price = jQuery("#price").val();
+                    var quantity = jQuery("#quantity").val();
+                    var hasError = true;
+                    if(!parseFloat(price)){
+                        jQuery("#errorPrice").html("Price is not a valid number");
+                        jQuery("#errorPrice").show();
+                        hasError = false;
+                    }
+                    else{
+                        jQuery("#errorPrice").html("");
+                        jQuery("#errorPrice").hide();    
+                    }
+                    if(!parseInt(quantity)){
+                        jQuery("#errorQuantity").html("Quantity is not a valid number");
+                        jQuery("#errorQuantity").show();
+                        hasError = false;
+                    }else{
+                        jQuery("#errorQuantity").html("");
+                        jQuery("#errorQuantity").hide();
+                    }
+                    return hasError;
+                }
         </script>
         <title>Buy & Sell</title>
     </head>
@@ -207,7 +229,7 @@
                 </div>
 
                 <div id="formContainder">
-                    <form id ="addBroadcast" method="POST" action="addBroadcast">
+                    <form id ="addBroadcast" method="POST" action="addBroadcast" onsubmit="return validateFormInventory();">
                         <div>
                             <div>
                                 <div style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">                        
@@ -301,9 +323,9 @@
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
                                     <div style="float: left;">   
-                                        <input name="price" class="field_big"/>
+                                        <input id="price" name="price" class="field_big"/>
                                     </div>
-                                    <div style="float: left;" class="fieldError">                        
+                                    <div id="errorPrice" style="float: left;" class="fieldError">                        
                                         <ch:errortag name="addBroadcast_price"></ch:errortag>
                                     </div>
                                     <div style="clear: both"></div> 
@@ -315,9 +337,9 @@
                                 </div>                        
                                 <div style="float: left; width: 48%; margin: 5px;">                        
                                     <div style="float: left;">   
-                                        <input name="quantity" class="field_big"/>
+                                        <input id="quantity" name="quantity" class="field_big"/>
                                     </div>
-                                    <div style="float: left;" class="fieldError">                        
+                                    <div id="errorQuantity" style="float: left;" class="fieldError">                        
                                         <ch:errortag name="addBroadcast_quantity"></ch:errortag>
                                     </div>
                                     <div style="clear: both"></div> 

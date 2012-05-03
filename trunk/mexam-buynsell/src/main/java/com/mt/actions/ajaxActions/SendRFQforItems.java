@@ -21,10 +21,11 @@ public class SendRFQforItems extends AuthenticatedAction {
     private String jsonString;
     private RFQItemService rFQItemService;
     private EmailService emailService;
+    private MessageService messageService;
     private List<Integer> partids;
     private String subject;
     private String message;
-    
+
     public void setVendorId(int vendorId) {
         this.vendorId = vendorId;
     }
@@ -63,6 +64,10 @@ public class SendRFQforItems extends AuthenticatedAction {
 
     public void setEmailService(EmailService emailService) {
         this.emailService = emailService;
+    }
+
+    public void setMessageService(MessageService messageService) {
+        this.messageService = messageService;
     }
 
     @Override
@@ -104,16 +109,32 @@ public class SendRFQforItems extends AuthenticatedAction {
         rfq.setCreationDate(new Timestamp(System.currentTimeMillis()));
         rfq.setUpdatedBy(getUser().getId());
         int rfqId = rFQService.addNew(rfq);
-        
+
+
+
         Email email = new Email();
         email.setIsSent(0);
         email.setTransactionId(rfqId);
         email.setType("RFQ_REQUESTED");
-        email.setCreatedBy((long)getUser().getId());
-        email.setUpdatedBy((long)getUser().getId());
-        email.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        email.setCreatedBy((long) getUser().getId());
+        email.setUpdatedBy((long) getUser().getId());
+           email.setCreationDate(new Timestamp(System.currentTimeMillis()));
         email.setUpdateDate(new Timestamp(System.currentTimeMillis()));
         emailService.addNew(email);
+
+        Message message = new Message();
+        message.setType("RFQ");
+        message.setSubject("RFQ Requested");
+        message.setMessage("Hello, <br/> I have sent you a request for quotation. Kindly reply to it");
+        message.setSendTo(receiver);
+        message.setSentBy(getUser());
+        message.setUnread(true);
+        message.setDeleted(false);
+        message.setCreatedBy((long) getUser().getId());
+        message.setUpdatedBy((long) getUser().getId());
+        message.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        message.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        messageService.addNew(message);
         List<RFQItem> rFQItems = new ArrayList<RFQItem>();
         for (CartItem cartItem : cartItems) {
             if (partids.contains(cartItem.getId())) {

@@ -17,10 +17,16 @@
                 font-weight: bold!important;
                 font-size: 1.5em!important;
                 padding: 8px;
+                color: #4B4B4B;
+            }
+            .heading{
+                font-weight: bold!important;
+                font-size: 1em!important;
+                /*padding: 8px;*/
                 color: #083152;
             }
             #prodLongDesc
-            {
+            { 
                 font-size: 1.2em!important;
                 padding: 8px;
                 text-align:justify;
@@ -87,7 +93,7 @@
 
                 <div id="title"> 
                     <div style="margin:auto">
-                        <h1 style="width: 100%; text-align: center" id="listTitle"><s:property value="part.partNo" /></h1>
+                        <h1 style="width: 100%; text-align: center" id="listTitle"><s:property value="part.manufacturer" escape="false"/> <s:property value="part.name" escape="false"/> <s:property value="part.partNo" escape="false"/></h1>
                         <img style="width: 100%; text-align: center" src="images/under_line.jpg" width="553" height="16" alt="" />
                     </div>
                 </div>
@@ -103,72 +109,42 @@
                             <img src='images/no-product-image.jpg'/>
                         </s:else>
                     </div>
-
-                    <div id="prodDescCont" style="float: left">
-                        <div id="prodDesc" style="text-align: left">
-                            <s:property value="part.description" escape="false"/><br>
-                        </div>
-
-                        <div id="prodLongDesc" style="max-width: 530px">
-                            <s:property value="part.overview" escape="false"/><br>
+                    <div>
+                        <div id="prodDescCont" style="float: left">
+                            <div id="prodDesc" style="text-align: left">
+                                <s:property value="part.overview" escape="false"/>
+                            </div>
+                            <div>
+                                <div class="heading">
+                                    Features
+                                </div>
+                                <div><s:if test="%{!part.features.equals('')}">${part.features}</s:if><s:else>${msg}</s:else></div>
+                                <br/>
+                                <div class="heading">
+                                    Specifications
+                                </div>
+                                <div><s:if test="%{!part.specifications.equals('')}">${part.specifications}</s:if><s:else>${msg}</s:else></div>
+                                <br/>
+                                <div id="prodDescCont" style="float: left">
+                                    <div class="heading">
+                                        Codes
+                                    </div>
+                                    <div><b>BSIN:</b><s:if test="%{!part.bsin.equals('')}">${part.bsin}</s:if><s:else>${msg}</s:else></div>
+                                    <div><b>UPC/EAN:</b><s:if test="%{!part.upc_ean.equals('')}">${part.upc_ean}</s:if><s:else>${msg}</s:else></div>
+                                    <div><b>NSN:</b><s:if test="%{!part.nsn.equals('')}">${part.nsn}</s:if><s:else>${msg}</s:else></div>
+                                </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
-
                 <div style="clear: both">
-                </div>
-                <div id="tabs">
-                    <ul>
-                        <li><a href="#productInfo"><span>Product Information</span></a></li>
-                        <li><a href="#parts"><span>Parts & Pricing</span></a></li>
-                        <li><a href="#docs"><span>Related Documents</span></a></li>
-                        <li><a href="#reviews"><span>Customer Reviews</span></a></li>
-                        <li><a href="#questions"><span>Products Q&A</span></a></li>
-                    </ul>
-                    <div id="productInfo">
-                        <div style="text-align: left; margin-top: 10px; padding-top: 15px">
-                            <div class="prodDescTitle">
-                                Features 
-                            </div>
-                            <div style="padding: 8px" class="prodDescContent">
-                                <s:property value="part.features" escape="false"/>
-                            </div>
-
-                            <div class="prodDescTitle">
-                                Specifications
-                            </div>
-                            <div style="padding: 8px" class="prodDescContent">
-                                <s:property value="part.specifications" escape="false"/>
-                            </div>
-
-                            <div style="clear: both">
-                            </div>
-                        </div>
-                    </div>
-                    <div id="parts" style="min-height: 300px">
-
-
-                    </div>
-                    <div id="docs" style="min-height: 300px">
-
-
-                    </div>
-                    <div id="reviews" style="min-height: 300px">
-
-                        <div style="clear: both"></div>
-                    </div>
-                    <div id="questions" style="min-height: 300px">
-
-                    </div>
                 </div>
                 <div style="clear: both">
                 </div>
             </div>
 
         </div>
-    </div>
+        <jsp:include page="../common/footer.jsp" />
 
-    <jsp:include page="../common/footer.jsp" />
-
-</body>
+    </body>
 </html>

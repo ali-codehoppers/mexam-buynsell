@@ -138,61 +138,71 @@ public class Register extends ActionSupport implements SessionAware {
 
         boolean valid = true;
 
-        if (name == null || name.length() == 0) {
+        if (name == null || name.trim().length() == 0) {
             session.put("register_name", "Name is required.");
             valid = false;
         }
 
 
-        if (address == null || address.length() == 0) {
+        if (address == null || address.trim().length() == 0) {
             session.put("register_address", "Address is required.");
             valid = false;
         }
 
-        if (city == null || city.length() == 0) {
+        if (city == null || city.trim().length() == 0) {
             session.put("register_city", "City is required.");
             valid = false;
         }
-
+        if (zip == null || zip.trim().length() == 0) {
+            session.put("register_zip", "Zip is required.");
+            valid = false;
+        } else if (!isNumeric(zip)) {
+            session.put("register_zip", "Zip should be number.");
+            valid = false;
+        }
         if (stateVal == 0) {
             session.put("register_state", "State is required.");
             valid = false;
         }
 
-        if (phoneNo == null || phoneNo.length() == 0) {
+        if (phoneNo == null || phoneNo.trim().length() == 0) {
             session.put("register_phoneNo", "Phone number is required.");
             valid = false;
         }
 
-        if (companyCategory == null || companyCategory.length() == 0) {
+        if (companyCategory == null || companyCategory.trim().length() == 0) {
             session.put("register_companyCategory", "Company category is required.");
             valid = false;
         }
 
-        if (firstName == null || firstName.length() == 0) {
+        if (firstName == null || firstName.trim().length() == 0) {
             session.put("register_firstName", "First name is required.");
             valid = false;
         }
 
-        if (lastName == null || lastName.length() == 0) {
+        if (lastName == null || lastName.trim().length() == 0) {
             session.put("register_lastName", "Last name is required.");
             valid = false;
         }
 
-        if (userName == null || userName.length() == 0) {
+        if (userName == null || userName.trim().length() == 0) {
             session.put("register_userName", "Username is required.");
             valid = false;
         }
-        if (password == null || password.length() == 0) {
+        if (password == null || password.trim().length() == 0) {
             session.put("register_password", "Password is required.");
             valid = false;
         }
 
-        if (verifyPassword == null || verifyPassword.length() == 0 || password.compareTo(verifyPassword) != 0) {
+        if (verifyPassword == null || verifyPassword.trim().length() == 0 || password.compareTo(verifyPassword) != 0) {
             session.put("register_verifyPassword", "Both passwords do not match.");
             valid = false;
         }
-        if (verifyEmail == null || verifyEmail.length() == 0 || email.compareTo(verifyEmail) != 0) {
+        if (email == null || email.trim().length() == 0) {
+            session.put("register_verifyPassword", "Email is required");
+            valid = false;
+        }
+        if (verifyEmail == null || verifyEmail.trim().length() == 0 || email.compareTo(verifyEmail) != 0) {
             session.put("register_verifyEmail", "Email Addresses are not a match.");
             valid = false;
         }
@@ -250,5 +260,9 @@ public class Register extends ActionSupport implements SessionAware {
 
     public String getMessage() {
         return message;
+    }
+
+    public static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(.\\d+)?");
     }
 }

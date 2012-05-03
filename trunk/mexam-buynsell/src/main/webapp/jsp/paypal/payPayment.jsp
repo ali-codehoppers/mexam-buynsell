@@ -73,8 +73,22 @@
         %>
 
         <script type="text/javascript">
-            var error = "<%=error%>";           
+            var error = "<%=error%>";   
+            var countries = eval(${countriesJson});
+            var countryId = "${user.company.state.country.id}";
+            var state = "${user.company.stateId}";
             $(document).ready(function () {
+                countriesHtml="";
+                for (var i = 0; i< countries.length; i++) {
+                    var select = "";
+                    if(countryId==countries[i].id){
+                        select = "selected=selected";
+                    }
+                    countriesHtml += '<option value="' + countries[i].id + '" '+select+'>' + countries[i].name + '</option>';
+                }
+                $("#billingCountry").html(countriesHtml);
+                $("#shippingCountry").html(countriesHtml);
+                populateStates(countryId);
                 if(error == "paymenterror"){
                     jQuery("#errorMsg").html("Invalid Credit Card Number or Credit Card Verification Code.");
                     jQuery('#messageContainer').show();
@@ -100,6 +114,31 @@
                     }
                 });
             });
+            function populateStates(country){
+                if(country && country > 0)
+                {
+                    $.ajax({
+                        type:       "get",
+                        url:        "getStates",
+                        data:       {countryId: country},
+                        success:    function(msg) {
+                            var data = eval('('+msg+')');
+                            var html = "";
+                            var len = data.length;
+                            for (var i = 0; i< len; i++) {
+                                var select = "";
+                                if(state==data[i].id){
+                                    select = "selected=selected";
+                                }
+                                html += '<option value="' + data[i].id + '" '+select+'>' + data[i].name + '</option>';
+                            }
+                            $('#shippingState').html(html);
+                            $('#billingState').html(html);
+                        }
+                    });
+                }
+                return false;
+            }
             function copyAddress(obj){
                 if(obj.checked){
                     jQuery("#shippingAddress1").val(jQuery("#billingAddress1").val());
@@ -361,70 +400,8 @@
                             </div>                        
                             <div style="float: left; width: 48%; margin: 5px;"> 
                                 <div style="float: left;">    
-                                    <select name="billingState" id="billingState" class="field_big" style="width: 50px;" >
-                                        <option></option>
-                                        <option value="AK">AK</option>
-                                        <option value="AL">AL</option>
-                                        <option value="AR">AR</option>
-                                        <option value="AZ">AZ</option>
-                                        <option value="CA">CA</option>
-                                        <option value="CO">CO</option>
-                                        <option value="CT">CT</option>
-                                        <option value="DC">DC</option>
-                                        <option value="DE">DE</option>
-                                        <option value="FL">FL</option>
-                                        <option value="GA">GA</option>
-                                        <option value="HI">HI</option>
-                                        <option value="IA">IA</option>
-                                        <option value="ID">ID</option>
-                                        <option value="IL">IL</option>
-                                        <option value="IN">IN</option>
-                                        <option value="KS">KS</option>
-                                        <option value="KY">KY</option>
-                                        <option value="LA">LA</option>
-                                        <option value="MA">MA</option>
-                                        <option value="MD">MD</option>
-                                        <option value="ME">ME</option>
-                                        <option value="MI">MI</option>
-                                        <option value="MN">MN</option>
-                                        <option value="MO">MO</option>
-                                        <option value="MS">MS</option>
-                                        <option value="MT">MT</option>
-                                        <option value="NC">NC</option>
-                                        <option value="ND">ND</option>
-                                        <option value="NE">NE</option>
-                                        <option value="NH">NH</option>
-                                        <option value="NJ">NJ</option>
-                                        <option value="NM">NM</option>
-                                        <option value="NV">NV</option>
-                                        <option value="NY">NY</option>
-                                        <option value="OH">OH</option>
-                                        <option value="OK">OK</option>
-                                        <option value="OR">OR</option>
-                                        <option value="PA">PA</option>
-                                        <option value="RI">RI</option>
-                                        <option value="SC">SC</option>
-                                        <option value="SD">SD</option>
-                                        <option value="TN">TN</option>
-                                        <option value="TX">TX</option>
-                                        <option value="UT">UT</option>
-                                        <option value="VA">VA</option>
-                                        <option value="VT">VT</option>
-                                        <option value="WA">WA</option>
-                                        <option value="WI">WI</option>
-                                        <option value="WV">WV</option>
-                                        <option value="WY">WY</option>
-                                        <option value="AA">AA</option>
-                                        <option value="AE">AE</option>
-                                        <option value="AP">AP</option>
-                                        <option value="AS">AS</option>
-                                        <option value="FM">FM</option>
-                                        <option value="GU">GU</option>
-                                        <option value="MH">MH</option>
-                                        <option value="MP">MP</option>
-                                        <option value="PR">PR</option>
-                                        <option value="PW">PW</option>
-                                        <option value="VI">VI</option>
+                                    <select name="billingState" id="billingState" class="field_big" style="" >
+
                                     </select>
 
                                 </div>
@@ -455,7 +432,8 @@
                                 Country:
                             </div>                        
                             <div style="float: left; width: 48%; margin: 5px;"> 
-                                United States
+                                <select name="billingCountry" id="billingCountry" class="field_big">
+                                </select>
                                 <div style="clear: both"></div> 
                             </div>
                         </div>
@@ -514,71 +492,9 @@
                             </div>                        
                             <div style="float: left; width: 48%; margin: 5px;"> 
                                 <div style="float: left;">    
-                                    <select name="shppingState" id="shppingState" class="field_big" style="width: 50px;" >
-                                        <option></option>
-                                        <option value="AK">AK</option>
-                                        <option value="AL">AL</option>
-                                        <option value="AR">AR</option>
-                                        <option value="AZ">AZ</option>
-                                        <option value="CA">CA</option>
-                                        <option value="CO">CO</option>
-                                        <option value="CT">CT</option>
-                                        <option value="DC">DC</option>
-                                        <option value="DE">DE</option>
-                                        <option value="FL">FL</option>
-                                        <option value="GA">GA</option>
-                                        <option value="HI">HI</option>
-                                        <option value="IA">IA</option>
-                                        <option value="ID">ID</option>
-                                        <option value="IL">IL</option>
-                                        <option value="IN">IN</option>
-                                        <option value="KS">KS</option>
-                                        <option value="KY">KY</option>
-                                        <option value="LA">LA</option>
-                                        <option value="MA">MA</option>
-                                        <option value="MD">MD</option>
-                                        <option value="ME">ME</option>
-                                        <option value="MI">MI</option>
-                                        <option value="MN">MN</option>
-                                        <option value="MO">MO</option>
-                                        <option value="MS">MS</option>
-                                        <option value="MT">MT</option>
-                                        <option value="NC">NC</option>
-                                        <option value="ND">ND</option>
-                                        <option value="NE">NE</option>
-                                        <option value="NH">NH</option>
-                                        <option value="NJ">NJ</option>
-                                        <option value="NM">NM</option>
-                                        <option value="NV">NV</option>
-                                        <option value="NY">NY</option>
-                                        <option value="OH">OH</option>
-                                        <option value="OK">OK</option>
-                                        <option value="OR">OR</option>
-                                        <option value="PA">PA</option>
-                                        <option value="RI">RI</option>
-                                        <option value="SC">SC</option>
-                                        <option value="SD">SD</option>
-                                        <option value="TN">TN</option>
-                                        <option value="TX">TX</option>
-                                        <option value="UT">UT</option>
-                                        <option value="VA">VA</option>
-                                        <option value="VT">VT</option>
-                                        <option value="WA">WA</option>
-                                        <option value="WI">WI</option>
-                                        <option value="WV">WV</option>
-                                        <option value="WY">WY</option>
-                                        <option value="AA">AA</option>
-                                        <option value="AE">AE</option>
-                                        <option value="AP">AP</option>
-                                        <option value="AS">AS</option>
-                                        <option value="FM">FM</option>
-                                        <option value="GU">GU</option>
-                                        <option value="MH">MH</option>
-                                        <option value="MP">MP</option>
-                                        <option value="PR">PR</option>
-                                        <option value="PW">PW</option>
-                                        <option value="VI">VI</option>
+                                    <select name="shippingState" id="shippingState" class="field_big" style="" >
                                     </select>
+                                    
 
                                 </div>
                                 <div style="float: left;" class="fieldError">                        
@@ -608,7 +524,8 @@
                                 Country:
                             </div>                        
                             <div style="float: left; width: 48%; margin: 5px;"> 
-                                United States
+                                <select name="shippingCountry" id="shippingCountry" class="field_big">
+                                </select>
                                 <div style="clear: both"></div> 
                             </div>
                         </div>

@@ -165,7 +165,7 @@
                             </div>
                             <div>
                                 <div class="link" style="float: left; width: 48%; margin: 5px; text-align: right; vertical-align: middle;">
-                                    <a href="#"  style="font-size:10pt">Forgot Password?</a>
+                                    <a href="forgotPassword"  style="font-size:10pt">Forgot Password?</a>
                                 </div>
                                 <div class="link" style="float: left; width: 48%; margin: 5px;">
                                     <a href="showRegistrationInfo"  style="font-size:10pt">Sign Up</a>
