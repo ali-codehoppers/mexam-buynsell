@@ -122,19 +122,19 @@ public class SendRFQforItems extends AuthenticatedAction {
         email.setUpdateDate(new Timestamp(System.currentTimeMillis()));
         emailService.addNew(email);
 
-        Message message = new Message();
-        message.setType("RFQ");
-        message.setSubject("RFQ Requested");
-        message.setMessage("Hello, <br/> I have sent you a request for quotation. Kindly reply to it");
-        message.setSendTo(receiver);
-        message.setSentBy(getUser());
-        message.setUnread(true);
-        message.setDeleted(false);
-        message.setCreatedBy((long) getUser().getId());
-        message.setUpdatedBy((long) getUser().getId());
-        message.setCreationDate(new Timestamp(System.currentTimeMillis()));
-        message.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-        messageService.addNew(message);
+        Message m = new Message();
+        m.setType("RFQ");
+        m.setSubject(subject);
+        m.setMessage(message);
+        m.setSendTo(receiver);
+        m.setSentBy(getUser());
+        m.setUnread(true);
+        m.setDeleted(false);
+        m.setCreatedBy((long) getUser().getId());
+        m.setUpdatedBy((long) getUser().getId());
+        m.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        m.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        messageService.addNew(m);
         List<RFQItem> rFQItems = new ArrayList<RFQItem>();
         for (CartItem cartItem : cartItems) {
             if (partids.contains(cartItem.getId())) {

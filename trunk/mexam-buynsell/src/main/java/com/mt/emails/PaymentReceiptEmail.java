@@ -70,10 +70,11 @@ public class PaymentReceiptEmail extends BaseEmail {
                 String date = format.format(transaction.getCompany().getExpiryDate());
                 body = body.replace("##ExpiryDate##", date);
                 body = body.replace("##CompanyName##", transaction.getCompany().getName());
-                body = body.replace("##Address##", transaction.getCompany().getAddress());
+                body = body.replace("##Address##", transaction.getBillingAddress().getAddress1()+" "+transaction.getBillingAddress().getAddress2());
                 body = body.replace("##City##", transaction.getCompany().getCity());
-                body = body.replace("##State##", transaction.getCompany().getState().getName());
-                body = body.replace("##Zip##", transaction.getCompany().getZip());
+                body = body.replace("##State##", transaction.getBillingAddress().getState().getName());
+                body = body.replace("##Country##", transaction.getBillingAddress().getState().getCountry().getName());
+                body = body.replace("##Zip##", transaction.getBillingAddress().getZip());
                 body = body.replace("##Amount##", "" + transaction.getAmount());
                 body = body.replace("##Months##", "" + transaction.getSubscriptionDuration());
                 //message.setText(body);
@@ -83,6 +84,7 @@ public class PaymentReceiptEmail extends BaseEmail {
                 emailService.addOrUpdate(email);
 
             } catch (Exception e) {
+                e.printStackTrace();
                 email.setNumberOfTries(email.getNumberOfTries() + 1);
                 emailService.addOrUpdate(email);
             }

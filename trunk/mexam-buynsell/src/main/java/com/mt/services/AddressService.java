@@ -13,9 +13,9 @@ public class AddressService {
         this.addressDao = addressDao;
     }
 
-  /*  public List<Address> findById(int addressId) {
-        return addressDao.findByAddressId("" + addressId);
-    }*/
+    public List<Address> findByTransactionId(int transId) {
+        return addressDao.findByTransactionId(transId);
+    }
 
     public Integer addNew(Address newInstance) {
         return addressDao.addNew(newInstance);

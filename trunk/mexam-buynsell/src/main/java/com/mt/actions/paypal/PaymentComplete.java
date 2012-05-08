@@ -5,6 +5,9 @@
 package com.mt.actions.paypal;
 
 import com.mt.actions.AuthenticatedAction;
+import com.mt.hibernate.entities.State;
+import com.mt.services.StateService;
+
 import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -16,12 +19,13 @@ public class PaymentComplete extends AuthenticatedAction implements SessionAware
     private String address2;
     private String zip;
     private String city;
-    private String state;
+    private State state;
     private double amount;
     private String creditCardNumber;
     private String creditCardType;
     private Map session;
     private String payment_status;
+    private StateService stateService;
 
     public void setPayment_status(String payment_status) {
         this.payment_status = payment_status;
@@ -29,6 +33,10 @@ public class PaymentComplete extends AuthenticatedAction implements SessionAware
 
     public void setSession(Map map) {
         this.session = map;
+    }
+
+    public void setStateService(StateService stateService) {
+        this.stateService = stateService;
     }
 
     @Override
@@ -40,7 +48,8 @@ public class PaymentComplete extends AuthenticatedAction implements SessionAware
         address2 = (String) session.get("address2");
         zip = (String) session.get("zip");
         city = (String) session.get("city");
-        state = (String) session.get("state");
+        int stateId = (Integer) session.get("state");
+        state = stateService.getById(stateId);
         amount = (Double) session.get("amount");
         creditCardNumber = (String) session.get("creditCardNumber");
         creditCardType = (String) session.get("creditCardType");
@@ -83,9 +92,11 @@ public class PaymentComplete extends AuthenticatedAction implements SessionAware
         return lastName;
     }
 
-    public String getState() {
+    public State getState() {
         return state;
     }
+
+
 
     public String getZip() {
         return zip;
