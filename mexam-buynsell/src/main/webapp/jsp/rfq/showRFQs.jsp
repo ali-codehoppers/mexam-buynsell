@@ -34,7 +34,7 @@
                         {name:'cell.title',index:'title', width:200, sortable:true,formatter:isNewFormatter},
                         {name:'cell.senderName',index:'sender.firstName', width:200, sortable:true,formatter:isNewFormatter},                        
                         {name:'cell.senderCompanyName',index:'sender.company.name', width:200, sortable:true,formatter:isNewFormatter},                        
-                        {name:'cell.isReplied',index:'isReplied', width:200, sortable:true,formatter:isNewFormatter}                        
+                        {name:'cell.isReplied',index:'isReplied', width:200,align:"center", sortable:true,formatter:isRepliedImage}                        
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
@@ -112,7 +112,13 @@
                 else
                     return cellvalue;
             }
-
+            function isRepliedImage (cellvalue, options, rowObject)
+            {
+                if(rowObject.cell.isReplied==true)
+                    return "<img src='images/ok.png'";
+                else
+                    return "<img src='images/error.png'";
+            }
              
             jQuery("#rfqsListSent").jqGrid('navGrid','#pager_s',{edit:false,add:false,del:true});
                                 

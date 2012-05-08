@@ -6,9 +6,11 @@ package com.mt.actions.ajaxActions;
 
 import com.mt.actions.AuthenticatedAction;
 import com.mt.hibernate.entities.Email;
+import com.mt.hibernate.entities.Message;
 import com.mt.hibernate.entities.RFQ;
 import com.mt.hibernate.entities.RFQItem;
 import com.mt.services.EmailService;
+import com.mt.services.MessageService;
 import com.mt.services.RFQItemService;
 import com.mt.services.RFQService;
 import java.sql.Timestamp;
@@ -26,6 +28,7 @@ public class UpdateRFQ extends AuthenticatedAction {
     private RFQItemService rFQItemService;
     private EmailService emailService;
     private RFQService rFQService;
+    private MessageService messageService;
 
     public void setPrice(int price) {
         this.price = price;
@@ -53,6 +56,10 @@ public class UpdateRFQ extends AuthenticatedAction {
 
     public void setrFQService(RFQService rFQService) {
         this.rFQService = rFQService;
+    }
+
+    public void setMessageService(MessageService messageService) {
+        this.messageService = messageService;
     }
 
     @Override
@@ -87,6 +94,20 @@ public class UpdateRFQ extends AuthenticatedAction {
             email.setCreationDate(new Timestamp(System.currentTimeMillis()));
             email.setUpdateDate(new Timestamp(System.currentTimeMillis()));
             emailService.addNew(email);
+            Message m = new Message();
+                    m.setType("RFQ");
+        m.setSubject("RFQ Response");
+        m.setMessage("We have responded to your request for quotation");
+        m.setSendTo(rfq.getSender().getCompany());
+        m.setSentBy(getUser());
+        m.setUnread(true);
+        m.setDeleted(false);
+        m.setCreatedBy((long) getUser().getId());
+        m.setUpdatedBy((long) getUser().getId());
+        m.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        m.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        messageService.addNew(m);
+            
         }
 
         return SUCCESS;

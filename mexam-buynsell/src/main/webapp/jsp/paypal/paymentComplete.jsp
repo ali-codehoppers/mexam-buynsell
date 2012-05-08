@@ -69,7 +69,7 @@
                         <legend>Billing Address</legend>
                         <div><b>Address</b>: ${address1}, ${address2}</div>
                         <div><b>City</b>: ${city}</div>
-                        <div><b>State</b>: ${state}</div>
+                        <div><b>State</b>: ${state.name}</div>
                         <div><b>Zip Code</b>: ${zip}</div>
                         <div><b>Country</b>: United States</div>
                         <div><b>Amount</b>: ${amount} USD</div>

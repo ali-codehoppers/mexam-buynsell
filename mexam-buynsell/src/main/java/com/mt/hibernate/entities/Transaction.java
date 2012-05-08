@@ -29,6 +29,7 @@ public class Transaction extends BaseEntity {
     private int subscriptionDuration;
     @Expose
     private int billingAddressId;
+    private Address billingAddress;
     @Expose
     private int shippingAddressId;
     @Expose
@@ -70,19 +71,36 @@ public class Transaction extends BaseEntity {
         this.shippingIsSame = shippingIsSame;
     }
 
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
     public double getAmount() {
         return amount;
     }
+
     @ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "companyId")
     public Company getCompany() {
         return company;
-    }   
+    }
 
     @NotEmpty
     @Column(insertable = false, updatable = false, name = "companyId")
     public int getCompanyId() {
         return companyId;
+    }
+
+    @ManyToOne(targetEntity = Address.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "billingAddressId")
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    @NotEmpty
+    @Column(insertable = false, updatable = false, name = "billingAddressId")
+    public int getBillingAddressId() {
+        return billingAddressId;
     }
 
     public int getSubscriptionDuration() {
@@ -97,10 +115,6 @@ public class Transaction extends BaseEntity {
         return transactionId;
     }
 
-    public int getBillingAddressId() {
-        return billingAddressId;
-    }
-
     public int getShippingAddressId() {
         return shippingAddressId;
     }
@@ -108,5 +122,4 @@ public class Transaction extends BaseEntity {
     public int getShippingIsSame() {
         return shippingIsSame;
     }
-    
 }

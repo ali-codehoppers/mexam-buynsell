@@ -9,10 +9,12 @@ import com.mt.hibernate.entities.Company;
 import com.mt.hibernate.entities.Transaction;
 import com.mt.hibernate.entities.Address;
 import com.mt.hibernate.entities.Email;
+import com.mt.hibernate.entities.State;
 import com.mt.hibernate.entities.User;
 import com.mt.services.AddressService;
 import com.mt.services.CompanyService;
 import com.mt.services.EmailService;
+import com.mt.services.StateService;
 import com.mt.services.TransactionService;
 import com.paypal.sdk.core.nvp.NVPDecoder;
 import java.sql.Timestamp;
@@ -27,12 +29,14 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
     private String billingAddress2;
     private String billingZip;
     private String billingCity;
-    private String billingState;
+    private int billingState;
+    private int billingCountry;
     private String shippingAddress1;
     private String shippingAddress2;
     private String shippingZip;
     private String shippingCity;
-    private String shippingState;
+    private int shippingState;
+    private int shippingCountry;
     private int shippingIsSame;
     private double amount;
     private String creditCardNumber;
@@ -46,7 +50,8 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
     private CompanyService companyService;
     private TransactionService transactionService;
     private AddressService addressService;
-    private EmailService emailService;   
+    private EmailService emailService;
+    private StateService stateService;
     private Map session;
 
     public void setAmount(double amount) {
@@ -97,6 +102,10 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         this.emailService = emailService;
     }
 
+    public void setStateService(StateService stateService) {
+        this.stateService = stateService;
+    }
+
     public void setMembershipType(String membershipType) {
         this.membershipType = membershipType;
         duration = Integer.parseInt(membershipType);
@@ -118,10 +127,6 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         this.billingCity = billingCity;
     }
 
-    public void setBillingState(String billingState) {
-        this.billingState = billingState;
-    }
-
     public void setBillingZip(String billingZip) {
         this.billingZip = billingZip;
     }
@@ -138,16 +143,28 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         this.shippingCity = shippingCity;
     }
 
-    public void setShippingState(String shippingState) {
-        this.shippingState = shippingState;
-    }
-
     public void setShippingZip(String shippingZip) {
         this.shippingZip = shippingZip;
     }
 
     public void setShippingIsSame(int shippingIsSame) {
         this.shippingIsSame = shippingIsSame;
+    }
+
+    public void setBillingState(int billingState) {
+        this.billingState = billingState;
+    }
+
+    public void setShippingState(int shippingState) {
+        this.shippingState = shippingState;
+    }
+
+    public void setBillingCountry(int billingCountry) {
+        this.billingCountry = billingCountry;
+    }
+
+    public void setShippingCountry(int shippingCountry) {
+        this.shippingCountry = shippingCountry;
     }
 
     @Override
@@ -182,8 +199,12 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
             valid = false;
         }
 
-        if (billingState == null || billingState.length() < 1) {
+        if (billingState == 0) {
             session.put("paypal_state", "State is missing.");
+            valid = false;
+        }
+        if (billingCountry == 0) {
+            session.put("paypal_country", "Country is missing.");
             valid = false;
         }
 
@@ -220,7 +241,7 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         paymentInfo.setBillingList1(billingAddress1);
         paymentInfo.setBillingList2(billingAddress2);
         paymentInfo.setCity(billingCity);
-        paymentInfo.setState(billingState);
+        paymentInfo.setState("" + billingState);
         paymentInfo.setCountryCode(
                 "US");
         paymentInfo.setPaymentType(creditCardType);
@@ -276,31 +297,37 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
 
             companyService.update(company);
             int transId = transactionService.addNew(transaction);
+            transaction = transactionService.getById(transId);
             Address address = new Address();
-            address.setTransId(transId);
+            address.setTransaction(transaction);
             address.setAddress1(billingAddress1);
             address.setAddress2(billingAddress2);
             address.setCity(billingCity);
-            address.setState(billingState);
+            State billState = stateService.getById(billingState);
+            address.setState(billState);
+            address.setCountryId(billingCountry);
             address.setZip(billingZip);
-            address.setCountry("US");
+            //address.setCountry("US");
             address.setType("b");
             int billingId = addressService.addNew(address);
+            Address billing = addressService.getById(billingId);
             address = new Address();
-            address.setTransId(transId);
+            address.setTransaction(transaction);
             address.setAddress1(shippingAddress1);
             address.setAddress2(shippingAddress2);
             address.setCity(shippingCity);
-            address.setState(shippingState);
+            State shippState = stateService.getById(shippingState);
+            address.setState(shippState);
+            address.setCountryId(shippingCountry);
             address.setZip(shippingZip);
-            address.setCountry("US");
+            //address.setCountry("US");
             address.setType("s");
             int shippingId = addressService.addNew(address);
             if (shippingIsSame != 1) {
                 shippingIsSame = 0;
             }
             transaction = transactionService.getById(transId);
-            transaction.setBillingAddressId(billingId);
+            transaction.setBillingAddress(billing);
             transaction.setShippingAddressId(shippingId);
             transaction.setShippingIsSame(shippingIsSame);
             transactionService.update(transaction);
@@ -321,7 +348,7 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
             email.setTransactionId(transId);
             email.setCreatedBy(user.getId());
             emailService.addNew(email);
-            
+
             return SUCCESS;
 
         }
@@ -373,10 +400,6 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         return billingCity;
     }
 
-    public String getBillingState() {
-        return billingState;
-    }
-
     public String getBillingZip() {
         return billingZip;
     }
@@ -393,15 +416,19 @@ public class PayAmount extends AuthenticatedAction implements SessionAware {
         return shippingCity;
     }
 
-    public String getShippingState() {
-        return shippingState;
-    }
-
     public String getShippingZip() {
         return shippingZip;
     }
 
     public int getShippingIsSame() {
         return shippingIsSame;
+    }
+
+    public int getBillingState() {
+        return billingState;
+    }
+
+    public int getShippingState() {
+        return shippingState;
     }
 }
